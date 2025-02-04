@@ -36,7 +36,7 @@ function changeSection(section) {
   <div id="app">
     <h1 class="main-title">
       Destino Perfecto
-      <img class="logo" src="./assets/LogoPagina.jpg" alt="Logo" />
+      <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvSd6-0-X6oKvvOX6OoxNgatOXWbbLBvdVjA&s" alt="Logo" />
     </h1>
     
     <Menu v-if="currentSection !== 'login' && currentSection !== 'register'" @navigate="changeSection" />

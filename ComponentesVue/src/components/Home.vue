@@ -164,7 +164,7 @@ onMounted(() => {
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(10deg, rgba(16, 77, 107, 0.8), rgba(10, 75, 99, 0.8)),
-    url('@/assets/Imagen.jpg') no-repeat center center fixed;
+    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvSd6-0-X6oKvvOX6OoxNgatOXWbbLBvdVjA&s') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;

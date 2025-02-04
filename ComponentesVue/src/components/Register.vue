@@ -197,8 +197,8 @@ function presioneCancelar() {
 .register-background {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(10deg, rgba(16, 77, 107, 0.8), rgba(10, 75, 99, 0.8)),
-    url('@/assets/Imagen.jpg') no-repeat center center fixed;
+  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8)),
+    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvSd6-0-X6oKvvOX6OoxNgatOXWbbLBvdVjA&s') no-repeat center center fixed;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -206,7 +206,7 @@ function presioneCancelar() {
 }
 
 .register-container {
-  background: rgba(65, 141, 168, 0.8);
+  background: rgba(180, 50, 50, 0.8);
   width: 720px;
   padding: 24px;
   border-radius: 20px;
