@@ -67,7 +67,7 @@ function presioneRegistrar() {
 .background {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(10deg, rgba(16, 77, 107, 0.8), rgba(10, 75, 99, 0.8)),
+  background: linear-gradient(10deg, rgba(236, 106, 106, 0.8), rgba(136, 10, 10, 0.8)),
     url('@/assets/Fondo.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
@@ -76,7 +76,7 @@ function presioneRegistrar() {
 }
 
 .login {
-  background: rgba(65, 141, 168, 0.8);
+  background: rgba(124, 7, 7, 0.8);
   width: 360px;
   padding: 24px;
   border-radius: 20px;
@@ -105,7 +105,7 @@ function presioneRegistrar() {
   outline: none;
   font-size: 14px;
   color: #333;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgb(243, 243, 243);
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -134,13 +134,13 @@ function presioneRegistrar() {
   font-size: 16px;
   font-weight: bold;
   color: white;
-  background: linear-gradient(90deg, #56ccf2, #2f80ed);
+  background: linear-gradient(90deg, #ff0000, #830f0f);
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
 .login-btn:hover {
-  background: linear-gradient(90deg, #2f80ed, #56ccf2);
+  background: linear-gradient(90deg, #830f0f, #ff0000);
 }
 
 .register-text {
@@ -150,7 +150,7 @@ function presioneRegistrar() {
 }
 
 .register-text a {
-  color: #56ccf2;
+  color: #ffd900;
   text-decoration: none;
   font-weight: bold;
 }
