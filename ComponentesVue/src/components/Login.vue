@@ -67,7 +67,7 @@ function presioneRegistrar() {
 .background {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(10deg, rgba(236, 106, 106, 0.8), rgba(136, 10, 10, 0.8)),
+  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8)),
     url('@/assets/Fondo.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;

@@ -81,10 +81,14 @@ function presioneCancelar() {
       </div>
       <div class="register-actions">
         <button class="register-btn" @click="presioneAceptar">Aceptar</button>
-        <button class="cancel-btn" @click="presioneCancelar">Cancelar</button>
       </div>
-      <button class="google-btn" @click="registrarConGoogle">Registrarse con Google</button>
+      <div>
+        <button class="google-btn" @click="registrarConGoogle">Registrarse con Google 🇬</button>
+      </div>
       <br/>
+      <p class="Login-text">
+        ¿Ya tienes cuenta? <a href="#" @click.prevent="presioneCancelar">Inicia Sesion</a>
+      </p>
       <label class="error">{{ errorMensaje }}</label>
       <label class="success">{{ buenMensaje }}</label>
     </div>
@@ -175,9 +179,18 @@ function presioneCancelar() {
 .cancel-btn { background: #5189f0; }
 .cancel-btn:hover { background: #0444cf; }
 
-.google-btn { background: #9baeaf; }
-.google-btn:hover { background: #5e7172; }
+.google-btn { background: #818e8f; }
+.google-btn:hover { background: #93aaac; }
 
 .error { color: rgb(255, 0, 0); }
 .success { color: rgb(102, 255, 0); }
+
+.Login-text{
+  color: white  ;
+}
+.Login-text a {
+  color: #ffd900;
+  text-decoration: none;
+  font-weight: bold;
+}
 </style>
