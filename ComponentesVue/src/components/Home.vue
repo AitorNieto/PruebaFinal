@@ -114,10 +114,15 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
+/* Fondo principal */
 .background {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8)),
+  background: linear-gradient(
+      10deg,
+      rgba(150, 15, 15, 0.8),
+      rgba(165, 47, 47, 0.8)
+    ),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
@@ -126,57 +131,211 @@ onMounted(() => {
   justify-content: center;
 }
 
-.section-title {
+/* Título principal */
+.title {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Imagen de bienvenida */
+.welcome-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+/* Countdown (posición absoluta) */
+.countdown-container {
+  position: absolute;
+  top: 20%; /* Ajusta este valor para mover el contador más arriba */
+  left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
+  transform: translateY(-50%);
+}
+
+/* Nuevo fondo rojo */
+.red-background {
+  width: 100%;
+  background-color: rgba(124, 7, 7, 0.8); /* Fondo rojo */
+  padding: 2rem 1rem; /* Espacio adicional */
+  padding-bottom: 4rem; /* Añade más espacio debajo */
+}
+
+/* Nuevo fondo rojo oscuro */
+.dark-red-background {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background-color: rgba(100, 0, 0, 0.8); /* Fondo rojo oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Necesario para posicionar las temporadas */
+}
+
+/* Temporadas */
+.season {
+  position: absolute;
+  font-size: 1.5rem;
+  color: #f5f5dc; /* Blanco crema */
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  transform: rotate(-10deg); /* Ajusta el ángulo de rotación */
+  animation: spin 5s linear infinite; /* Añade la animación de rotación */
+}
+
+.season-1 {
+  top: 40px;
+  left: 40px;
+}
+
+.season-2 {
+  top: 40px;
+  right: 40px;
+}
+
+.season-3 {
+  bottom: 40px;
+  left: 40px;
+}
+
+.season-4 {
+  bottom: 40px;
+  right: 40px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+/* Primer nuevo div grande */
+.large-red-background {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background-color: rgba(150, 0, 0, 0.8); /* Fondo rojo más claro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Añade un cursor de puntero para indicar que es clicable */
+}
+
+/* Segundo nuevo div grande */
+.large-dark-red-background {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background-color: rgba(80, 0, 0, 0.8); /* Fondo rojo más oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Añade un cursor de puntero para indicar que es clicable */
+}
+
+/* Título para los nuevos divs grandes */
+.large-div-title {
   font-size: 2.5rem;
   color: white;
   text-align: center;
 }
 
-.dark-red-background,
-.large-red-background,
-.large-dark-red-background {
+/* Sección de contenido extra */
+.home-content {
   width: 100%;
-  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Espacio vertical entre secciones */
+}
+
+/* Fila de contenido */
+.content-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  align-items: flex-start; /* Alinea los elementos al inicio para que estén a la misma altura */
+}
+
+/* Título "Novedades" */
+.novedades-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 2rem;
+  opacity: 0; /* Inicialmente oculto */
+  transform: translateX(-100%); /* Fuera de la pantalla a la izquierda */
+  transition: opacity 1s, transform 1s; /* Transición suave */
+}
+
+.novedades-title.slide-in {
+  opacity: 1; /* Visible */
+  transform: translateX(0); /* En su posición final */
+}
+
+/* Último Video */
+.ultimo-video {
+  max-width: 48%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
+  height: 400px; /* Ajusta la altura según sea necesario */
+  animation: blink 1s infinite; /* Añade la animación de parpadeo */
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.ultimo-video h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #960f0f;
+}
+
+/* Contenedor para el iframe (para mantener proporción 16:9) */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* Título "Ver Videos" */
+.ver-videos-title {
+  font-size: 2.5rem;
+  color: white;
+  text-align: center;
+  margin-top: 2rem;
+  height: 400px; /* Ajusta la altura según sea necesario */
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
-.dark-red-background {
-  background-color: rgba(100, 0, 0, 0.8);
-  position: relative;
-}
-
-.large-red-background {
-  background-color: rgba(150, 0, 0, 0.8);
-}
-
-.large-dark-red-background {
-  background-color: rgba(80, 0, 0, 0.8);
-}
-
-.season {
-  position: absolute;
-  font-size: 1.5rem;
-  color: #f5f5dc;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 5px;
-  transform: rotate(-10deg);
-  animation: spin 5s linear infinite;
-}
-
-.season-1 { top: 40px; left: 40px; }
-.season-2 { top: 40px; right: 40px; }
-.season-3 { bottom: 40px; left: 40px; }
-.season-4 { bottom: 40px; right: 40px; }
-
-@keyframes spin {
-  0%, 100% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-}
-
+/* Barra de desplazamiento */
 .scrolling-bar {
   position: fixed;
   bottom: 0;
@@ -190,22 +349,16 @@ onMounted(() => {
 .scrolling-text {
   display: inline-block;
   padding-left: 100%;
-  animation: scroll 40s linear infinite;
+  animation: scroll 40s linear infinite; /* Ajusta la duración de la animación */
 }
 
 @keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
+  }
 }
 
-@media (max-width: 768px) {
-  .section-title { font-size: 1.5rem; }
-  .dark-red-background,
-  .large-red-background,
-  .large-dark-red-background {
-    padding: 1rem 0.5rem;
-    height: auto;
-  }
-  .scrolling-bar { font-size: 0.8rem; }
-}
 </style>
