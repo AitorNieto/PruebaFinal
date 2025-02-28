@@ -79,4 +79,23 @@ onMounted(() => {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .spinner {
+    font-size: 24px; /* Tamaño más pequeño */
+  }
+
+  .letter {
+    font-size: 24px; /* Tamaño más pequeño */
+  }
+
+  .icon {
+    font-size: 18px; /* Tamaño más pequeño para el ícono */
+  }
+
+  .footer {
+    font-size: 10px; /* Tamaño más pequeño */
+  }
+}
 </style>

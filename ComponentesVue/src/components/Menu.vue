@@ -135,7 +135,7 @@ onUnmounted(() => {
 .menu ul li a {
   color: white;
   text-decoration: none;
-  font-size:3rem; /* Aumenta el tamaño de la fuente */
+  font-size: 3rem; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
   letter-spacing: 1px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -193,5 +193,26 @@ onUnmounted(() => {
 .scroll-to-top:hover {
   background: #ffffff;
   color: #8b0000;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .menu ul li a {
+    font-size: 2rem; /* Tamaño más pequeño */
+  }
+
+  .menu.scrolled {
+    transform: scale(1); /* No reducir el tamaño del menú */
+  }
+
+  .scroll-to-top {
+    font-size: 1.5rem; /* Tamaño más pequeño */
+    padding: 3px 10px;
+  }
 }
 </style>

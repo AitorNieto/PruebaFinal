@@ -108,4 +108,16 @@ function redirectToTwitch() {
     transform: scale(1);
   }
 }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .countdown {
+    font-size: 1rem;
+    padding: 5px 10px;
+  }
+
+  .countdown h2 {
+    font-size: 1rem;
+  }
+}
 </style>

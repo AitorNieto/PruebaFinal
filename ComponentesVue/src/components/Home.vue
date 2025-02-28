@@ -277,4 +277,48 @@ onMounted(() => {
     transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
   }
 }
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .welcome-image {
+    max-width: 100%;
+  }
+
+  .countdown-container {
+    top: 10%;
+    left: 20px;
+    transform: translateY(-50%);
+  }
+
+  .red-background, .dark-red-background, .large-red-background, .large-dark-red-background {
+    padding: 1rem 0.5rem;
+    height: auto;
+  }
+
+  .novedades-title, .ver-videos-title, .large-div-title {
+    font-size: 1.5rem;
+  }
+
+  .ultimo-video {
+    max-width: 100%;
+    margin-top: 50px;
+    height: auto;
+  }
+
+  .ultimo-video h2 {
+    font-size: 1.5rem;
+  }
+
+  .video-container {
+    padding-bottom: 56.25%; /* 16:9 */
+  }
+
+  .scrolling-bar {
+    font-size: 0.8rem;
+  }
+}
 </style>

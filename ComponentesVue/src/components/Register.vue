@@ -272,4 +272,36 @@ function irALogin() {
 .register-text a:hover {
   text-decoration: underline;
 }
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .login {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .tab {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .input-group input {
+    padding: 10px 14px 10px 36px;
+    font-size: 12px;
+  }
+
+  .login-btn,
+  .google-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .register-text {
+    font-size: 12px;
+  }
+}
 </style>
