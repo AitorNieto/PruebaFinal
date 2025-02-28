@@ -38,20 +38,11 @@ onMounted(() => {
 
   <!-- Nuevo div con fondo rojo -->
   <div class="red-background">
-    <!-- Sección de contenido extra debajo (Quiénes Somos, Último Video) -->
+    <!-- Título "Novedades" centrado -->
+    <h1 class="novedades-title">Novedades</h1>
+    <!-- Sección de contenido extra debajo (Último Video) -->
     <div class="home-content">
       <div class="content-row">
-        <!-- Quiénes Somos -->
-        <div class="quienes-somos">
-          <h2>Quiénes Somos</h2>
-          <p>
-            Bienvenido a Delirios & Barbaries, el rincón donde la realidad se descompone 
-            en debates crudos, ideas disruptivas y conversaciones sin censura. 
-            Cada episodio es un viaje sin retorno a lo más profundo del pensamiento crítico. 
-            ¿Listo para el caos?
-          </p>
-        </div>
-
         <!-- Último Video -->
         <div class="ultimo-video">
           <h2>Último Video</h2>
@@ -208,29 +199,21 @@ onMounted(() => {
   align-items: flex-start; /* Alinea los elementos al inicio para que estén a la misma altura */
 }
 
-/* Quiénes Somos */
-.quienes-somos {
-  max-width: 48%;
+/* Título "Novedades" */
+.novedades-title {
+  width: 100%;
   text-align: center;
-  padding: 20px;
-  border: 2px solid white; /* Añade un borde */
-  border-radius: 10px; /* Hazlo más cuadrado */
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente transparente */
-  margin-top: 150px; /* Mueve la sección más arriba */
-  height: 400px; /* Ajusta la altura según sea necesario */
-}
-
-.quienes-somos h2 {
-  font-size: 2.5rem; /* Hazlo más grande */
-  margin-bottom: 1rem;
-  color: #960f0f;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 2rem;
 }
 
 /* Último Video */
 .ultimo-video {
   max-width: 48%;
   text-align: center;
-  margin-left: -20px; /* Ajusta la posición del video más a la izquierda */
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
   height: 400px; /* Ajusta la altura según sea necesario */
 }
