@@ -4,10 +4,12 @@ import { useFirestore, useFirebaseAuth } from 'vuefire';
 import { doc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import imageSrc from '@/assets/DYB.png';
 import Countdown from './Countdown.vue';
+import Nosotros from './Nosotros.vue';
 
 const Posts = ref([]);
 const db = useFirestore();
 const auth = useFirebaseAuth();
+const currentSection = ref('home');
 
 function descargarPosts() {
   if (!auth.currentUser) {
@@ -24,66 +26,80 @@ function descargarPosts() {
   });
 }
 
+function changeSection(section) {
+  currentSection.value = section;
+}
+
 onMounted(() => {
   descargarPosts();
 });
 </script>
 
 <template>
-  <div class="background">
-    <h1 class="title">DELIRIOS Y BARBARIES</h1>
-    <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
-    <Countdown class="countdown-container" />
-  </div>
+  <div v-if="currentSection === 'home'">
+    <div class="background">
+      <h1 class="title">DELIRIOS Y BARBARIES</h1>
+      <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+      <Countdown class="countdown-container" />
+    </div>
 
-  <!-- Nuevo div con fondo rojo -->
-  <div class="red-background">
-    <!-- Título "Novedades" centrado -->
-    <h1 class="novedades-title">Novedades</h1>
-    <!-- Sección de contenido extra debajo (Último Video) -->
-    <div class="home-content">
-      <div class="content-row">
-        <!-- Último Video -->
-        <div class="ultimo-video">
-          <h2>Último Video</h2>
-          <!-- Ajusta el 'src' de tu iframe al video de YouTube que desees mostrar -->
-          <div class="video-container">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/VIDEO_ID"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
+    <!-- Nuevo div con fondo rojo -->
+    <div class="red-background">
+      <!-- Título "Novedades" centrado -->
+      <h1 class="novedades-title">Novedades</h1>
+      <!-- Sección de contenido extra debajo (Último Video) -->
+      <div class="home-content">
+        <div class="content-row">
+          <!-- Último Video -->
+          <div class="ultimo-video">
+            <h2>Último Video</h2>
+            <!-- Ajusta el 'src' de tu iframe al video de YouTube que desees mostrar -->
+            <div class="video-container">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
-  <div class="dark-red-background">
-    <h1 class="ver-videos-title">Ver Videos</h1>
-  </div>
-
-  <!-- Primer nuevo div grande -->
-  <div class="large-red-background">
-    <h1 class="large-div-title">Nuestro Foro</h1>
-  </div>
-
-  <!-- Segundo nuevo div grande -->
-  <div class="large-dark-red-background">
-    <h1 class="large-div-title">Sobre Nosotros</h1>
-  </div>
-
-  <!-- Barra de desplazamiento -->
-  <div class="scrolling-bar">
-    <div class="scrolling-text">
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+    <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
+    <div class="dark-red-background">
+      <h1 class="ver-videos-title">Ver Videos</h1>
+      <div class="season season-1">Temporada 1</div>
+      <div class="season season-2">Temporada 2</div>
+      <div class="season season-3">Temporada 3</div>
+      <div class="season season-4">Temporada 4</div>
     </div>
+
+    <!-- Primer nuevo div grande -->
+    <div class="large-red-background">
+      <h1 class="large-div-title">Nuestro Foro</h1>
+    </div>
+
+    <!-- Segundo nuevo div grande -->
+    <div class="large-dark-red-background" @click="changeSection('nosotros')">
+      <h1 class="large-div-title">Sobre Nosotros</h1>
+    </div>
+
+    <!-- Barra de desplazamiento -->
+    <div class="scrolling-bar">
+      <div class="scrolling-text">
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+      </div>
+    </div>
+  </div>
+
+  <div v-else-if="currentSection === 'nosotros'">
+    <Nosotros />
   </div>
 </template>
 
@@ -152,6 +168,51 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative; /* Necesario para posicionar las temporadas */
+}
+
+/* Temporadas */
+.season {
+  position: absolute;
+  font-size: 1.5rem;
+  color: #f5f5dc; /* Blanco crema */
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  transform: rotate(-10deg); /* Ajusta el ángulo de rotación */
+  animation: spin 5s linear infinite; /* Añade la animación de rotación */
+}
+
+.season-1 {
+  top: 40px;
+  left: 40px;
+}
+
+.season-2 {
+  top: 40px;
+  right: 40px;
+}
+
+.season-3 {
+  bottom: 40px;
+  left: 40px;
+}
+
+.season-4 {
+  bottom: 40px;
+  right: 40px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
 }
 
 /* Primer nuevo div grande */
@@ -172,6 +233,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer; /* Añade un cursor de puntero para indicar que es clicable */
 }
 
 /* Título para los nuevos divs grandes */
