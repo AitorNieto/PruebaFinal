@@ -37,7 +37,7 @@ onMounted(() => {
   </div>
 
   <!-- Nuevo div con fondo rojo -->
-  <div class="red-background">
+  <div id="novedades" class="red-background">
     <!-- Título "Novedades" centrado -->
     <h1 class="novedades-title">Novedades</h1>
     <!-- Sección de contenido extra debajo (Último Video) -->
@@ -62,17 +62,17 @@ onMounted(() => {
   </div>
 
   <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
-  <div class="dark-red-background">
-    <h1 class="ver-videos-title">Ver Videos</h1>
+  <div id="podcast" class="dark-red-background">
+    <h1 class="ver-videos-title">Ver Podcast</h1>
   </div>
 
   <!-- Primer nuevo div grande -->
-  <div class="large-red-background">
+  <div id="foro" class="large-red-background">
     <h1 class="large-div-title">Nuestro Foro</h1>
   </div>
 
   <!-- Segundo nuevo div grande -->
-  <div class="large-dark-red-background">
+  <div id="sobre-nosotros" class="large-dark-red-background">
     <h1 class="large-div-title">Sobre Nosotros</h1>
   </div>
 
@@ -275,6 +275,50 @@ onMounted(() => {
   }
   100% {
     transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .welcome-image {
+    max-width: 100%;
+  }
+
+  .countdown-container {
+    top: 10%;
+    left: 20px;
+    transform: translateY(-50%);
+  }
+
+  .red-background, .dark-red-background, .large-red-background, .large-dark-red-background {
+    padding: 1rem 0.5rem;
+    height: auto;
+  }
+
+  .novedades-title, .ver-videos-title, .large-div-title {
+    font-size: 1.5rem;
+  }
+
+  .ultimo-video {
+    max-width: 100%;
+    margin-top: 50px;
+    height: auto;
+  }
+
+  .ultimo-video h2 {
+    font-size: 1.5rem;
+  }
+
+  .video-container {
+    padding-bottom: 56.25%; /* 16:9 */
+  }
+
+  .scrolling-bar {
+    font-size: 0.8rem;
   }
 }
 </style>
