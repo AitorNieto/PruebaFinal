@@ -69,7 +69,7 @@ onMounted(() => {
     </div>
 
     <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
-    <div class="dark-red-background">
+    <div class="dark-red-background" @click="$emit('navigate', 'videos')">
       <h1 class="ver-videos-title">Ver Videos</h1>
       <div class="season season-1">Temporada 1</div>
       <div class="season season-2">Temporada 2</div>
@@ -78,7 +78,7 @@ onMounted(() => {
     </div>
 
     <!-- Primer nuevo div grande -->
-    <div class="large-red-background">
+    <div class="large-red-background" @click="$emit('navigate', 'foro')">
       <h1 class="large-div-title">Nuestro Foro</h1>
     </div>
 
@@ -223,6 +223,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer; /* Añade un cursor de puntero para indicar que es clicable */
 }
 
 /* Segundo nuevo div grande */
