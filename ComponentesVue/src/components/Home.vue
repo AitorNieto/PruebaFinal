@@ -75,6 +75,16 @@ onMounted(() => {
     <h1 class="ver-videos-title">Ver Videos</h1>
   </div>
 
+  <!-- Primer nuevo div grande -->
+  <div class="large-red-background">
+    <h1 class="large-div-title">Nuestro Foro</h1>
+  </div>
+
+  <!-- Segundo nuevo div grande -->
+  <div class="large-dark-red-background">
+    <h1 class="large-div-title">Sobre Nosotros</h1>
+  </div>
+
   <!-- Barra de desplazamiento -->
   <div class="scrolling-bar">
     <div class="scrolling-text">
@@ -146,8 +156,38 @@ onMounted(() => {
 /* Nuevo fondo rojo oscuro */
 .dark-red-background {
   width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
   background-color: rgba(100, 0, 0, 0.8); /* Fondo rojo oscuro */
-  padding: 2rem 1rem; /* Espacio adicional */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Primer nuevo div grande */
+.large-red-background {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background-color: rgba(150, 0, 0, 0.8); /* Fondo rojo más claro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Segundo nuevo div grande */
+.large-dark-red-background {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background-color: rgba(80, 0, 0, 0.8); /* Fondo rojo más oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Título para los nuevos divs grandes */
+.large-div-title {
+  font-size: 2.5rem;
+  color: white;
+  text-align: center;
 }
 
 /* Sección de contenido extra */
@@ -177,6 +217,7 @@ onMounted(() => {
   border-radius: 10px; /* Hazlo más cuadrado */
   background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente transparente */
   margin-top: 150px; /* Mueve la sección más arriba */
+  height: 400px; /* Ajusta la altura según sea necesario */
 }
 
 .quienes-somos h2 {
@@ -191,6 +232,7 @@ onMounted(() => {
   text-align: center;
   margin-left: -20px; /* Ajusta la posición del video más a la izquierda */
   margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
+  height: 400px; /* Ajusta la altura según sea necesario */
 }
 
 .ultimo-video h2 {
@@ -221,6 +263,10 @@ onMounted(() => {
   color: white;
   text-align: center;
   margin-top: 2rem;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Barra de desplazamiento */
