@@ -4,10 +4,12 @@ import { useFirestore, useFirebaseAuth } from 'vuefire';
 import { doc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import imageSrc from '@/assets/DYB.png';
 import Countdown from './Countdown.vue';
+import Nosotros from './Nosotros.vue';
 
 const Posts = ref([]);
 const db = useFirestore();
 const auth = useFirebaseAuth();
+const currentSection = ref('home');
 
 function descargarPosts() {
   if (!auth.currentUser) {
@@ -24,17 +26,31 @@ function descargarPosts() {
   });
 }
 
+function changeSection(section) {
+  currentSection.value = section;
+}
+
 onMounted(() => {
   descargarPosts();
+
+  // Detectar el desplazamiento y aplicar la clase de animación
+  const novedadesTitle = document.querySelector('.novedades-title');
+  window.addEventListener('scroll', () => {
+    const rect = novedadesTitle.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      novedadesTitle.classList.add('slide-in');
+    }
+  });
 });
 </script>
 
 <template>
-  <div class="background">
-    <h1 class="title">DELIRIOS Y BARBARIES</h1>
-    <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
-    <Countdown class="countdown-container" />
-  </div>
+  <div v-if="currentSection === 'home'">
+    <div class="background">
+      <h1 class="title">DELIRIOS Y BARBARIES</h1>
+      <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+      <Countdown class="countdown-container" />
+    </div>
 
   <!-- Nuevo div con fondo rojo -->
   <div id="novedades" class="red-background">
@@ -59,36 +75,43 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
-  <div id="podcast" class="dark-red-background">
-    <h1 class="ver-videos-title">Ver Podcast</h1>
-  </div>
-
-  <!-- Primer nuevo div grande -->
-  <div id="foro" class="large-red-background">
-    <h1 class="large-div-title">Nuestro Foro</h1>
-  </div>
-
-  <!-- Segundo nuevo div grande -->
-  <div id="sobre-nosotros" class="large-dark-red-background">
-    <h1 class="large-div-title">Sobre Nosotros</h1>
-  </div>
-
-  <!-- Barra de desplazamiento -->
-  <div class="scrolling-bar">
-    <div class="scrolling-text">
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
-      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+<template>
+  <div class="background">
+    <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
+    <div class="dark-red-background" @click="$emit('navigate', 'videos')">
+      <h1 class="section-title">Ver Videos</h1>
+      <div class="season season-1">Temporada 1</div>
+      <div class="season season-2">Temporada 2</div>
+      <div class="season season-3">Temporada 3</div>
+      <div class="season season-4">Temporada 4</div>
     </div>
+
+    <!-- Primer nuevo div grande -->
+    <div class="large-red-background" @click="$emit('navigate', 'foro')">
+      <h1 class="section-title">Nuestro Foro</h1>
+    </div>
+
+    <!-- Segundo nuevo div grande -->
+    <div class="large-dark-red-background" @click="changeSection('nosotros')">
+      <h1 class="section-title">Sobre Nosotros</h1>
+    </div>
+
+    <!-- Barra de desplazamiento -->
+    <div class="scrolling-bar">
+      <div class="scrolling-text">
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto •
+        D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
+      </div>
+    </div>
+  </div>
+
+  <div v-else-if="currentSection === 'nosotros'">
+    <Nosotros />
   </div>
 </template>
 
 <style scoped>
-/* Reset y tipografías */
 * {
   font-family: "Poppins", sans-serif;
   margin: 0;
@@ -96,15 +119,10 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-/* Fondo principal */
 .background {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(
-      10deg,
-      rgba(150, 15, 15, 0.8),
-      rgba(165, 47, 47, 0.8)
-    ),
+  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8)),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
@@ -113,146 +131,57 @@ onMounted(() => {
   justify-content: center;
 }
 
-/* Título principal */
-.title {
-  font-size: 48px;
-  font-weight: bold;
+.section-title {
+  font-size: 2.5rem;
   color: white;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Imagen de bienvenida */
-.welcome-image {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-}
-
-/* Countdown (posición absoluta) */
-.countdown-container {
-  position: absolute;
-  top: 20%; /* Ajusta este valor para mover el contador más arriba */
-  left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
-  transform: translateY(-50%);
-}
-
-/* Nuevo fondo rojo */
-.red-background {
-  width: 100%;
-  background-color: rgba(124, 7, 7, 0.8); /* Fondo rojo */
-  padding: 2rem 1rem; /* Espacio adicional */
-  padding-bottom: 4rem; /* Añade más espacio debajo */
-}
-
-/* Nuevo fondo rojo oscuro */
-.dark-red-background {
-  width: 100%;
-  height: 400px; /* Ajusta la altura según sea necesario */
-  background-color: rgba(100, 0, 0, 0.8); /* Fondo rojo oscuro */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Primer nuevo div grande */
-.large-red-background {
-  width: 100%;
-  height: 400px; /* Ajusta la altura según sea necesario */
-  background-color: rgba(150, 0, 0, 0.8); /* Fondo rojo más claro */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Segundo nuevo div grande */
+.dark-red-background,
+.large-red-background,
 .large-dark-red-background {
   width: 100%;
-  height: 400px; /* Ajusta la altura según sea necesario */
-  background-color: rgba(80, 0, 0, 0.8); /* Fondo rojo más oscuro */
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-/* Título para los nuevos divs grandes */
-.large-div-title {
-  font-size: 2.5rem;
-  color: white;
-  text-align: center;
-}
-
-/* Sección de contenido extra */
-.home-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem; /* Espacio vertical entre secciones */
-}
-
-/* Fila de contenido */
-.content-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  align-items: flex-start; /* Alinea los elementos al inicio para que estén a la misma altura */
-}
-
-/* Título "Novedades" */
-.novedades-title {
-  width: 100%;
-  text-align: center;
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 2rem;
-}
-
-/* Último Video */
-.ultimo-video {
-  max-width: 48%;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
-  height: 400px; /* Ajusta la altura según sea necesario */
-}
-
-.ultimo-video h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #960f0f;
-}
-
-/* Contenedor para el iframe (para mantener proporción 16:9) */
-.video-container {
+.dark-red-background {
+  background-color: rgba(100, 0, 0, 0.8);
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
-  overflow: hidden;
 }
 
-.video-container iframe {
+.large-red-background {
+  background-color: rgba(150, 0, 0, 0.8);
+}
+
+.large-dark-red-background {
+  background-color: rgba(80, 0, 0, 0.8);
+}
+
+.season {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  font-size: 1.5rem;
+  color: #f5f5dc;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  transform: rotate(-10deg);
+  animation: spin 5s linear infinite;
 }
 
-/* Título "Ver Videos" */
-.ver-videos-title {
-  font-size: 2.5rem;
-  color: white;
-  text-align: center;
-  margin-top: 2rem;
-  height: 400px; /* Ajusta la altura según sea necesario */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.season-1 { top: 40px; left: 40px; }
+.season-2 { top: 40px; right: 40px; }
+.season-3 { bottom: 40px; left: 40px; }
+.season-4 { bottom: 40px; right: 40px; }
+
+@keyframes spin {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
 }
 
-/* Barra de desplazamiento */
 .scrolling-bar {
   position: fixed;
   bottom: 0;
@@ -266,59 +195,22 @@ onMounted(() => {
 .scrolling-text {
   display: inline-block;
   padding-left: 100%;
-  animation: scroll 40s linear infinite; /* Ajusta la duración de la animación */
+  animation: scroll 40s linear infinite;
 }
 
 @keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
-  .title {
-    font-size: 32px;
-  }
-
-  .welcome-image {
-    max-width: 100%;
-  }
-
-  .countdown-container {
-    top: 10%;
-    left: 20px;
-    transform: translateY(-50%);
-  }
-
-  .red-background, .dark-red-background, .large-red-background, .large-dark-red-background {
+  .section-title { font-size: 1.5rem; }
+  .dark-red-background,
+  .large-red-background,
+  .large-dark-red-background {
     padding: 1rem 0.5rem;
     height: auto;
   }
-
-  .novedades-title, .ver-videos-title, .large-div-title {
-    font-size: 1.5rem;
-  }
-
-  .ultimo-video {
-    max-width: 100%;
-    margin-top: 50px;
-    height: auto;
-  }
-
-  .ultimo-video h2 {
-    font-size: 1.5rem;
-  }
-
-  .video-container {
-    padding-bottom: 56.25%; /* 16:9 */
-  }
-
-  .scrolling-bar {
-    font-size: 0.8rem;
-  }
+  .scrolling-bar { font-size: 0.8rem; }
 }
 </style>

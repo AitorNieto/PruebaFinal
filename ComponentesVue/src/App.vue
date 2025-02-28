@@ -6,6 +6,9 @@ import Register from './components/Register.vue';
 import Home from './components/Home.vue';
 import Perfil from './components/Perfil.vue';
 import PreHome from './components/PreHome.vue';
+import Nosotros from './components/Nosotros.vue';
+import Videos from './components/Videos.vue';
+import Foro from './components/Foro.vue';
 
 const currentSection = ref('prehome');
 
@@ -38,10 +41,19 @@ onMounted(() => {
       <Register @cambiarALogin="changeSection('login')" @cambiarAHome="changeSection('home')" />
     </div>
     <div v-else-if="currentSection === 'home'">
-      <Home />
+      <Home @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'profile'">
       <Perfil />
+    </div>
+    <div v-else-if="currentSection === 'nosotros'">
+      <Nosotros />
+    </div>
+    <div v-else-if="currentSection === 'videos'">
+      <Videos />
+    </div>
+    <div v-else-if="currentSection === 'foro'">
+      <Foro />
     </div>
 
     <div v-if="currentSection !== 'prehome'">
@@ -61,7 +73,7 @@ onMounted(() => {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1000; /* Asegúrate de que los botones estén por encima del contenido */
+  z-index: 2000; /* Asegúrate de que los botones estén por encima del contenido */
 }
 
 .auth-buttons button {
