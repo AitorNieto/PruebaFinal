@@ -1,71 +1,97 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
 
-const isOpen = ref(false);
 const emit = defineEmits(['navigate']);
 const auth = useFirebaseAuth();
-
-function toggleMenu() {
-  isOpen.value = !isOpen.value;
-}
 
 function navigate(section) {
   if (section === 'profile' && !auth.currentUser) {
     alert('Debes estar autenticado para acceder al perfil. Redirigiendo al registro.');
     emit('navigate', 'register');
-  } else {
+  } else if (section === 'profile') {
     emit('navigate', section);
+  } else {
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
-  isOpen.value = false;
 }
 
 function handleLogout() {
   if (!auth || !auth.currentUser) {
     console.error("No estás conectado para cerrar sesión.");
     alert("No estás conectado para cerrar sesión.");
-    isOpen.value = false; // Asegúrate de cerrar el menú
     return;
   }
 
   auth.signOut()
     .then(() => {
       alert("Sesión cerrada correctamente.");
-      emit('navigate', 'login'); // Redirigir al login
+      emit('navigate', 'login');
     })
     .catch((error) => {
       console.error("Error al cerrar sesión:", error.message);
       alert("Hubo un problema al intentar cerrar sesión: " + error.message);
-    })
-    .finally(() => {
-      isOpen.value = false; // Cerrar el menú
     });
 }
+
+const handleScroll = () => {
+  const menu = document.querySelector('.menu');
+  const scrollToTopButton = document.querySelector('.scroll-to-top');
+  const mainSection = document.querySelector('.background');
+  const mainSectionBottom = mainSection.getBoundingClientRect().bottom;
+
+  if (mainSectionBottom <= 0) {
+    menu.classList.add('scrolled');
+    scrollToTopButton.classList.add('visible');
+  } else {
+    menu.classList.remove('scrolled');
+    scrollToTopButton.classList.remove('visible');
+  }
+};
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
   <div>
-    <button @click="toggleMenu" class="menu-toggle">☰</button>
-
-    <transition name="slide">
-      <aside v-if="isOpen" class="menu">
-        <nav>
-          <ul>
-            <li><a href="#" @click.prevent="navigate('home')">Inicio</a></li>
-            <li><a href="#" @click.prevent="navigate('profile')">Perfil</a></li>
-            <li><a href="#" @click.prevent="handleLogout">Cerrar sesión</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </transition>
-
-    <div v-if="isOpen" class="overlay" @click="toggleMenu"></div>
+    <aside class="menu">
+      <nav>
+        <ul>
+          <li><a href="#" @click.prevent="navigate('novedades')">Novedades</a></li>
+          <li><a href="#" @click.prevent="navigate('podcast')">Podcast</a></li>
+          <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
+          <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
+          <li><a href="#" @click.prevent="navigate('profile')"><i class="fas fa-user"></i></a></li>
+        </ul>
+      </nav>
+    </aside>
+    <button class="scroll-to-top" @click="scrollToTop">
+      ↑
+    </button>
   </div>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Bebas Neue', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -76,85 +102,96 @@ function handleLogout() {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(124, 7, 7, 0.8);
+  background: linear-gradient(to right, #4a0d0d, #8b0000);
   color: white;
-  padding: 10px 0;
+  padding: 15px 0;
   display: flex;
   justify-content: center;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.menu.scrolled {
+  top: 0;
+  bottom: auto;
+  left: auto;
+  right: 0;
+  width: auto;
+  padding: 10px;
+  box-shadow: none;
+  background: none;
+  transform: scale(0.8); /* Reduce el tamaño del menú */
+  font-family: 'Roboto', sans-serif;
 }
 
 .menu ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 50px;
   padding: 0;
-  margin: 0;
-}
-
-.menu ul li {
   margin: 0;
 }
 
 .menu ul li a {
   color: white;
   text-decoration: none;
-  cursor: pointer;
+  font-size:3rem; /* Aumenta el tamaño de la fuente */
   font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  -webkit-text-stroke: 1px #8b0000; /* Delineado granate rojo */
+  background: white; /* Relleno blanco */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu.scrolled ul li a {
+  color: white;
+  -webkit-text-stroke: none;
+  background: none;
+  -webkit-background-clip: none;
+  -webkit-text-fill-color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem; /* Tamaño de fuente más pequeño */
 }
 
 .menu ul li a:hover {
-  color: #00e1ff;
+  color: #FFD700;
+  text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.5);
 }
 
-.menu ul li a:active {
-  background-color: rgba(0, 0, 0, 0.1); /* Ajusta la opacidad del fondo al estar pulsado */
+.menu ul li a i {
+  font-size: 3rem; /* Aumenta el tamaño del ícono */
 }
 
-.menu-toggle {
+.menu ul li a:hover i {
+  color: #FFD700;
+  text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.5);
+}
+
+.scroll-to-top {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  background: red;
+  bottom: 35px;
+  right: 17px;
+  background: #8b0000;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
+  border-radius: 100%;
+  padding: 3px 17px;
   cursor: pointer;
-  z-index: 1002;
-  font-size: 20px;
-}
-
-.menu-toggle:hover {
-  background: rgba(124, 7, 7, 0.8);;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  font-size: 2rem;
+  display: none;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease-in-out;
+.scroll-to-top.visible {
+  display: block;
 }
 
-.slide-enter-from {
-  transform: translateX(-100%);
-}
-
-.slide-leave-to {
-  transform: translateX(-100%);
-}
-
-.background {
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8));
+.scroll-to-top:hover {
+  background: #ffffff;
+  color: #8b0000;
 }
 </style>

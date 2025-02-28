@@ -37,7 +37,7 @@ onMounted(() => {
   </div>
 
   <!-- Nuevo div con fondo rojo -->
-  <div class="red-background">
+  <div id="novedades" class="red-background">
     <!-- Título "Novedades" centrado -->
     <h1 class="novedades-title">Novedades</h1>
     <!-- Sección de contenido extra debajo (Último Video) -->
@@ -62,17 +62,17 @@ onMounted(() => {
   </div>
 
   <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
-  <div class="dark-red-background">
-    <h1 class="ver-videos-title">Ver Videos</h1>
+  <div id="podcast" class="dark-red-background">
+    <h1 class="ver-videos-title">Ver Podcast</h1>
   </div>
 
   <!-- Primer nuevo div grande -->
-  <div class="large-red-background">
+  <div id="foro" class="large-red-background">
     <h1 class="large-div-title">Nuestro Foro</h1>
   </div>
 
   <!-- Segundo nuevo div grande -->
-  <div class="large-dark-red-background">
+  <div id="sobre-nosotros" class="large-dark-red-background">
     <h1 class="large-div-title">Sobre Nosotros</h1>
   </div>
 
