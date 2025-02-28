@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
-import { doc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import imageSrc from '@/assets/DYB.png';
 import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
@@ -36,9 +36,11 @@ onMounted(() => {
   // Detectar el desplazamiento y aplicar la clase de animación
   const novedadesTitle = document.querySelector('.novedades-title');
   window.addEventListener('scroll', () => {
-    const rect = novedadesTitle.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      novedadesTitle.classList.add('slide-in');
+    if (novedadesTitle) {
+      const rect = novedadesTitle.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        novedadesTitle.classList.add('slide-in');
+      }
     }
   });
 });
@@ -52,33 +54,28 @@ onMounted(() => {
       <Countdown class="countdown-container" />
     </div>
 
-  <!-- Nuevo div con fondo rojo -->
-  <div id="novedades" class="red-background">
-    <!-- Título "Novedades" centrado -->
-    <h1 class="novedades-title">Novedades</h1>
-    <!-- Sección de contenido extra debajo (Último Video) -->
-    <div class="home-content">
-      <div class="content-row">
-        <!-- Último Video -->
-        <div class="ultimo-video">
-          <h2>Último Video</h2>
-          <!-- Ajusta el 'src' de tu iframe al video de YouTube que desees mostrar -->
-          <div class="video-container">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/VIDEO_ID"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
+    <!-- Sección de Novedades -->
+    <div id="novedades" class="red-background">
+      <h1 class="novedades-title">Novedades</h1>
+      <div class="home-content">
+        <div class="content-row">
+          <div class="ultimo-video">
+            <h2>Último Video</h2>
+            <div class="video-container">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-<template>
-  <div class="background">
-    <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
+    <!-- Secciones de Navegación -->
     <div class="dark-red-background" @click="$emit('navigate', 'videos')">
       <h1 class="section-title">Ver Videos</h1>
       <div class="season season-1">Temporada 1</div>
@@ -87,12 +84,10 @@ onMounted(() => {
       <div class="season season-4">Temporada 4</div>
     </div>
 
-    <!-- Primer nuevo div grande -->
     <div class="large-red-background" @click="$emit('navigate', 'foro')">
       <h1 class="section-title">Nuestro Foro</h1>
     </div>
 
-    <!-- Segundo nuevo div grande -->
     <div class="large-dark-red-background" @click="changeSection('nosotros')">
       <h1 class="section-title">Sobre Nosotros</h1>
     </div>
