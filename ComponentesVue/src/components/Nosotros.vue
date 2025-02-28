@@ -15,7 +15,7 @@
         </v-row>
       </v-container>
     </div>
-    <div class="red-background">
+    <div class="dark-red-background">
       <p>Contenido adicional aquí</p>
     </div>
   </div>
@@ -64,14 +64,17 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.red-background {
-  background-color: #7c0707; /* Mismo tono de rojo que el fondo */
+.dark-red-background {
+  background-color: #4b0000; /* Tono de rojo más oscuro */
   padding: 20px;
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
-  margin-top: 20px; /* Más espacio hacia abajo */
-  width: 80%; /* Ajusta el ancho según sea necesario */
-  text-align: center;
+  margin-top: 0; /* Elimina el espacio superior */
+  width: 100%; /* Ajusta el ancho para ocupar todo el ancho de la pantalla */
+  min-height: 100vh; /* Ocupa todo el largo de la pantalla */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centra el contenido verticalmente */
 }
 </style>
