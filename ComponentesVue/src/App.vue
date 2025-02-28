@@ -1,42 +1,37 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Menu from './components/Menu.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Home from './components/Home.vue';
 import Perfil from './components/Perfil.vue';
+import PreHome from './components/PreHome.vue';
 
-const LoginVisible=ref(true);
-const RegistroVisible=ref(false);
-const HomeVisible=ref(false);
-
-function mostrarRegistro(){
-  LoginVisible.value=false;
-  RegistroVisible.value=true;
-}
-
-function mostrarLogin(){
-    LoginVisible.value=true;
-    RegistroVisible.value=false;
-}
-
-function mostrarHome(){
-  HomeVisible.value=true;
-  LoginVisible.value=false;
-}
-
-const currentSection = ref('login');
+const currentSection = ref('prehome');
 
 function changeSection(section) {
   currentSection.value = section;
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    currentSection.value = 'home';
+  }, 3000);
+});
 </script>
 
 <template>
   <div id="app">
-    <Menu v-if="currentSection !== 'login' && currentSection !== 'register'" @navigate="changeSection" />
-    
-    <div v-if="currentSection === 'login'">
+    <div v-if="currentSection !== 'prehome' && currentSection !== 'login' && currentSection !== 'register'">
+      <div class="auth-buttons">
+        <button @click="changeSection('login')">Autenticación</button>
+      </div>
+    </div>
+
+    <div v-if="currentSection === 'prehome'">
+      <PreHome />
+    </div>
+    <div v-else-if="currentSection === 'login'">
       <Login @logeado="changeSection('home')" @solicitaRegistro="changeSection('register')" />
     </div>
     <div v-else-if="currentSection === 'register'">
@@ -48,6 +43,10 @@ function changeSection(section) {
     <div v-else-if="currentSection === 'profile'">
       <Perfil />
     </div>
+
+    <div v-if="currentSection !== 'prehome'">
+      <Menu @navigate="changeSection" />
+    </div>
   </div>
 </template>
 
@@ -56,6 +55,27 @@ function changeSection(section) {
   font-family: Arial, sans-serif;
   text-align: center;
   position: relative;
+}
+
+.auth-buttons {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Asegúrate de que los botones estén por encima del contenido */
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #800000; /* Granate */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-buttons button:hover {
+  background-color: #660000; /* Granate oscuro */
 }
 
 .main-title {

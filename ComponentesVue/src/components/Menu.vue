@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, defineEmits } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
@@ -12,7 +11,12 @@ function toggleMenu() {
 }
 
 function navigate(section) {
-  emit('navigate', section);
+  if (section === 'profile' && !auth.currentUser) {
+    alert('Debes estar autenticado para acceder al perfil. Redirigiendo al registro.');
+    emit('navigate', 'register');
+  } else {
+    emit('navigate', section);
+  }
   isOpen.value = false;
 }
 
@@ -47,9 +51,9 @@ function handleLogout() {
       <aside v-if="isOpen" class="menu">
         <nav>
           <ul>
-            <li><a href="#" @click="navigate('home')">Inicio</a></li>
-            <li><a href="#" @click="navigate('profile')">Perfil</a></li>
-            <li><a href="#" @click="handleLogout">Cerrar sesión</a></li>
+            <li><a href="#" @click.prevent="navigate('home')">Inicio</a></li>
+            <li><a href="#" @click.prevent="navigate('profile')">Perfil</a></li>
+            <li><a href="#" @click.prevent="handleLogout">Cerrar sesión</a></li>
           </ul>
         </nav>
       </aside>
@@ -69,26 +73,27 @@ function handleLogout() {
 
 .menu {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  width: 250px;
-  height: 100%;
-  background-color: rgba(16, 77, 107, 0.8);
+  width: 100%;
+  background-color: rgba(124, 7, 7, 0.8);
   color: white;
-  padding: 20px;
-  transform: translateX(0);
-  z-index: 1001;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .menu ul {
   list-style: none;
+  display: flex;
+  gap: 20px;
   padding: 0;
   margin: 0;
 }
 
 .menu ul li {
-  margin: 20px 0;
+  margin: 0;
 }
 
 .menu ul li a {
@@ -102,11 +107,15 @@ function handleLogout() {
   color: #00e1ff;
 }
 
+.menu ul li a:active {
+  background-color: rgba(0, 0, 0, 0.1); /* Ajusta la opacidad del fondo al estar pulsado */
+}
+
 .menu-toggle {
   position: fixed;
   top: 20px;
   left: 20px;
-  background: #348ff7;
+  background: red;
   color: white;
   border: none;
   border-radius: 5px;
@@ -117,7 +126,7 @@ function handleLogout() {
 }
 
 .menu-toggle:hover {
-  background: #07305e;
+  background: rgba(124, 7, 7, 0.8);;
 }
 
 .overlay {
@@ -141,5 +150,11 @@ function handleLogout() {
 
 .slide-leave-to {
   transform: translateX(-100%);
+}
+
+.background {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(10deg, rgba(150, 15, 15, 0.8), rgba(165, 47, 47, 0.8));
 }
 </style>

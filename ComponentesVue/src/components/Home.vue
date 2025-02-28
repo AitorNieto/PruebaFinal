@@ -2,68 +2,19 @@
 import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
 import { doc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import imageSrc from '@/assets/DYB.png';
+import Countdown from './Countdown.vue';
 
 const Posts = ref([]);
-const NuevoTitulo = ref('');
-const NuevoCuerpo = ref('');
-const NuevoEstado = ref('pending');
-const NombreBotonAgregar = ref('Agregar');
-const EditandoPostId = ref(null); 
-
 const db = useFirestore();
 const auth = useFirebaseAuth();
 
-function agregarPost() {
-  if (EditandoPostId.value) {
-    editarPost();
-  } else {
-    const datosNuevoPost = {
-      title: NuevoTitulo.value,
-      body: NuevoCuerpo.value,
-      status: NuevoEstado.value
-    };
-    const collectionRefPosts = collection(db, `Profiles/${auth.currentUser.uid}/Posts`);
-    addDoc(collectionRefPosts, datosNuevoPost)
-      .then(postInsertadoOK)
-      .catch(postInsertadoNOK);
-  }
-}
-
-function editarPost() {
-  const postRef = doc(db, `Profiles/${auth.currentUser.uid}/Posts`, EditandoPostId.value);
-  updateDoc(postRef, {
-    title: NuevoTitulo.value,
-    body: NuevoCuerpo.value,
-    status: NuevoEstado.value,
-  })
-    .then(() => {
-      alert("Post actualizado correctamente");
-      limpiarFormulario();
-      EditandoPostId.value = null;
-    })
-    .catch((error) => {
-      console.error("Error al actualizar el post:", error);
-    });
-}
-
-function postInsertadoOK(nuevoPostRef) {
-  alert(`SE HA INSERTADO CORRECTAMENTE ${nuevoPostRef.id}`);
-  limpiarFormulario();
-}
-
-function postInsertadoNOK(error) {
-  console.error('Error al insertar el post:', error);
-}
-
-function limpiarFormulario() {
-  NuevoTitulo.value = '';
-  NuevoCuerpo.value = '';
-  NuevoEstado.value = 'pending';
-  NombreBotonAgregar.value = 'Agregar';
-  EditandoPostId.value = null;
-}
-
 function descargarPosts() {
+  if (!auth.currentUser) {
+    console.error('No hay usuario autenticado');
+    return;
+  }
+
   const collectionRef = collection(db, `Profiles/${auth.currentUser.uid}/Posts`);
   onSnapshot(collectionRef, (snapshot) => {
     Posts.value = snapshot.docs.map((doc) => ({
@@ -73,37 +24,6 @@ function descargarPosts() {
   });
 }
 
-function prepararEdicion(post) {
-  NuevoTitulo.value = post.title;
-  NuevoCuerpo.value = post.body;
-  NuevoEstado.value = post.status;
-  NombreBotonAgregar.value = 'Actualizar';
-  EditandoPostId.value = post.id;
-}
-
-function cambiarEstado(post) {
-  const nuevoEstado = post.status === 'pending' ? 'completed' : 'pending';
-  const postRef = doc(db, `Profiles/${auth.currentUser.uid}/Posts`, post.id);
-  updateDoc(postRef, { status: nuevoEstado })
-    .then(() => {
-      alert("Estado cambiado correctamente");
-    })
-    .catch((error) => {
-      console.error("Error al cambiar el estado:", error);
-    });
-}
-
-function eliminarTarea(post) {
-  const postRef = doc(db, `Profiles/${auth.currentUser.uid}/Posts`, post.id);
-  deleteDoc(postRef)
-    .then(() => {
-      alert('Tarea eliminada correctamente');
-    })
-    .catch((error) => {
-      console.error('Error al eliminar la tarea:', error);
-    });
-}
-
 onMounted(() => {
   descargarPosts();
 });
@@ -111,48 +31,63 @@ onMounted(() => {
 
 <template>
   <div class="background">
-    <div class="container">
-      <h1 class="title">Gestión de Viajes</h1>
+    <h1 class="title">DELIRIOS Y BARBARIES</h1>
+    <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+    <Countdown class="countdown-container" />
+  </div>
 
-      <div class="form-container">
-        <input v-model="NuevoTitulo" placeholder="Destino" class="input" />
-        <textarea v-model="NuevoCuerpo" placeholder="Descripción del viaje" class="textarea"></textarea>
-        <select v-model="NuevoEstado" class="select">
-          <option value="pending">Pendiente</option>
-          <option value="completed">Completada</option>
-        </select>
-        <button @click="agregarPost" class="button primary">{{ NombreBotonAgregar }}</button>
-      </div>
+  <!-- Nuevo div con fondo rojo -->
+  <div class="red-background">
+    <!-- Sección de contenido extra debajo (Quiénes Somos, Último Video) -->
+    <div class="home-content">
+      <div class="content-row">
+        <!-- Quiénes Somos -->
+        <div class="quienes-somos">
+          <h2>Quiénes Somos</h2>
+          <p>
+            Bienvenido a Delirios & Barbaries, el rincón donde la realidad se descompone 
+            en debates crudos, ideas disruptivas y conversaciones sin censura. 
+            Cada episodio es un viaje sin retorno a lo más profundo del pensamiento crítico. 
+            ¿Listo para el caos?
+          </p>
+        </div>
 
-      <div class="posts-container">
-        <div 
-          v-for="(post, index) in Posts" 
-          :key="post.id" 
-          class="post-card" 
-          :class="{ completed: post.status === 'completed', pending: post.status === 'pending' }"
-        >
-          <div class="post-header">
-            <h2>{{ post.title }}</h2>
-            <span class="status-icon">
-              <span v-if="post.status === 'pending'">⏳</span>
-              <span v-else>✔️</span>
-            </span>
-          </div>
-          <p>{{ post.body }}</p>
-          <div class="buttons">
-            <button @click="cambiarEstado(post)" class="button secondary">
-              Cambiar a {{ post.status === 'pending' ? 'Completada' : 'Pendiente' }}
-            </button>
-            <button @click="prepararEdicion(post)" class="button">Editar</button>
-            <button @click="eliminarTarea(post)" class="button danger">Eliminar</button>
+        <!-- Último Video -->
+        <div class="ultimo-video">
+          <h2>Último Video</h2>
+          <!-- Ajusta el 'src' de tu iframe al video de YouTube que desees mostrar -->
+          <div class="video-container">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/VIDEO_ID"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Nuevo div con fondo rojo oscuro y h1 "Ver Videos" -->
+  <div class="dark-red-background">
+    <h1 class="ver-videos-title">Ver Videos</h1>
+  </div>
+
+  <!-- Barra de desplazamiento -->
+  <div class="scrolling-bar">
+    <div class="scrolling-text">
+      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+      D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah • D&B • Kappah • 
+    </div>
+  </div>
 </template>
 
 <style scoped>
+/* Reset y tipografías */
 * {
   font-family: "Poppins", sans-serif;
   margin: 0;
@@ -160,159 +95,157 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
+/* Fondo principal */
 .background {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(10deg, rgba(16, 77, 107, 0.8), rgba(10, 75, 99, 0.8)),
-    url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvSd6-0-X6oKvvOX6OoxNgatOXWbbLBvdVjA&s') no-repeat center center fixed;
+  background: linear-gradient(
+      10deg,
+      rgba(150, 15, 15, 0.8),
+      rgba(165, 47, 47, 0.8)
+    ),
+    url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: rgba(65, 141, 168, 0.8);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
+/* Título principal */
 .title {
-  font-size: 2rem;
+  font-size: 48px;
+  font-weight: bold;
   color: white;
-  margin-bottom: 16px;
-  margin-top: 80px;
-}
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   margin-bottom: 20px;
 }
 
-.input,
-.textarea,
-.select {
+/* Imagen de bienvenida */
+.welcome-image {
   width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 30px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  height: auto;
 }
 
-.textarea {
-  resize: none;
+/* Countdown (posición absoluta) */
+.countdown-container {
+  position: absolute;
+  top: 20%; /* Ajusta este valor para mover el contador más arriba */
+  left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
+  transform: translateY(-50%);
 }
 
-.button {
-  padding: 12px 16px;
-  font-size: 1rem;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  background-color: #1d72c2;
-  color: white;
+/* Nuevo fondo rojo */
+.red-background {
+  width: 100%;
+  background-color: rgba(124, 7, 7, 0.8); /* Fondo rojo */
+  padding: 2rem 1rem; /* Espacio adicional */
+  padding-bottom: 4rem; /* Añade más espacio debajo */
 }
 
-.button.primary {
-  background-color: #007bff;
-  color: white;
+/* Nuevo fondo rojo oscuro */
+.dark-red-background {
+  width: 100%;
+  background-color: rgba(100, 0, 0, 0.8); /* Fondo rojo oscuro */
+  padding: 2rem 1rem; /* Espacio adicional */
 }
 
-.button.primary:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.button.secondary {
-  background-color: #5bc0de; 
-  color: white;
-}
-
-.button.secondary:hover {
-  background-color: #00a3cc; 
-  transform: scale(1.05); 
-}
-
-.button.danger {
-  background-color: #dc3545;
-  color: white;
-}
-
-.button.danger:hover {
-  background-color: #a5101f; 
-  transform: scale(1.05); 
-}
-
-.button.edit {
-  background-color: #17a2b8;
-  color: white;
-}
-
-.button.edit:hover {
-  background-color: #138496; 
-  transform: scale(1.05); 
-}
-
-.posts-container {
+/* Sección de contenido extra */
+.home-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 2rem; /* Espacio vertical entre secciones */
 }
 
-.post-card {
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, background-color 0.3s;
-  background: rgba(173, 216, 230, 0.8);
-  color: #333;
-}
-
-.post-card:hover {
-  transform: scale(1.03);
-}
-
-.post-card.completed {
-  background: rgba(144, 238, 144, 0.9);
-}
-
-.post-card.pending {
-  background: rgba(173, 216, 230, 0.8);
-}
-
-.post-header {
+/* Fila de contenido */
+.content-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  align-items: flex-start; /* Alinea los elementos al inicio para que estén a la misma altura */
 }
 
-.status-icon {
-  font-size: 1.5rem;
-  color: #555;
+/* Quiénes Somos */
+.quienes-somos {
+  max-width: 48%;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid white; /* Añade un borde */
+  border-radius: 10px; /* Hazlo más cuadrado */
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente transparente */
+  margin-top: 150px; /* Mueve la sección más arriba */
 }
 
-.buttons {
-  display: flex;
-  gap: 10px;
+.quienes-somos h2 {
+  font-size: 2.5rem; /* Hazlo más grande */
+  margin-bottom: 1rem;
+  color: #960f0f;
 }
 
-.buttons button:hover {
-  background-color: #271396;
-  transform: scale(1.05);
+/* Último Video */
+.ultimo-video {
+  max-width: 48%;
+  text-align: center;
+  margin-left: -20px; /* Ajusta la posición del video más a la izquierda */
+  margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
 }
 
+.ultimo-video h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #960f0f;
+}
+
+/* Contenedor para el iframe (para mantener proporción 16:9) */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* Título "Ver Videos" */
+.ver-videos-title {
+  font-size: 2.5rem;
+  color: white;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Barra de desplazamiento */
+.scrolling-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(124, 7, 7, 0.8);
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.scrolling-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll 40s linear infinite; /* Ajusta la duración de la animación */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
+  }
+}
 </style>
