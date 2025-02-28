@@ -109,4 +109,21 @@ onMounted(() => {
   border-radius: 50%;
   object-fit: cover;
 }
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .auth-buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .main-title {
+    font-size: 24px;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+}
 </style>

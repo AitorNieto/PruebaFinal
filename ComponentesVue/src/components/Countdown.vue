@@ -9,7 +9,9 @@ const targetDate = ref(new Date());
 function getNextTargetDate() {
   const now = new Date();
   const nextTarget = new Date(now);
-  nextTarget.setDate(now.getDate() + 2); // Set to 2 days from now
+  const dayOfWeek = nextTarget.getDay();
+  const daysUntilSunday = (7 - dayOfWeek) % 7;
+  nextTarget.setDate(nextTarget.getDate() + daysUntilSunday);
   nextTarget.setHours(18, 30, 0, 0); // Set to 6:30 PM
   return nextTarget;
 }
@@ -36,9 +38,7 @@ function updateCountdown() {
   const timeDifference = targetDate.value - now;
 
   if (timeDifference <= 0) {
-    targetDate.value = new Date();
-    targetDate.value.setDate(targetDate.value.getDate() + 7); // Set to 7 days from now
-    targetDate.value.setHours(18, 30, 0, 0); // Set to 6:30 PM
+    targetDate.value = getNextTargetDate();
     const targetDateDoc = doc(db, 'countdown', 'targetDate');
     setDoc(targetDateDoc, { date: targetDate.value.toISOString() });
     updateCountdown();
@@ -61,10 +61,14 @@ onMounted(async () => {
 onUnmounted(() => {
   clearInterval(interval);
 });
+
+function redirectToTwitch() {
+  window.open('https://www.twitch.tv/deliriosybarbaries', '_blank');
+}
 </script>
 
 <template>
-  <div class="countdown">
+  <div class="countdown" @click="redirectToTwitch">
     <h2>Próximo Capítulo en:</h2>
     <div class="time">{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</div>
   </div>
@@ -79,10 +83,41 @@ onUnmounted(() => {
   font-size: 1.5rem;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.countdown:hover {
+  animation: pulse 1s infinite;
+  background: rgba(124, 7, 7, 1);
 }
 
 .countdown h2 {
   font-size: 1.2rem;
   margin-bottom: 10px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .countdown {
+    font-size: 1rem;
+    padding: 5px 10px;
+  }
+
+  .countdown h2 {
+    font-size: 1rem;
+  }
 }
 </style>

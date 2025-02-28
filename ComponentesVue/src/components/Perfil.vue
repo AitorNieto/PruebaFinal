@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
@@ -269,5 +268,46 @@ onMounted(() => {
 .perfil-toggle-accounts-container {
   display: inline-block;
   position: relative;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .perfil-container {
+    flex-direction: column;
+    width: 90%;
+    padding: 16px;
+  }
+
+  .perfil-avatar-container {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .perfil-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .perfil-info {
+    padding: 0;
+  }
+
+  .perfil-title {
+    font-size: 20px;
+  }
+
+  .perfil-logout-btn,
+  .perfil-account-btn,
+  .perfil-toggle-accounts-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .cuentas {
+    position: static;
+    transform: none;
+    margin-left: 0;
+    margin-top: 20px;
+  }
 }
 </style>
