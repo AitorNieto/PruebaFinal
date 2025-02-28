@@ -32,6 +32,15 @@ function changeSection(section) {
 
 onMounted(() => {
   descargarPosts();
+
+  // Detectar el desplazamiento y aplicar la clase de animación
+  const novedadesTitle = document.querySelector('.novedades-title');
+  window.addEventListener('scroll', () => {
+    const rect = novedadesTitle.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      novedadesTitle.classList.add('slide-in');
+    }
+  });
 });
 </script>
 
@@ -269,6 +278,14 @@ onMounted(() => {
   font-size: 2.5rem;
   color: white;
   margin-bottom: 2rem;
+  opacity: 0; /* Inicialmente oculto */
+  transform: translateX(-100%); /* Fuera de la pantalla a la izquierda */
+  transition: opacity 1s, transform 1s; /* Transición suave */
+}
+
+.novedades-title.slide-in {
+  opacity: 1; /* Visible */
+  transform: translateX(0); /* En su posición final */
 }
 
 /* Último Video */
@@ -279,6 +296,16 @@ onMounted(() => {
   margin-right: auto;
   margin-top: 150px; /* Alinea el video a la misma altura que "Quiénes Somos" */
   height: 400px; /* Ajusta la altura según sea necesario */
+  animation: blink 1s infinite; /* Añade la animación de parpadeo */
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .ultimo-video h2 {
