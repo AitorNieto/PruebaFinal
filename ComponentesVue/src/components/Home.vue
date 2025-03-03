@@ -6,12 +6,13 @@ import imageSrc from '@/assets/DYB.png';
 import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
 import Foro from './Foro.vue';
-
+import CookieAlert from './CookieAlert.vue';
 
 const Posts = ref([]);
 const db = useFirestore();
 const auth = useFirebaseAuth();
 const currentSection = ref('home');
+const showCookieAlert = ref(false);
 
 function descargarPosts() {
   if (!auth.currentUser) {
@@ -34,6 +35,11 @@ function changeSection(section) {
 
 onMounted(() => {
   descargarPosts();
+
+  // Mostrar alerta de cookies después de un breve retraso
+  setTimeout(() => {
+    showCookieAlert.value = true;
+  }, 3000); // 3 segundos de retraso
 
   // Detectar el desplazamiento y aplicar la clase de animación
   const novedadesTitle = document.querySelector('.novedades-title');
@@ -114,6 +120,9 @@ onMounted(() => {
   <div v-else-if="currentSection === 'nosotros'">
     <Nosotros />
   </div>
+
+  <!-- Componente de alerta de cookies -->
+  <CookieAlert v-if="showCookieAlert" />
 </template>
 
 <style scoped>
