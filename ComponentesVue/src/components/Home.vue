@@ -43,11 +43,27 @@ onMounted(() => {
 
   // Detectar el desplazamiento y aplicar la clase de animación
   const novedadesTitle = document.querySelector('.novedades-title');
+  const videoSection = document.querySelector('.dark-red-background');
+  const seasons = document.querySelectorAll('.season');
+
   window.addEventListener('scroll', () => {
     if (novedadesTitle) {
       const rect = novedadesTitle.getBoundingClientRect();
       if (rect.top < window.innerHeight) {
         novedadesTitle.classList.add('slide-in');
+      }
+    }
+
+    if (videoSection) {
+      const rect = videoSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        seasons.forEach(season => {
+          season.classList.add('bounce-in');
+          season.addEventListener('animationend', () => {
+            season.classList.remove('bounce-in');
+            season.classList.add('spin');
+          }, { once: true });
+        });
       }
     }
   });
@@ -103,8 +119,7 @@ onMounted(() => {
     <!-- Barra de desplazamiento -->
     <div class="scrolling-bar">
       <div class="scrolling-text">
-        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto •
-        D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
+        D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
       </div>
     </div>
   </div>
@@ -220,7 +235,8 @@ onMounted(() => {
   padding: 10px;
   border-radius: 5px;
   transform: rotate(-10deg); /* Ajusta el ángulo de rotación */
-  animation: spin 5s linear infinite; /* Añade la animación de rotación */
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.5s, transform 1s; /* Transición suave */
 }
 
 .season-1 {
@@ -241,6 +257,30 @@ onMounted(() => {
 .season-4 {
   bottom: 40px;
   right: 40px;
+}
+
+.season.bounce-in {
+  opacity: 1; /* Visible */
+  animation: bounce-in 1s ease-out;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: translateX(-1000px) rotate(-10deg);
+  }
+  60% {
+    transform: translateX(30px) rotate(-10deg);
+  }
+  80% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(-10deg);
+  }
+}
+
+.season.spin {
+  animation: spin 5s linear infinite; /* Añade la animación de rotación */
 }
 
 @keyframes spin {
@@ -398,5 +438,4 @@ onMounted(() => {
     transform: translateX(-50%); /* Ajusta para que el texto se repita sin interrupciones */
   }
 }
-
 </style>
