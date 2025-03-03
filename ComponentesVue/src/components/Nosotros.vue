@@ -16,7 +16,53 @@
       </v-container>
     </div>
     <div class="dark-red-background">
-      <p>Contenido adicional aquí</p>
+      <div class="image-container">
+        <div class="image-box">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="@/assets/imagen1.jpg" alt="Imagen 1" class="additional-image" />
+              </div>
+              <div class="flip-card-back">
+                <h2>Nombre Completo</h2>
+                <p>Edad: 30</p>
+                <p>Nacimiento: 01/01/1995</p>
+                <p>Fecha: 01/01/2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="image-box">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="@/assets/imagen2.jpg" alt="Imagen 2" class="additional-image" />
+              </div>
+              <div class="flip-card-back">
+                <h2>Nombre Completo</h2>
+                <p>Edad: 28</p>
+                <p>Nacimiento: 01/01/1997</p>
+                <p>Fecha: 01/01/2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="image-box">
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="@/assets/imagen3.jpg" alt="Imagen 3" class="additional-image" />
+              </div>
+              <div class="flip-card-back">
+                <h2>Nombre Completo</h2>
+                <p>Edad: 25</p>
+                <p>Nacimiento: 01/01/2000</p>
+                <p>Fecha: 01/01/2025</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -76,5 +122,69 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Centra el contenido verticalmente */
+}
+
+.image-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.image-box {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.additional-image {
+  width: 100%;
+  max-width: 300px; /* Ajusta el tamaño máximo de las imágenes */
+  height: auto;
+  display: block;
+}
+
+/* Estilos para la tarjeta de volteo */
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 400px;
+  perspective: 1000px; /* Elimina el efecto 3D */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #d3d3d3; /* Fondo grisáceo */
+  color: black;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
