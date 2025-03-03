@@ -1,313 +1,246 @@
-<script setup>
-import { ref, onMounted } from 'vue';
-import { useFirestore, useFirebaseAuth } from 'vuefire';
-import { doc, getDoc } from 'firebase/firestore';
-import { signOut, signInWithEmailAndPassword } from 'firebase/auth';
-
-const userProfile = ref({});
-const userEmail = ref('');
-const savedAccounts = ref([]); 
-const mostrarCuentas = ref(false); 
-const db = useFirestore();
-const auth = useFirebaseAuth();
-
-function obtenerPerfil() {
-  const userId = auth.currentUser?.uid;
-  if (userId) {
-    const perfilRef = doc(db, `Profiles/${userId}`);
-    getDoc(perfilRef)
-      .then((perfilSnap) => {
-        if (perfilSnap.exists()) {
-          userProfile.value = perfilSnap.data();
-          userEmail.value = auth.currentUser.email;
-        } else {
-          console.error('Perfil no encontrado.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error al obtener el perfil:', error.message);
-      });
-  }
-}
-
-function desloguearUsuario() {
-  signOut(auth)
-    .then(() => {
-      alert('Se ha cerrado sesión correctamente.');
-      window.location.href = '/'; 
-    })
-    .catch((error) => {
-      console.error('Error al cerrar sesión:', error.message);
-    });
-}
-
-function guardarCuenta(email) {
-  let cuentas = JSON.parse(localStorage.getItem('savedAccounts')) || [];
-  if (!cuentas.includes(email)) {
-    cuentas.push(email);
-    localStorage.setItem('savedAccounts', JSON.stringify(cuentas));
-  }
-}
-
-function cargarCuentasGuardadas() {
-  const cuentas = JSON.parse(localStorage.getItem('savedAccounts')) || [];
-  savedAccounts.value = cuentas;
-}
-
-function cambiarCuenta(email) {
-  const password = prompt(`Introduce la contraseña para ${email}:`);
-  if (password) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert(`Has cambiado a la cuenta: ${email}`);
-        obtenerPerfil();
-      })
-      .catch((error) => {
-        console.error('Error al cambiar de cuenta:', error.message);
-        alert('Error al cambiar de cuenta: Verifica la contraseña.');
-      });
-  }
-}
-
-onMounted(() => {
-  obtenerPerfil();
-  cargarCuentasGuardadas();
-
-  if (auth.currentUser?.email) {
-    guardarCuenta(auth.currentUser.email);
-  }
-});
-</script>
-
 <template>
-  <div class="perfil-background">
-    <div class="perfil-container">
-      <div class="perfil-avatar-container">
-        <img :src="userProfile.avatar" alt="Avatar del usuario" class="perfil-avatar" v-if="userProfile.avatar" />
-      </div>
-      <div class="perfil-info">
-        <h1 class="perfil-title">Perfil del Usuario</h1>
-        <div v-if="userProfile" class="Formulario">
-          <p><strong>Nombre:</strong> {{ userProfile.nombre }}</p>
-          <p><strong>Apellidos:</strong> {{ userProfile.apellidos }}</p>
-          <p><strong>Edad:</strong> {{ userProfile.edad }}</p>
-          <p><strong>Sexo:</strong> {{ userProfile.sexo }}</p>
-          <p><strong>Correo Electrónico:</strong> {{ userEmail }}</p>
+  <div class="perfil-container">
+    <div class="perfil-card">
+      <div class="perfil-header">
+        <div class="perfil-image-container">
+          <img :src="perfil.profileImageUrl" alt="Imagen de perfil" class="perfil-image" />
         </div>
-        <button class="perfil-logout-btn" @click="desloguearUsuario">Cerrar Sesión</button>
-
-        <h2 class="perfil-switch-title">Cambiar de Cuenta</h2>
-        <div class="perfil-toggle-accounts-container">
-          <button class="perfil-toggle-accounts-btn" @click="mostrarCuentas = !mostrarCuentas">
-            {{ mostrarCuentas ? 'Ocultar Cuentas' : 'Mostrar Cuentas' }}
-          </button>
-
-          <div v-if="mostrarCuentas" class="cuentas">
-            <div v-if="savedAccounts.length > 0">
-              <p>Selecciona una cuenta para cambiar:</p>
-              <ul class="perfil-accounts-list">
-                <li v-for="email in savedAccounts" :key="email">
-                  <button class="perfil-account-btn" @click="cambiarCuenta(email)">
-                    {{ email }}
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div v-else>
-              <p>No hay cuentas guardadas. Por favor, inicia sesión con una nueva cuenta.</p>
-            </div>
-          </div>
-        </div>
+        <h2>{{ perfil.username }}</h2>
       </div>
+
+      <form @submit.prevent="handleSubmit" class="perfil-form">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input v-model="perfil.username" type="text" id="nombre" placeholder="Escribe tu nombre" required />
+        </div>
+
+        <div class="form-group">
+          <label for="edad">Edad</label>
+          <input v-model.number="perfil.edad" type="number" id="edad" placeholder="Introduce tu edad" required min="0" />
+        </div>
+
+        <div class="form-group">
+          <label for="genero">Género</label>
+          <select v-model="perfil.genero" id="genero" required>
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
+            <option value="prefiero no decirlo">Prefiero no decirlo</option>
+          </select>
+        </div>
+
+        <button type="submit">Guardar Perfil</button>
+      </form>
     </div>
   </div>
 </template>
 
+<script setup>
+import { ref, onMounted } from 'vue';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref as dbRef, get } from 'firebase/database';
+import { firebaseApp } from '../firebase';
+
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const realtimeDb = getDatabase(firebaseApp);
+
+const perfil = ref({
+  username: '',
+  email: '',
+  edad: '',
+  genero: '',
+  profileImageUrl: '',
+});
+
+const fetchPerfil = async () => {
+  const user = auth.currentUser;
+  if (user) {
+    const userId = user.uid;
+
+    const docRef = doc(db, 'perfiles', userId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      Object.assign(perfil.value, docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+
+    const imageRef = dbRef(realtimeDb, 'profileImages/' + userId);
+    const imageSnap = await get(imageRef);
+
+    if (imageSnap.exists()) {
+      perfil.value.profileImageUrl = imageSnap.val().profileImageUrl;
+    } else {
+      console.log("No such image!");
+    }
+  }
+};
+
+const handleSubmit = async () => {
+  const user = auth.currentUser;
+  if (user) {
+    const userId = user.uid;
+
+    await updateDoc(doc(db, 'perfiles', userId), {
+      username: perfil.value.username,
+      edad: perfil.value.edad,
+      genero: perfil.value.genero,
+    });
+
+    await set(dbRef(realtimeDb, 'profileImages/' + userId), {
+      profileImageUrl: perfil.value.profileImageUrl
+    });
+
+    console.log('Perfil actualizado');
+  }
+};
+
+onMounted(fetchPerfil);
+</script>
+
 <style scoped>
-* {
-  font-family: "Poppins", sans-serif;
+/* Fondo animado de dragones */
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  height: 100vh;
+  background: url('https://example.com/dragon-background.gif') no-repeat center center fixed;
+  background-size: cover;
+  animation: dragon-fly 10s infinite linear;
 }
 
-.perfil-background {
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(10deg, rgba(16, 77, 107, 0.8), rgba(10, 75, 99, 0.8)),
-    url('@https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvSd6-0-X6oKvvOX6OoxNgatOXWbbLBvdVjA&s') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes dragon-fly {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -3000px 0;
+  }
 }
 
 .perfil-container {
-  background: rgba(65, 141, 168, 0.8);
-  width: 80%;
-  max-width: 900px;
-  display: flex;
-  padding: 24px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  text-align: left;
-}
-
-.perfil-avatar-container {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
+  height: 100vh;
+  font-family: 'Cinzel', serif;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.perfil-avatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.perfil-info {
-  flex: 2;
-  padding: 10px;
-}
-
-.perfil-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 16px;
-}
-
-.perfil-logout-btn,
-.perfil-account-btn,
-.perfil-toggle-accounts-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-.perfil-logout-btn {
-  background-color: #ff4d4d;
-}
-
-.perfil-logout-btn:hover {
-  background-color: #ff1a1a;
-}
-
-.perfil-account-btn {
-  background-color: #348ff7;
-  margin: 5px;
-}
-
-.perfil-account-btn:hover {
-  background-color: #07305e;
-}
-
-.perfil-toggle-accounts-btn {
-  background-color: #007bff;
-}
-
-.perfil-toggle-accounts-btn:hover {
-  background-color: #0056b3;
-}
-
-.perfil-accounts-list {
-  list-style: none;
-  padding: 0;
-}
-
-.perfil-switch-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-  margin-top: 30px;
-}
-
-.perfil-switch-title,
-.perfil-title {
-  margin-top: 30px;
-}
-
-.Formulario {
-  color: white;
-}
-
-.cuentas {
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  transform: translateY(-50%);
-  background-color: rgba(65, 141, 168, 0.9);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-left: 10px;
-  color:white
-}
-
-.cuentas p {
-  margin: 10px 0;
-}
-
-.perfil-accounts-list {
-  margin-top: 10px;
-}
-
-.perfil-accounts-list li {
-  margin-bottom: 10px;
-}
-
-.perfil-toggle-accounts-container {
-  display: inline-block;
+.perfil-card {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.5);
   position: relative;
+  z-index: 10;
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-  .perfil-container {
-    flex-direction: column;
-    width: 90%;
-    padding: 16px;
-  }
+.perfil-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .perfil-avatar-container {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
+.perfil-image-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #ffcc00;
+  box-shadow: 0 0 15px #ffcc00, 0 0 30px #ffcc00;
+}
 
-  .perfil-avatar {
-    width: 100px;
-    height: 100px;
-  }
+.perfil-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: float 5s ease-in-out infinite;
+}
 
-  .perfil-info {
-    padding: 0;
+@keyframes float {
+  0% {
+    transform: translateY(0px);
   }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
 
-  .perfil-title {
-    font-size: 20px;
-  }
+h2 {
+  font-size: 2.5rem;
+  margin-top: 15px;
+  color: #ffcc00;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+}
 
-  .perfil-logout-btn,
-  .perfil-account-btn,
-  .perfil-toggle-accounts-btn {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
+.perfil-form {
+  margin-top: 20px;
+}
 
-  .cuentas {
-    position: static;
-    transform: none;
-    margin-left: 0;
-    margin-top: 20px;
-  }
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffcc00;
+  display: block;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #333;
+  color: #fff;
+  margin-bottom: 12px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 15px #ffcc00;
+}
+
+input:focus,
+select:focus {
+  background-color: #444;
+  outline: none;
+}
+
+button {
+  background-color: #ffcc00;
+  color: white;
+  padding: 14px;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 15px #ffcc00;
+}
+
+button:hover {
+  background-color: #ffb900;
+  transform: scale(1.05);
+}
+
+button:focus {
+  outline: none;
 }
 </style>
