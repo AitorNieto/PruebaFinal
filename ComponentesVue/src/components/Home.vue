@@ -5,6 +5,8 @@ import { collection, onSnapshot } from "firebase/firestore";
 import imageSrc from '@/assets/DYB.png';
 import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
+import Foro from './Foro.vue';
+
 
 const Posts = ref([]);
 const db = useFirestore();
@@ -76,7 +78,7 @@ onMounted(() => {
     </div>
 
     <!-- Secciones de Navegación -->
-    <div class="dark-red-background" @click="$emit('navigate', 'videos')">
+    <div class="dark-red-background" @click="changeSection('videos')">
       <h1 class="section-title">Ver Videos</h1>
       <div class="season season-1">Temporada 1</div>
       <div class="season season-2">Temporada 2</div>
@@ -84,7 +86,7 @@ onMounted(() => {
       <div class="season season-4">Temporada 4</div>
     </div>
 
-    <div class="large-red-background" @click="$emit('navigate', 'foro')">
+    <div class="large-red-background" @click="changeSection('foro')">
       <h1 class="section-title">Nuestro Foro</h1>
     </div>
 
@@ -99,6 +101,14 @@ onMounted(() => {
         D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
       </div>
     </div>
+  </div>
+
+  <div v-else-if="currentSection === 'foro'">
+    <Foro @navigate="changeSection" />
+  </div>
+
+  <div v-else-if="currentSection === 'resenas'">
+    <Reseñas />
   </div>
 
   <div v-else-if="currentSection === 'nosotros'">
@@ -133,10 +143,23 @@ onMounted(() => {
 
 /* Título principal */
 .title {
-  font-size: 48px;
+  font-size: 5rem; /* Aumenta el tamaño del título */
   font-weight: bold;
-  color: white;
-  margin-bottom: 20px;
+  color: #ffd700; /* Dorado */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Cinzel', serif; /* Fuente estilizada */
+  animation: delirio 3s infinite;
+}
+
+@keyframes delirio {
+  0%, 100% {
+    transform: scale(1);
+    color: #ffd700;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #ff4500; /* Naranja */
+  }
 }
 
 /* Imagen de bienvenida */
@@ -144,6 +167,12 @@ onMounted(() => {
   width: 100%;
   max-width: 800px;
   height: auto;
+  border-radius: 20px; /* Bordes redondeados */ 
+  transition: transform 0.3s ease; /* Transiciones suaves */
+}
+
+.welcome-image:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */ 
 }
 
 /* Countdown (posición absoluta) */
