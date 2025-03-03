@@ -1,12 +1,11 @@
 <template>
   <div>
-    <!-- Imagen del título fija en la parte superior -->
-    <div class="title-container">
-      <img :src="fotoTitulo" alt="Título" class="title-image" />
-    </div>
-
     <!-- Contenido debajo del título -->
     <div class="content">
+      <h1 class="section-title">Quiénes Somos</h1>
+      <p class="welcome-text">
+        Bienvenido a Delirios & Barbaries, el rincón donde la realidad se descompone en debates crudos, ideas disruptivas y conversaciones sin censura. Cada episodio es un viaje sin retorno a lo más profundo del pensamiento crítico. ¿Listo para el caos?
+      </p>
       <v-container>
         <v-row justify="center">
           <v-col cols="12" md="6">
@@ -15,6 +14,12 @@
         </v-row>
       </v-container>
     </div>
+
+    <!-- Imagen del título fija en la parte superior -->
+    <div class="title-container">
+      <img :src="fotoTitulo" alt="Título" class="title-image" />
+    </div>
+
     <div class="dark-red-background">
       <div class="image-container">
         <div class="image-box">
@@ -24,10 +29,10 @@
                 <img src="@/assets/imagen1.jpg" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Nombre Completo</h2>
-                <p>Edad: 30</p>
-                <p>Nacimiento: 01/01/1995</p>
-                <p>Fecha: 01/01/2025</p>
+                <h2>Jimmy</h2>
+                <p>Edad: 21</p>
+                <p>Nacimiento: 01/01/2003</p>
+                <p>Insta: @dfghjk</p>
               </div>
             </div>
           </div>
@@ -39,10 +44,10 @@
                 <img src="@/assets/imagen2.jpg" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Nombre Completo</h2>
-                <p>Edad: 28</p>
-                <p>Nacimiento: 01/01/1997</p>
-                <p>Fecha: 01/01/2025</p>
+                <h2>Daniel Lomas</h2>
+                <p>Edad: 21</p>
+                <p>Nacimiento: 01/01/2003</p>
+                <p>Insta: @dfghjk</p>
               </div>
             </div>
           </div>
@@ -54,10 +59,10 @@
                 <img src="@/assets/imagen3.jpg" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Nombre Completo</h2>
-                <p>Edad: 25</p>
-                <p>Nacimiento: 01/01/2000</p>
-                <p>Fecha: 01/01/2025</p>
+                <h2>Monzón</h2>
+                <p>Edad: 22</p>
+                <p>Nacimiento: 01/01/2002</p>
+                <p>Insta: @dfghjk</p>
               </div>
             </div>
           </div>
@@ -96,12 +101,31 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 
 /* Contenedor principal (deja espacio para la imagen fija) */
 .content {
-  padding-top: 30vh; /* Ajusta este valor para que el contenido no quede tapado */
+  padding-top: 35vh; /* Ajusta este valor para mover el contenido más abajo */
   background-color: #7c0707;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center; /* Centra el texto */
+}
+
+/* Título de la sección */
+.section-title {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Texto de bienvenida */
+.welcome-text {
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 2rem;
+  max-width: 800px; /* Limita el ancho del texto */
+  border: 2px solid white; /* Añade un borde al texto */
+  padding: 1rem; /* Añade un relleno al texto */
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 /* Imagen dentro del contenido */
