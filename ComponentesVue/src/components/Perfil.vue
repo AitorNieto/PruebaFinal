@@ -122,7 +122,7 @@ body {
 
 .perfil-container {
   display: flex;
-  justify-content: center;
+  justify-content: center;  
   align-items: center;
   height: 100vh;
   font-family: 'Cinzel', serif;
@@ -131,7 +131,7 @@ body {
 }
 
 .perfil-card {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgb(94, 32, 32);
   border-radius: 20px;
   padding: 40px;
   width: 100%;
@@ -152,8 +152,8 @@ body {
   margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #ffcc00;
-  box-shadow: 0 0 15px #ffcc00, 0 0 30px #ffcc00;
+  border: 5px solid #881919;
+  box-shadow: 0 0 15px #881919, 0 0 30px #881919;
 }
 
 .perfil-image {
@@ -178,7 +178,7 @@ body {
 h2 {
   font-size: 2.5rem;
   margin-top: 15px;
-  color: #ffcc00;
+  color: #dfb8b8;
   font-family: 'Cinzel', serif;
   text-transform: uppercase;
   letter-spacing: 5px;
@@ -196,7 +196,7 @@ h2 {
 label {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #ffcc00;
+  color: #dfb8b8;
   display: block;
   margin-bottom: 10px;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
@@ -209,21 +209,21 @@ select {
   font-size: 1.1rem;
   border: none;
   border-radius: 10px;
-  background-color: #333;
+  background-color:#e7d8d8;
   color: #fff;
   margin-bottom: 12px;
   transition: background-color 0.3s ease;
-  box-shadow: 0 0 15px #ffcc00;
+  box-shadow: 0 0 15px #881919;
 }
 
 input:focus,
 select:focus {
-  background-color: #444;
+  background-color: #7a6a6a;
   outline: none;
 }
 
 button {
-  background-color: #ffcc00;
+  background-color: #881919;
   color: white;
   padding: 14px;
   font-size: 1.3rem;
@@ -232,11 +232,11 @@ button {
   cursor: pointer;
   width: 100%;
   transition: background-color 0.3s ease;
-  box-shadow: 0 0 15px #ffcc00;
+  box-shadow: 0 0 15px #881919;
 }
 
 button:hover {
-  background-color: #ffb900;
+  background-color: #881919;
   transform: scale(1.05);
 }
 
