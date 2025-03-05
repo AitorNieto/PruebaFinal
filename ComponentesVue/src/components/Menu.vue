@@ -62,19 +62,14 @@ const scrollToTop = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  if (auth.currentUser) {
+    userName.value = auth.currentUser.displayName || "Usuario";
+    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
-});
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  if (auth.currentUser) {
-    userName.value = auth.currentUser.displayName || "Usuario";
-    // Usa la variable defaultAvatar importada, no la cadena "defaultAvatar"
-    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
-  }
 });
 </script>
 
@@ -88,7 +83,10 @@ onMounted(() => {
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
           <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
           <li class="user-section">
-            <img :src="userPhoto" alt="Avatar" class="user-avatar" />
+            <!-- Se envuelve el avatar en un enlace para hacerlo interactivo -->
+            <a href="#" @click.prevent="navigate('profile')">
+              <img :src="userPhoto" alt="Avatar" class="user-avatar" />
+            </a>
           </li>
         </ul>
       </nav>
@@ -123,6 +121,22 @@ onMounted(() => {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid white; /* Opcional, para destacar el avatar */
+}
+
+/* Nuevo: Estilos para el enlace del avatar para que no herede estilos de los demás enlaces */
+.user-section a {
+  display: inline-block;
+  font-size: unset;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  -webkit-text-stroke: 0;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.user-section a:hover {
+  transform: scale(1.1);
 }
 
 .user-info {
