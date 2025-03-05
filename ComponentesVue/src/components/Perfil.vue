@@ -29,9 +29,12 @@
         </div>
 
         <button type="submit">Guardar Perfil</button>
+        <br />
+        <br />
+        <button type="submit">Cerrar Sesion</button>
       </form>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script setup>
