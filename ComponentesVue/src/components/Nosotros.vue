@@ -29,10 +29,13 @@
                 <img src="@/assets/imagen1.jpg" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Jimmy</h2>
-                <p>Edad: 21</p>
-                <p>Nacimiento: 01/01/2003</p>
-                <p>Insta: @dfghjk</p>
+                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <div class="card-info">
+                  <h2>Jimmy</h2>
+                  <p>Edad: 21</p>
+                  <p>Nacimiento: 01/01/2003</p>
+                  <p>Insta: @dfghjk</p>
+                </div>
               </div>
             </div>
           </div>
@@ -44,10 +47,13 @@
                 <img src="@/assets/imagen2.jpg" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Daniel Lomas</h2>
-                <p>Edad: 21</p>
-                <p>Nacimiento: 01/01/2003</p>
-                <p>Insta: @dfghjk</p>
+                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <div class="card-info">
+                  <h2>Daniel Lomas</h2>
+                  <p>Edad: 21</p>
+                  <p>Nacimiento: 01/01/2003</p>
+                  <p>Insta: @dfghjk</p>
+                </div>
               </div>
             </div>
           </div>
@@ -59,10 +65,13 @@
                 <img src="@/assets/imagen3.jpg" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <h2>Monzón</h2>
-                <p>Edad: 22</p>
-                <p>Nacimiento: 01/01/2002</p>
-                <p>Insta: @dfghjk</p>
+                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <div class="card-info">
+                  <h2>Monzón</h2>
+                  <p>Edad: 22</p>
+                  <p>Nacimiento: 01/01/2002</p>
+                  <p>Insta: @dfghjk</p>
+                </div>
               </div>
             </div>
           </div>
@@ -218,5 +227,23 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.card-info {
+  z-index: 2;
+  color: black; /* Cambia el color del texto a negro */
+  text-align: center;
 }
 </style>
