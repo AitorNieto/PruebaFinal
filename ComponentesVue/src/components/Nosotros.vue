@@ -1,7 +1,12 @@
 <template>
   <div>
+    <!-- Imagen del título fija en la parte superior -->
+    <div class="title-container">
+      <img :src="fotoTitulo" alt="Título" class="title-image" />
+    </div>
+
     <!-- Contenido debajo del título -->
-    <div class="content">
+    <div class="content" ref="content">
       <h1 class="section-title">Quiénes Somos</h1>
       <p class="welcome-text">
         Bienvenido a Delirios & Barbaries, el rincón donde la realidad se descompone en debates crudos, ideas disruptivas y conversaciones sin censura. Cada episodio es un viaje sin retorno a lo más profundo del pensamiento crítico. ¿Listo para el caos?
@@ -13,11 +18,6 @@
           </v-col>
         </v-row>
       </v-container>
-    </div>
-
-    <!-- Imagen del título fija en la parte superior -->
-    <div class="title-container">
-      <img :src="fotoTitulo" alt="Título" class="title-image" />
     </div>
 
     <div class="dark-red-background">
@@ -73,7 +73,14 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
+
+const content = ref(null);
+
+onMounted(() => {
+  content.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 </script>
 
 <style scoped>
@@ -94,14 +101,14 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 /* Imagen del título centrada */
 .title-image {
   width: 100vw; /* Expande la imagen a todo el ancho de la pantalla */
-  max-height: 30vh; /* No más alta que el 30% de la página */
+  max-height: 20vh; /* No más alta que el 20% de la página */
   object-fit: cover; /* Mantiene proporción */
   object-position: center center; /* Centra la imagen completamente */
 }
 
 /* Contenedor principal (deja espacio para la imagen fija) */
 .content {
-  padding-top: 35vh; /* Ajusta este valor para mover el contenido más abajo */
+  padding-top: 5vh; /* Ajusta este valor para mover el contenido más arriba */
   background-color: #7c0707;
   min-height: 100vh;
   display: flex;
@@ -114,6 +121,7 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 .section-title {
   font-size: 2.5rem;
   color: white;
+  margin-top: 30vh; /* Ajusta este valor para mover el h1 más abajo */
   margin-bottom: 1rem;
 }
 
@@ -121,6 +129,7 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 .welcome-text {
   font-size: 1.2rem;
   color: white;
+  margin-top: 10vh; /* Ajusta este valor para mover el texto más abajo */
   margin-bottom: 2rem;
   max-width: 800px; /* Limita el ancho del texto */
   border: 2px solid white; /* Añade un borde al texto */
@@ -209,6 +218,5 @@ import fotoTitulo from '@/assets/fotoTitulo.jpeg';
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 </style>
