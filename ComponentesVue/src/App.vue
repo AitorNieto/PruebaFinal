@@ -21,6 +21,8 @@ onMounted(() => {
     currentSection.value = 'home';
   }, 3000);
 });
+
+// Removed redundant export default block
 </script>
 
 <template>
@@ -38,7 +40,7 @@ onMounted(() => {
       <Home @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'profile'">
-      <Perfil />
+      <Perfil @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'nosotros'">
       <Nosotros />
@@ -50,11 +52,13 @@ onMounted(() => {
       <Foro />
     </div>
 
-    <div v-if="currentSection !== 'prehome'">
+    <div v-if="currentSection !== 'prehome' && currentSection !== 'profile'">
       <Menu @navigate="changeSection" />
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 #app {

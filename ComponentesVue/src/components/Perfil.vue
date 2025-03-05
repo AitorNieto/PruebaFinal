@@ -1,5 +1,10 @@
 <template>
   <div class="perfil-container">
+    <!-- Botón de flecha para volver a home -->
+    <button @click="$emit('navigate', 'home')" class="back-button">
+      ⬅️
+    </button>
+
     <div class="perfil-card">
       <div class="perfil-header">
         <div class="perfil-image-container">
@@ -131,6 +136,7 @@ body {
   font-family: 'Cinzel', serif;
   color: #fff;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
 .perfil-card {
@@ -245,5 +251,16 @@ button:hover {
 
 button:focus {
   outline: none;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #fff;
 }
 </style>
