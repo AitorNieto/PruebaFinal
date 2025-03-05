@@ -1,9 +1,13 @@
 <script setup>
 import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
+import defaultAvatar from '../assets/avatar-default.png';
 
 const emit = defineEmits(['navigate']);
 const auth = useFirebaseAuth();
+
+const userName = ref("Usuario");
+const userPhoto = ref(defaultAvatar);
 
 function navigate(section) {
   if (section === 'profile' && !auth.currentUser) {
@@ -63,6 +67,15 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  if (auth.currentUser) {
+    userName.value = auth.currentUser.displayName || "Usuario";
+    // Usa la variable defaultAvatar importada, no la cadena "defaultAvatar"
+    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
+  }
+});
 </script>
 
 <template>
@@ -74,7 +87,9 @@ onUnmounted(() => {
           <li><a href="#" @click.prevent="navigate('podcast')">Podcast</a></li>
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
           <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
-          <li><a href="#" @click.prevent="navigate('profile')"><i class="fas fa-user"></i></a></li>
+          <li class="user-section">
+            <img :src="userPhoto" alt="Avatar" class="user-avatar" />
+          </li>
         </ul>
       </nav>
     </aside>
@@ -96,6 +111,25 @@ onUnmounted(() => {
   padding: 0;
   box-sizing: border-box;
 }
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre la imagen y la info */
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white; /* Opcional, para destacar el avatar */
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+} 
 
 .menu {
   position: fixed;
