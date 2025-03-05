@@ -25,12 +25,6 @@ onMounted(() => {
 
 <template>
   <div id="app">
-    <div v-if="currentSection !== 'prehome' && currentSection !== 'login' && currentSection !== 'register'">
-      <div class="auth-buttons">
-        <button @click="changeSection('login')">Autenticación</button>
-      </div>
-    </div>
-
     <div v-if="currentSection === 'prehome'">
       <PreHome />
     </div>
