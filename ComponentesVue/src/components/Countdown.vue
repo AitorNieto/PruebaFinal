@@ -12,7 +12,7 @@ function getNextTargetDate() {
   const dayOfWeek = nextTarget.getDay();
   const daysUntilSunday = (7 - dayOfWeek) % 7;
   nextTarget.setDate(nextTarget.getDate() + daysUntilSunday);
-  nextTarget.setHours(18, 30, 0, 0); // Set to 6:30 PM
+  nextTarget.setHours(20, 0, 0, 0); // Set to 8:00 PM
   return nextTarget;
 }
 
