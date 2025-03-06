@@ -65,10 +65,27 @@ onUnmounted(() => {
 function redirectToTwitch() {
   window.open('https://www.twitch.tv/deliriosybarbaries', '_blank');
 }
+
+const countdownRef = ref(null);
+
+function handleMouseMove(event) {
+  const rect = countdownRef.value.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+
+  if (distance < rect.width / 4) {
+    countdownRef.value.classList.add('scale');
+  } else {
+    countdownRef.value.classList.remove('scale');
+  }
+}
 </script>
 
 <template>
-  <div class="countdown" @click="redirectToTwitch">
+  <div ref="countdownRef" class="countdown" @click="redirectToTwitch" @mousemove="handleMouseMove">
     <h2>Próximo Capítulo en:</h2>
     <div class="time">{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</div>
   </div>
@@ -84,29 +101,16 @@ function redirectToTwitch() {
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.countdown:hover {
-  animation: pulse 1s infinite;
-  background: rgba(124, 7, 7, 1);
+.countdown.scale {
+  transform: scale(1.1);
 }
 
 .countdown h2 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 /* Media Queries for Responsiveness */
