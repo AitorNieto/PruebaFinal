@@ -1,27 +1,23 @@
 <template>
-  <div class="perfil-container">
-    <!-- Botón de flecha para volver a home -->
-    <button @click="$emit('navigate', 'home')" class="back-button">
-      ⬅️
-    </button>
-
+  <div class="perfil-container" :class="{ 'blurred': editingImage }">
+    <button @click="navigateHome" class="back-button">⬅️</button>
     <div class="perfil-card">
       <div class="perfil-header">
-        <div class="perfil-image-container">
-          <img :src="perfil.profileImageUrl" alt="Imagen de perfil" class="perfil-image" />
+        <div class="perfil-image-container" @click="openImageEditor">
+          <img :src="perfil.profileImageUrl || defaultImage" alt="Imagen de perfil" class="perfil-image" />
         </div>
-        <h2>{{ perfil.username }}</h2>
+        <h2>{{ perfil.username || 'Tu nombre aquí' }}</h2>
       </div>
 
       <form @submit.prevent="handleSubmit" class="perfil-form">
         <div class="form-group">
           <label for="nombre">Nombre</label>
-          <input v-model="perfil.username" type="text" id="nombre" placeholder="Escribe tu nombre" required />
+          <input v-model="perfil.username" type="text" id="nombre" required />
         </div>
 
         <div class="form-group">
           <label for="edad">Edad</label>
-          <input v-model.number="perfil.edad" type="number" id="edad" placeholder="Introduce tu edad" required min="0" />
+          <input v-model.number="perfil.edad" type="number" id="edad" required min="0" />
         </div>
 
         <div class="form-group">
@@ -34,82 +30,100 @@
         </div>
 
         <button type="submit">Guardar Perfil</button>
-        <br />
-        <br />
-        <button type="submit">Cerrar Sesion</button>
+        <br /><br />
+        <button type="button" @click="cerrarSesion">Cerrar Sesión</button>
       </form>
     </div>
-  </div>  
+  </div>
+
+  <div v-if="editingImage" class="modal-overlay">
+    <div class="modal">
+      <button @click="closeImageEditor" class="close-button">✖</button>
+      <h3>Cambiar Imagen de Perfil</h3>
+      <input v-model="tempImageUrl" type="url" placeholder="Introduce la URL de tu imagen" />
+      <button @click="updateProfileImage">Aceptar</button>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { getDatabase, ref as dbRef, get } from 'firebase/database';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getAuth, signOut } from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 
+const emit = defineEmits(['navigate', 'profileSaved']);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
-const realtimeDb = getDatabase(firebaseApp);
-
-const perfil = ref({
-  username: '',
-  email: '',
-  edad: '',
-  genero: '',
-  profileImageUrl: '',
-});
+const defaultImage = '/assets/avatar-default.png';
+const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '' });
+const editingImage = ref(false);
+const tempImageUrl = ref('');
 
 const fetchPerfil = async () => {
-  const user = auth.currentUser;
-  if (user) {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
     const userId = user.uid;
-
-    const docRef = doc(db, 'perfiles', userId);
+    const docRef = doc(db, 'Profiles', userId);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
-      Object.assign(perfil.value, docSnap.data());
+      perfil.value = docSnap.data();
     } else {
-      console.log("No such document!");
+      perfil.value.username = user.displayName || '';
+      perfil.value.profileImageUrl = user.photoURL || defaultImage;
     }
-
-    const imageRef = dbRef(realtimeDb, 'profileImages/' + userId);
-    const imageSnap = await get(imageRef);
-
-    if (imageSnap.exists()) {
-      perfil.value.profileImageUrl = imageSnap.val().profileImageUrl;
-    } else {
-      console.log("No such image!");
-    }
+  } catch (error) {
+    console.error('Error al recuperar el perfil:', error);
   }
 };
 
 const handleSubmit = async () => {
-  const user = auth.currentUser;
-  if (user) {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
     const userId = user.uid;
-
-    await updateDoc(doc(db, 'perfiles', userId), {
-      username: perfil.value.username,
-      edad: perfil.value.edad,
-      genero: perfil.value.genero,
-    });
-
-    await set(dbRef(realtimeDb, 'profileImages/' + userId), {
-      profileImageUrl: perfil.value.profileImageUrl
-    });
-
-    console.log('Perfil actualizado');
+    await setDoc(doc(db, 'Profiles', userId), perfil.value);
+    alert('Perfil actualizado correctamente.');
+    emit('profileSaved', true);
+  } catch (error) {
+    console.error('Error al actualizar el perfil:', error);
   }
+};
+
+const cerrarSesion = async () => {
+  try {
+    await signOut(auth);
+    emit('navigate', 'home');
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+  }
+};
+
+const navigateHome = () => {
+  emit('navigate', 'home');
+};
+
+const openImageEditor = () => {
+  tempImageUrl.value = perfil.value.profileImageUrl;
+  editingImage.value = true;
+};
+
+const closeImageEditor = () => {
+  editingImage.value = false;
+};
+
+const updateProfileImage = () => {
+  perfil.value.profileImageUrl = tempImageUrl.value;
+  closeImageEditor();
 };
 
 onMounted(fetchPerfil);
 </script>
 
+
 <style scoped>
-/* Fondo animado de dragones */
+/* Fondo animado */
 body {
   margin: 0;
   padding: 0;
@@ -120,19 +134,16 @@ body {
 }
 
 @keyframes dragon-fly {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -3000px 0;
-  }
+  0% { background-position: 0 0; }
+  100% { background-position: -3000px 0; }
 }
 
 .perfil-container {
   display: flex;
-  justify-content: center;  
-  align-items: center;
-  height: 100vh;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+  min-height: 100vh;
   font-family: 'Cinzel', serif;
   color: #fff;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -145,6 +156,7 @@ body {
   padding: 40px;
   width: 100%;
   max-width: 500px;
+  margin-top: 50px;
   box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 10;
@@ -163,25 +175,13 @@ body {
   overflow: hidden;
   border: 5px solid #881919;
   box-shadow: 0 0 15px #881919, 0 0 30px #881919;
+  cursor: pointer;
 }
 
 .perfil-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: float 5s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
 }
 
 h2 {
@@ -218,7 +218,7 @@ select {
   font-size: 1.1rem;
   border: none;
   border-radius: 10px;
-  background-color:#e7d8d8;
+  background-color: #e7d8d8;
   color: #fff;
   margin-bottom: 12px;
   transition: background-color 0.3s ease;
@@ -262,5 +262,74 @@ button:focus {
   font-size: 24px;
   cursor: pointer;
   color: #fff;
+}
+
+.blurred {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.modal {
+  background: #5e2020;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 15px #881919;
+}
+
+.modal h3 {
+  color: #dfb8b8;
+  margin-bottom: 15px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #e7d8d8;
+  color: black;
+}
+
+.modal button {
+  background-color: #881919;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.close-button:hover {
+  color: #dfb8b8;
+}
+.modal button:hover {
+  background-color: #a32b2b;
 }
 </style>
