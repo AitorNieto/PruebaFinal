@@ -7,14 +7,16 @@ const reviews = ref([
  comment: 'Este es un comentario de ejemplo.',
  likes: 0,
  liked: false,
- comments: []
+ comments: [],
+ newComment: ''
  },
  {
  title: 'Reseña 2',
  comment: 'Otro comentario de ejemplo.',
  likes: 0,
  liked: false,
- comments: []
+ comments: [],
+ newComment: ''
  }
 ]);
 
@@ -41,7 +43,7 @@ const toggleLike = (review) => {
  </button>
  <div class="comment-section">
  <input v-model="review.newComment" placeholder="Comentar" class="input" />
- <button @click="addComment(review, review.newComment); review.newComment = '';" class="button">Agregar Comentario</button>
+ <button @click="review.comments.push(review.newComment); review.newComment = '';" class="button">Agregar Comentario</button>
  <div v-for="(comment, idx) in review.comments" :key="idx" class="comment">
  <p>{{ comment }}</p>
  </div>
@@ -82,6 +84,7 @@ h1 {
  display: flex;
  align-items: center;
  justify-content: center;
+ transition: background-color 0.3s ease;
 }
 
 .button:hover {
