@@ -219,7 +219,7 @@ select {
   border: none;
   border-radius: 10px;
   background-color: #e7d8d8;
-  color: #fff;
+  color: #881919;
   margin-bottom: 12px;
   transition: background-color 0.3s ease;
   box-shadow: 0 0 15px #881919;
