@@ -31,6 +31,10 @@ function descargarPosts() {
 
 function changeSection(section) {
   currentSection.value = section;
+  const element = document.getElementById(section);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 onMounted(() => {
@@ -100,7 +104,7 @@ onMounted(() => {
     </div>
 
     <!-- Secciones de Navegación -->
-    <div class="dark-red-background" @click="changeSection('videos')">
+    <div id="podcast" class="dark-red-background" @click="changeSection('videos')">
       <h1 class="section-title">Ver Videos</h1>
       <div class="season season-1">Temporada 1</div>
       <div class="season season-2">Temporada 2</div>
@@ -108,11 +112,11 @@ onMounted(() => {
       <div class="season season-4">Temporada 4</div>
     </div>
 
-    <div class="large-red-background" @click="changeSection('foro')">
+    <div id="foro" class="large-red-background" @click="changeSection('foro')">
       <h1 class="section-title">Nuestro Foro</h1>
     </div>
 
-    <div class="large-dark-red-background" @click="changeSection('nosotros')">
+    <div id="sobre-nosotros" class="large-dark-red-background" @click="changeSection('nosotros')">
       <h1 class="section-title">Sobre Nosotros</h1>
     </div>
 
