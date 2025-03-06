@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
 import { collection, onSnapshot } from "firebase/firestore";
-import imageSrc from '@/assets/DYB.png';
+import imageSrc from '@/assets/DyBia.png';
 import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
 import Foro from './Foro.vue';
