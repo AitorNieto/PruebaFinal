@@ -1,13 +1,72 @@
 <script setup>
 import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { firebaseApp } from '../firebase';
 import defaultAvatar from '../assets/avatar-default.png';
 
+const props = defineProps({
+  currentView: {
+    type: String,
+    default: 'home'
+  }
+});
 const emit = defineEmits(['navigate']);
 const auth = useFirebaseAuth();
-
-const userName = ref("Usuario");
+const db = getFirestore(firebaseApp);
 const userPhoto = ref(defaultAvatar);
+const userName = ref("Usuario");
+
+// Función para escuchar cambios en el perfil
+const watchUserProfile = (userId) => {
+  if (!userId) return null;
+  
+  return onSnapshot(doc(db, 'Profiles', userId), (snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      userPhoto.value = data.profileImageUrl || defaultAvatar;
+      userName.value = data.username || "Usuario";
+    }
+  });
+};
+
+let profileUnsubscribe = null;
+
+const handleScroll = () => {
+  const menu = document.querySelector('.menu');
+  const scrollToTopButton = document.querySelector('.scroll-to-top');
+  const mainSection = document.querySelector('.background');
+  if (!mainSection) return;
+  const mainSectionBottom = mainSection.getBoundingClientRect().bottom;
+
+  if (mainSectionBottom <= 0) {
+    menu.classList.add('scrolled');
+    scrollToTopButton.classList.add('visible');
+  } else {
+    menu.classList.remove('scrolled');
+    scrollToTopButton.classList.remove('visible');
+  }
+};
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  if (auth.currentUser) {
+    profileUnsubscribe = watchUserProfile(auth.currentUser.uid);
+    // También asignamos una imagen por defecto si no hay otra disponible
+    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
+  }
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  if (profileUnsubscribe) {
+    profileUnsubscribe();
+  }
+});
 
 function navigate(section) {
   if (section === 'profile' && !auth.currentUser) {
@@ -40,41 +99,11 @@ function handleLogout() {
       alert("Hubo un problema al intentar cerrar sesión: " + error.message);
     });
 }
-
-const handleScroll = () => {
-  const menu = document.querySelector('.menu');
-  const scrollToTopButton = document.querySelector('.scroll-to-top');
-  const mainSection = document.querySelector('.background');
-  const mainSectionBottom = mainSection.getBoundingClientRect().bottom;
-
-  if (mainSectionBottom <= 0) {
-    menu.classList.add('scrolled');
-    scrollToTopButton.classList.add('visible');
-  } else {
-    menu.classList.remove('scrolled');
-    scrollToTopButton.classList.remove('visible');
-  }
-};
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  if (auth.currentUser) {
-    userName.value = auth.currentUser.displayName || "Usuario";
-    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
-  }
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
 </script>
 
 <template>
-  <div>
+  <!-- El menú solo se muestra si currentView NO es 'profile' -->
+  <div v-if="currentView !== 'profile'">
     <aside class="menu">
       <nav>
         <ul>
@@ -83,7 +112,7 @@ onUnmounted(() => {
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
           <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
           <li class="user-section">
-            <!-- Se envuelve el avatar en un enlace para hacerlo interactivo -->
+            <!-- Al hacer clic, se navega al perfil -->
             <a href="#" @click.prevent="navigate('profile')">
               <img :src="userPhoto" alt="Avatar" class="user-avatar" />
             </a>
@@ -96,6 +125,7 @@ onUnmounted(() => {
     </button>
   </div>
 </template>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
@@ -129,6 +159,7 @@ onUnmounted(() => {
   font-size: unset;
   background: none;
   -webkit-background-clip: unset;
+  background-clip: unset;
   -webkit-text-fill-color: unset;
   -webkit-text-stroke: 0;
   color: inherit;
@@ -191,6 +222,7 @@ onUnmounted(() => {
   -webkit-text-stroke: 1px #8b0000; /* Delineado granate rojo */
   background: white; /* Relleno blanco */
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -199,6 +231,7 @@ onUnmounted(() => {
   -webkit-text-stroke: none;
   background: none;
   -webkit-background-clip: none;
+  background-clip: none;
   -webkit-text-fill-color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 1.5rem; /* Tamaño de fuente más pequeño */

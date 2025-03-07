@@ -52,7 +52,7 @@ onMounted(() => {
       <Foro />
     </div>
 
-    <div v-if="currentSection !== 'prehome' && currentSection !== 'profile'&& currentSection !== 'login' && currentSection !== 'register'">
+    <div v-if="currentSection !== 'prehome' && currentSection !== 'profile'">
       <Menu @navigate="changeSection" />
     </div>
   </div>

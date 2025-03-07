@@ -49,16 +49,26 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, updateProfile, signOut } from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 
 const emit = defineEmits(['navigate', 'profileSaved']);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const defaultImage = '/assets/avatar-default.png';
+
 const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '' });
 const editingImage = ref(false);
 const tempImageUrl = ref('');
+
+// Función para subir una foto (si decides implementarla en el futuro)
+const onPhotoSelected = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    // Aquí podrías implementar la lógica de subida a Firebase Storage
+    // Ejemplo: perfil.value.profileImageUrl = URL.createObjectURL(file);
+  }
+};
 
 const fetchPerfil = async () => {
   try {
@@ -69,6 +79,7 @@ const fetchPerfil = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       perfil.value = docSnap.data();
+      localStorage.setItem('userProfileImage', perfil.value.profileImageUrl);
     } else {
       perfil.value.username = user.displayName || '';
       perfil.value.profileImageUrl = user.photoURL || defaultImage;
@@ -78,16 +89,39 @@ const fetchPerfil = async () => {
   }
 };
 
+const updateProfileImage = async () => {
+  try {
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    perfil.value.profileImageUrl = tempImageUrl.value;
+    
+    // Actualizamos en Firebase
+    await setDoc(doc(db, 'Profiles', user.uid), { ...perfil.value }, { merge: true });
+    
+    closeImageEditor();
+  } catch (error) {
+    console.error('Error al actualizar la imagen:', error);
+    alert('Error al actualizar la imagen');
+  }
+};
+
 const handleSubmit = async () => {
   try {
     const user = auth.currentUser;
     if (!user) return;
-    const userId = user.uid;
-    await setDoc(doc(db, 'Profiles', userId), perfil.value);
+    
+    const profileData = {
+      ...perfil.value,
+      lastUpdated: new Date().toISOString()
+    };
+
+    await setDoc(doc(db, 'Profiles', user.uid), profileData);
     alert('Perfil actualizado correctamente.');
     emit('profileSaved', true);
   } catch (error) {
     console.error('Error al actualizar el perfil:', error);
+    alert('Error al guardar el perfil');
   }
 };
 
@@ -113,14 +147,8 @@ const closeImageEditor = () => {
   editingImage.value = false;
 };
 
-const updateProfileImage = () => {
-  perfil.value.profileImageUrl = tempImageUrl.value;
-  closeImageEditor();
-};
-
 onMounted(fetchPerfil);
 </script>
-
 
 <style scoped>
 /* Fondo animado */
@@ -315,6 +343,7 @@ button:focus {
   margin: 5px;
   transition: background-color 0.3s ease;
 }
+
 .close-button {
   position: absolute;
   top: 10px;
@@ -329,6 +358,7 @@ button:focus {
 .close-button:hover {
   color: #dfb8b8;
 }
+
 .modal button:hover {
   background-color: #a32b2b;
 }
