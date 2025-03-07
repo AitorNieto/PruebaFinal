@@ -29,7 +29,7 @@
                 <img src="@/assets/Jimmy.png" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Jimmy</h2>
                   <p>Edad: 21</p>
@@ -47,7 +47,7 @@
                 <img src="@/assets/Lomas.png" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Daniel Lomas</h2>
                   <p>Edad: 21</p>
@@ -65,7 +65,7 @@
                 <img src="@/assets/Monzon.png" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/carta.png" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Monzón</h2>
                   <p>Edad: 22</p>
@@ -245,7 +245,7 @@ onMounted(() => {
 
 .card-info {
   z-index: 2;
-  color: black; /* Cambia el color del texto a negro */
+  color: #000; /* Cambia el color del texto a negro */
   text-align: center;
 }
 </style>
