@@ -21,6 +21,9 @@ const buenMensaje = ref('');
 
 const auth = useFirebaseAuth();
 
+const passwordFieldType = ref('password');
+const repeatPasswordFieldType = ref('password');
+
 function presioneAceptar() {
   errorMensaje.value = '';
   buenMensaje.value = '';
@@ -62,6 +65,14 @@ function registrarConGoogle() {
 function irALogin() {
   emit('cambiarALogin');
 }
+
+function togglePasswordVisibility() {
+  passwordFieldType.value = passwordFieldType.value === 'password' ? 'text' : 'password';
+}
+
+function toggleRepeatPasswordVisibility() {
+  repeatPasswordFieldType.value = repeatPasswordFieldType.value === 'password' ? 'text' : 'password';
+}
 </script>
 
 <template>
@@ -82,11 +93,13 @@ function irALogin() {
       </div>
       <div class="input-group">
         <i class="icon lock-icon"></i>
-        <input v-model="PasswordRe" type="password" placeholder="Contraseña" />
+        <input :type="passwordFieldType" v-model="PasswordRe" placeholder="Contraseña" />
+        <i class="icon eye-icon" @click="togglePasswordVisibility">{{ passwordFieldType === 'password' ? '👁️' : '🙈' }}</i>
       </div>
       <div class="input-group">
         <i class="icon lock-icon"></i>
-        <input v-model="RepetirPasswordRe" type="password" placeholder="Repetir Contraseña" />
+        <input :type="repeatPasswordFieldType" v-model="RepetirPasswordRe" placeholder="Repetir Contraseña" />
+        <i class="icon eye-icon" @click="toggleRepeatPasswordVisibility">{{ repeatPasswordFieldType === 'password' ? '👁️' : '🙈' }}</i>
       </div>
 
       <!-- Botón principal -->
@@ -200,6 +213,13 @@ function irALogin() {
   transform: translateY(-50%);
   font-size: 18px;
   color: rgba(0, 0, 0, 0.5);
+}
+
+/* Icono de ojo */
+.eye-icon {
+  right: 12px;
+  left: auto;
+  cursor: pointer;
 }
 
 /* Emojis */
