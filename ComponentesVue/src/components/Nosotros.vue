@@ -223,7 +223,7 @@ onMounted(() => {
 }
 
 .flip-card-back {
-  background-color: #d3d3d3; /* Fondo grisáceo */
+  background-color: transparent; /* Fondo transparente */
   color: black;
   transform: rotateY(180deg);
   display: flex;
@@ -245,7 +245,15 @@ onMounted(() => {
 
 .card-info {
   z-index: 2;
+  background-color: rgba(211, 211, 211, 0.4); /* Fondo grisáceo transparente */
   color: #000; /* Cambia el color del texto a negro */
   text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px; /* Bordes redondeados */
 }
 </style>
