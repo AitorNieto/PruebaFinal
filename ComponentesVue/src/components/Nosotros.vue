@@ -26,7 +26,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/imagen1.jpg" alt="Imagen 1" class="additional-image" />
+                <img src="@/assets/Jimmy.png" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/carta.png" alt="Carta" class="card-image" />
@@ -44,7 +44,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/imagen2.jpg" alt="Imagen 2" class="additional-image" />
+                <img src="@/assets/Lomas.png" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/carta.png" alt="Carta" class="card-image" />
@@ -62,7 +62,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/imagen3.jpg" alt="Imagen 3" class="additional-image" />
+                <img src="@/assets/Monzon.png" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/carta.png" alt="Carta" class="card-image" />
@@ -185,6 +185,7 @@ onMounted(() => {
   max-width: 300px; /* Ajusta el tamaño máximo de las imágenes */
   height: auto;
   display: block;
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 /* Estilos para la tarjeta de volteo */
@@ -213,6 +214,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 .flip-card-front {
