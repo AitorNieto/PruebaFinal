@@ -1,17 +1,14 @@
 <script setup>
 import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
+import defaultAvatar from '../assets/avatar-default.png';
 
 const emit = defineEmits(['navigate']);
 const auth = useFirebaseAuth();
 
-const defaultPhoto = "../assets/avatar-avatar.png";  // Foto de perfil por defecto
+const userName = ref("Usuario");
+const userPhoto = ref(defaultAvatar);
 
-const removeImage = () => {
-   photoURL.value = defaultPhoto;
-};
-
-// Función de navegación (ya está bien, no hace falta cambios aquí)
 function navigate(section) {
   if (section === 'profile' && !auth.currentUser) {
     alert('Debes estar autenticado para acceder al perfil. Redirigiendo al registro.');
@@ -26,7 +23,6 @@ function navigate(section) {
   }
 }
 
-// Función de logout (no requiere cambios)
 function handleLogout() {
   if (!auth || !auth.currentUser) {
     console.error("No estás conectado para cerrar sesión.");
@@ -45,7 +41,6 @@ function handleLogout() {
     });
 }
 
-// Función para detectar el scroll (no requiere cambios)
 const handleScroll = () => {
   const menu = document.querySelector('.menu');
   const scrollToTopButton = document.querySelector('.scroll-to-top');
@@ -66,12 +61,13 @@ const scrollToTop = () => {
 };
 
 onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
   if (auth.currentUser) {
-    userPhoto.value = auth.currentUser.photoURL || "../assets/avatar-avatar.png";
+    userName.value = auth.currentUser.displayName || "Usuario";
+    userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
   }
 });
 
-// Limpiar el evento al desmontar el componente
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
@@ -87,7 +83,7 @@ onUnmounted(() => {
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
           <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
           <li class="user-section">
-            <!-- Enlazamos la imagen para que sea interactiva -->
+            <!-- Se envuelve el avatar en un enlace para hacerlo interactivo -->
             <a href="#" @click.prevent="navigate('profile')">
               <img :src="userPhoto" alt="Avatar" class="user-avatar" />
             </a>
@@ -234,14 +230,12 @@ onUnmounted(() => {
   cursor: pointer;
   font-size: 2rem;
   display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .scroll-to-top.visible {
   display: block;
-  opacity: 1;
 }
 
 .scroll-to-top:hover {
@@ -255,15 +249,10 @@ onUnmounted(() => {
     flex-direction: column;
     gap: 20px;
   }
-  .menu ul li a {
-    font-size: 1.5rem; /* Tamaño más pequeño */
-  }
 
-  .user-avatar {
-    width: 30px;  /* Avatar más pequeño */
-    height: 30px;
+  .menu ul li a {
+    font-size: 2rem; /* Tamaño más pequeño */
   }
-}
 
   .menu.scrolled {
     transform: scale(1); /* No reducir el tamaño del menú */

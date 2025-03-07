@@ -121,8 +121,23 @@ const updateProfileImage = () => {
 onMounted(fetchPerfil);
 </script>
 
+
 <style scoped>
-/* Fondo animado de dragones */
+/* Fondo animado */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('https://example.com/dragon-background.gif') no-repeat center center fixed;
+  background-size: cover;
+  animation: dragon-fly 10s infinite linear;
+}
+
+@keyframes dragon-fly {
+  0% { background-position: 0 0; }
+  100% { background-position: -3000px 0; }
+}
+
 .perfil-container {
   display: flex;
   justify-content: center;
@@ -133,14 +148,6 @@ onMounted(fetchPerfil);
   color: #fff;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   position: relative;
-  background: url('https://www.wallpapertip.com/wmimgs/4-47465_dragon-gif-background-animated.gif') no-repeat center center fixed;
-  background-size: cover;
-  animation: dragon-fly 10s infinite linear;
-}
-
-@keyframes dragon-fly {
-  0% { background-position: 0 0; }
-  100% { background-position: -3000px 0; }
 }
 
 .perfil-card {
@@ -308,7 +315,6 @@ button:focus {
   margin: 5px;
   transition: background-color 0.3s ease;
 }
-
 .close-button {
   position: absolute;
   top: 10px;
@@ -323,7 +329,6 @@ button:focus {
 .close-button:hover {
   color: #dfb8b8;
 }
-
 .modal button:hover {
   background-color: #a32b2b;
 }
