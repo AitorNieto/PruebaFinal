@@ -47,7 +47,7 @@ onMounted(() => {
 
   // Detectar el desplazamiento y aplicar la clase de animación
   const novedadesTitle = document.querySelector('.novedades-title');
-  const videoSection = document.querySelector('.dark-red-background');
+  const videoSection = document.querySelector('.scroll-bg');
   const seasons = document.querySelectorAll('.season');
 
   window.addEventListener('scroll', () => {
@@ -104,7 +104,7 @@ onMounted(() => {
     </div>
 
     <!-- Secciones de Navegación -->
-    <div id="podcast" class="dark-red-background" @click="changeSection('videos')">
+    <div id="podcast" class="scroll-bg" @click="changeSection('videos')">
       <h1 class="section-title">Ver Videos</h1>
       <div class="season season-1">Temporada 1</div>
       <div class="season season-2">Temporada 2</div>
@@ -221,15 +221,28 @@ onMounted(() => {
   padding-bottom: 4rem; /* Añade más espacio debajo */
 }
 
-/* Nuevo fondo rojo oscuro */
-.dark-red-background {
+/* Fondo desplazable */
+.scroll-bg {
   width: 100%;
   height: 400px; /* Ajusta la altura según sea necesario */
-  background-color: rgba(100, 0, 0, 0.8); /* Fondo rojo oscuro */
+  background: url('@/assets/Videos.png') repeat-x, 
+              url('@/assets/Videos.png') repeat-x;
+  background-size: contain;
+  background-position: 0 0, 0 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative; /* Necesario para posicionar las temporadas */
+  animation: scrollBg 35s linear infinite;
+}
+
+@keyframes scrollBg {
+  from {
+    background-position: 0 0, 0 100%;
+  }
+  to {
+    background-position: 100% 0, 100% 100%;
+  }
 }
 
 /* Fondo para el div de "Nuestro Foro" */
