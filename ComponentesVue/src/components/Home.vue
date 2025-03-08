@@ -26,23 +26,64 @@ const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY; // Usa variables de entorn
 // Función para obtener el último video del canal
 const fetchLatestVideo = async () => {
   try {
-    loadingVideo.value = true; // Iniciamos carga
-    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        key: API_KEY,
-        channelId: CHANNEL_ID,
-        part: 'snippet',
-        order: 'date',
-        maxResults: 1,
-        type: 'video'
+    // Variables reactivas
+    const latestVideoId = ref('g7jLY3Z17uk'); // Video por defecto
+    const loadingVideo = ref(false);
+    const currentSection = ref('home');
+
+    // Configuración de la API de YouTube
+    const API_KEY = 'TU_API_KEY'; // Reemplaza con tu API key real
+    const CHANNEL_ID = 'UCWYxQaXnpQVzXaO1Yz4VyWQ';
+
+    // Función para obtener el último video
+    const fetchLatestVideo = async () => {
+      try {
+        // Si no hay API_KEY, usar video por defecto
+        if (!API_KEY || API_KEY === 'TU_API_KEY') {
+          console.log('Using default video');
+          return;
+        }
+
+        loadingVideo.value = true;
+        const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+          params: {
+            key: API_KEY,
+            channelId: CHANNEL_ID,
+            part: 'snippet',
+            order: 'date',
+            maxResults: 1,
+            type: 'video'
+          }
+        });
+
+        if (response.data.items && response.data.items.length > 0) {
+          latestVideoId.value = response.data.items[0].id.videoId;
+        }
+      } catch (error) {
+        console.error('Error obteniendo el último video:', error);
+        // Mantener el video por defecto en caso de error
+      } finally {
+        loadingVideo.value = false;
+      }
+    };
+
+    // Manejo del montaje del componente
+    onMounted(() => {
+      try {
+        fetchLatestVideo();
+      } catch (error) {
+        console.error('Error en mounted:', error);
       }
     });
 
-    if (response.data.items && response.data.items.length > 0) {
-      latestVideoId.value = response.data.items[0].id.videoId;
-    } else {
-      latestVideoId.value = 'Hs2FQvz-Qn4'; // Video de respaldo
-    }
+    // Función para cambiar sección
+    const changeSection = (section) => {
+      currentSection.value = section;
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
   } catch (error) {
     console.error('Error obteniendo el último video:', error.response?.data || error.message);
     latestVideoId.value = 'Hs2FQvz-Qn4'; // Video de respaldo si falla la API
@@ -51,18 +92,14 @@ const fetchLatestVideo = async () => {
   }
 };
 
-// Llamar a la API al montar el componente
 onMounted(async () => {
   await fetchLatestVideo();
-
-  // Refrescar el video cada 10 minutos (600,000 ms)
-  setInterval(fetchLatestVideo, 600000);
-
-  // Mostrar alerta de cookies después de 3 segundos
+  // Inicia el setInterval después de 3000 milisegundos
   setTimeout(() => {
-    showCookieAlert.value = true;
+    setInterval(fetchLatestVideo, 1800000);
   }, 3000);
 });
+
 onMounted(() => {
   AOS.init({
     duration: 1000,
