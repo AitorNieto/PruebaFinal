@@ -246,7 +246,7 @@ onMounted(() => {
 .card-info {
   z-index: 2;
   background-color: rgba(211, 211, 211, 0.4); /* Fondo grisáceo transparente */
-  color: #000; /* Cambia el color del texto a negro */
+  color: #800000; /* Cambia el color del texto a rojo-granate */
   text-align: center;
   width: 100%;
   height: 100%;
@@ -255,5 +255,6 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   border-radius: 10px; /* Bordes redondeados */
+  font-weight: bold; /* Hace el texto en negrita */
 }
 </style>

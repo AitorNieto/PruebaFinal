@@ -112,8 +112,10 @@ onMounted(() => {
       <div class="season season-4">Temporada 4</div>
     </div>
 
-    <div id="foro" class="large-red-background" @click="changeSection('foro')">
-      <h1 class="section-title">Nuestro Foro</h1>
+    <div id="foro" class="large-red-background foro-background" @click="changeSection('foro')">
+      <div class="foro-content">
+        <h1 class="section-title">Nuestro Foro</h1>
+      </div>
     </div>
 
     <div id="sobre-nosotros" class="large-dark-red-background" @click="changeSection('nosotros')">
@@ -228,6 +230,27 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative; /* Necesario para posicionar las temporadas */
+}
+
+/* Fondo para el div de "Nuestro Foro" */
+.foro-background {
+  background: url('@/assets/Foro.webp') no-repeat center bottom;
+  background-size: cover;
+  display: flex;
+  align-items: flex-end; /* Alinea el contenido al final del div */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  position: relative; /* Necesario para posicionar el contenedor blanco */
+}
+
+/* Contenedor blanco para el texto "Nuestro Foro" */
+.foro-content {
+  background-color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  margin-bottom: 0; /* Espacio desde el fondo del div */
+  text-align: center;
+  position: absolute;
+  bottom: 10px; /* Ajusta este valor para mover el contenedor más arriba o abajo */
 }
 
 /* Temporadas */
