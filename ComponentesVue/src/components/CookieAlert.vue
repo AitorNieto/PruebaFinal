@@ -17,7 +17,10 @@ const auth = useFirebaseAuth();
 
 async function checkCookieConsent() {
   if (!auth.currentUser) {
-    console.error('No hay usuario autenticado');
+    const localConsent = localStorage.getItem('cookieConsent');
+    if (localConsent) {
+      visible.value = false;
+    }
     return;
   }
 
@@ -34,7 +37,9 @@ async function checkCookieConsent() {
 
 async function acceptCookies() {
   if (!auth.currentUser) {
-    console.error('No hay usuario autenticado');
+    localStorage.setItem('cookieConsent', 'accepted');
+    console.log("Cookies aceptadas (sin autenticación)");
+    visible.value = false;
     return;
   }
 
@@ -46,7 +51,9 @@ async function acceptCookies() {
 
 async function declineCookies() {
   if (!auth.currentUser) {
-    console.error('No hay usuario autenticado');
+    localStorage.setItem('cookieConsent', 'declined');
+    console.log("Cookies rechazadas (sin autenticación)");
+    visible.value = false;
     return;
   }
 
