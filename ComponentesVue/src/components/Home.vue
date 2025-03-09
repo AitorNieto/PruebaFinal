@@ -184,7 +184,7 @@ const changeSection = (section) => {
       <footer class="site-footer">
         <div class="footer-content">
           <div class="footer-social">
-            <h3 class="footer-title">Conéctate con Nosotros</h3>
+            <h3 class="footer-title">Siguenos en nuestras Redes!</h3>
             <div class="social-links">
               <a href="https://youtube.com/@DeliriosyBarbaries" target="_blank" class="social-link youtube">
                 <i class="fab fa-youtube"></i>
@@ -202,10 +202,6 @@ const changeSection = (section) => {
                 <i class="fab fa-tiktok"></i>
               </a>
             </div>
-          </div>
-          <div class="footer-info">
-            <h3 class="footer-title">Delirios y Barbaries</h3>
-            <p>Tu dosis semanal de terror y misterio.</p>
           </div>
         </div>
         <div class="footer-bottom">
