@@ -6,6 +6,8 @@ import Nosotros from './Nosotros.vue';
 import Foro from './Foro.vue';
 import Videos from './Videos.vue'; // ¡Importa tu componente Videos!
 import CookieAlert from './CookieAlert.vue';
+import StarBackground from './StarBackground.vue';
+
 import axios from 'axios';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -114,12 +116,62 @@ const changeSection = (section) => {
   if (element) {
     element.scrollIntoView({ behavior: 'smooth' });
   }
+}
+
+onMounted(() => {
+  descargarPosts();
+
+  // Mostrar alerta de cookies después de un breve retraso
+  setTimeout(() => {
+    showCookieAlert.value = true;
+  }, 3000); // 3 segundos de retraso
+
+  // Detectar el desplazamiento y aplicar la clase de animación
+  const novedadesTitle = document.querySelector('.novedades-title');
+  const videoSection = document.querySelector('.scroll-bg');
+  const seasons = document.querySelectorAll('.season');
+
+  window.addEventListener('scroll', () => {
+    if (novedadesTitle) {
+      const rect = novedadesTitle.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        novedadesTitle.classList.add('slide-in');
+      }
+    }
+
+    if (videoSection) {
+      const rect = videoSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        seasons.forEach(season => {
+          season.classList.add('bounce-in');
+          season.addEventListener('animationend', () => {
+            season.classList.remove('bounce-in');
+            season.classList.add('spin');
+          }, { once: true });
+        });
+      }
+    }
+  });
+});
+</script>
+
+<template>
+  <StarBackground />
+  <div v-if="currentSection === 'home'">
+    <div class="background">
+      <div class="animated-bg"></div>
+      <h1 class="title">DELIRIOS Y BARBARIES</h1>
+      <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+      <Countdown class="countdown-container" />
+    </div>
+=======
 };
 </script>
 
 <template>
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
+    <div class="background">
       <div class="background">
         <h1 class="title">DELIRIOS Y BARBARIES</h1>
         <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
@@ -163,7 +215,23 @@ const changeSection = (section) => {
           </div>
         </div>
       </div>
+    <!-- Secciones de Navegación -->
+    <div id="podcast" class="scroll-bg" @click="changeSection('videos')">
+      <h1 class="section-title">Ver Videos</h1>
+      <div class="season season-1">Temporada 1</div>
+      <div class="season season-2">Temporada 2</div>
+      <div class="season season-3">Temporada 3</div>
+      <div class="season season-4">Temporada 4</div>
+    </div>
 
+    <div id="foro" class="large-red-background foro-background" @click="changeSection('foro')">
+      <div class="foro-content">
+        <h1 class="section-title">Nuestro Foro</h1>
+      </div>
+    </div>
+
+    <!-- Componente Nosotros -->
+    <Nosotros />
       <!-- Otras secciones -->
       <div id="podcast" class="dark-red-background" @click="changeSection('videos')">
         <h1 class="section-title">Ver Videos</h1>
@@ -253,10 +321,6 @@ const changeSection = (section) => {
     ),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Título principal */
@@ -267,6 +331,7 @@ const changeSection = (section) => {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Cinzel', serif; /* Fuente estilizada */
   animation: delirio 3s infinite;
+  z-index: 1; /* Asegura que el título esté por encima del fondo animado */
 }
 
 @keyframes delirio {
@@ -287,6 +352,7 @@ const changeSection = (section) => {
   height: auto;
   border-radius: 20px; /* Bordes redondeados */ 
   transition: transform 0.3s ease; /* Transiciones suaves */
+  z-index: 1; /* Asegura que la imagen esté por encima del fondo animado */
 }
 
 .welcome-image:hover {
@@ -296,9 +362,10 @@ const changeSection = (section) => {
 /* Countdown (posición absoluta) */
 .countdown-container {
   position: absolute;
-  top: 20%; /* Ajusta este valor para mover el contador más arriba */
+  top: 10%; /* Ajusta este valor para mover el contador más arriba */
   left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
   transform: translateY(-50%);
+  z-index: 1; /* Asegura que el contador esté por encima del fondo animado */
 }
 /* Actualización de la sección de novedades */
 .red-background {
@@ -546,14 +613,55 @@ const changeSection = (section) => {
 }
 /* ... estilos existentes hasta dark-red-background ... */
 
+/* Fondo desplazable */
+.scroll-bg {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según sea necesario */
+  background: url('@/assets/Videos.png') repeat-x, 
+              url('@/assets/Videos.png') repeat-x;
+  background-size: contain;
+  background-position: 0 0, 0 100%;
 .dark-red-background {
   width: 100%;
   height: 400px;
   background: linear-gradient(135deg, rgba(100, 0, 0, 0.95), rgba(60, 0, 0, 0.95));
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative; /* Necesario para posicionar las temporadas */
+  animation: scrollBg 35s linear infinite;
+}
+
+@keyframes scrollBg {
+  from {
+    background-position: 0 0, 0 100%;
+  }
+  to {
+    background-position: 100% 0, 100% 100%;
+  }
+}
+
+/* Fondo para el div de "Nuestro Foro" */
+.foro-background {
+  background: url('@/assets/Foro.webp') no-repeat center bottom;
+  background-size: cover;
+  display: flex;
+  align-items: flex-end; /* Alinea el contenido al final del div */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  position: relative; /* Necesario para posicionar el contenedor blanco */
+}
+
+/* Contenedor blanco para el texto "Nuestro Foro" */
+.foro-content {
+  background-color: white;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  margin-bottom: 0; /* Espacio desde el fondo del div */
+  text-align: center;
+  position: absolute;
+  bottom: 10px; /* Ajusta este valor para mover el contenedor más arriba o abajo */
   position: relative;
   overflow: hidden;
   cursor: pointer;

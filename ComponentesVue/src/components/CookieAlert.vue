@@ -7,19 +7,65 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useFirestore, useFirebaseAuth } from 'vuefire';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const visible = ref(true);
+const db = useFirestore();
+const auth = useFirebaseAuth();
 
-function acceptCookies() {
+async function checkCookieConsent() {
+  if (!auth.currentUser) {
+    const localConsent = localStorage.getItem('cookieConsent');
+    if (localConsent) {
+      visible.value = false;
+    }
+    return;
+  }
+
+  const docRef = doc(db, `Profiles/${auth.currentUser.uid}/Settings/CookieConsent`);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    if (data.cookiesAccepted) {
+      visible.value = false;
+    }
+  }
+}
+
+async function acceptCookies() {
+  if (!auth.currentUser) {
+    localStorage.setItem('cookieConsent', 'accepted');
+    console.log("Cookies aceptadas (sin autenticación)");
+    visible.value = false;
+    return;
+  }
+
+  const docRef = doc(db, `Profiles/${auth.currentUser.uid}/Settings/CookieConsent`);
+  await setDoc(docRef, { cookiesAccepted: true }, { merge: true });
   console.log("Cookies aceptadas");
   visible.value = false;
 }
 
-function declineCookies() {
+async function declineCookies() {
+  if (!auth.currentUser) {
+    localStorage.setItem('cookieConsent', 'declined');
+    console.log("Cookies rechazadas (sin autenticación)");
+    visible.value = false;
+    return;
+  }
+
+  const docRef = doc(db, `Profiles/${auth.currentUser.uid}/Settings/CookieConsent`);
+  await setDoc(docRef, { cookiesAccepted: false }, { merge: true });
   console.log("Cookies rechazadas");
   visible.value = false;
 }
+
+onMounted(() => {
+  checkCookieConsent();
+});
 </script>
 
 <style scoped>
