@@ -7,6 +7,7 @@ import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
 import Foro from './Foro.vue';
 import CookieAlert from './CookieAlert.vue';
+import StarBackground from './StarBackground.vue';
 
 const Posts = ref([]);
 const db = useFirestore();
@@ -75,6 +76,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <StarBackground />
   <div v-if="currentSection === 'home'">
     <div class="background">
       <div class="animated-bg"></div>
