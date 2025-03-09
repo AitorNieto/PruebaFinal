@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useFirestore } from 'vuefire';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import twitchLogo from '@/assets/Twitch.png';
 
 const db = useFirestore();
 const targetDate = ref(new Date());
@@ -12,7 +13,7 @@ function getNextTargetDate() {
   const dayOfWeek = nextTarget.getDay();
   const daysUntilSunday = (7 - dayOfWeek) % 7;
   nextTarget.setDate(nextTarget.getDate() + daysUntilSunday);
-  nextTarget.setHours(20, 0, 0, 0); // Set to 8:00 PM
+  nextTarget.setHours(20, 0, 0, 0); // 8:00 PM
   return nextTarget;
 }
 
@@ -39,8 +40,7 @@ function updateCountdown() {
 
   if (timeDifference <= 0) {
     targetDate.value = getNextTargetDate();
-    const targetDateDoc = doc(db, 'countdown', 'targetDate');
-    setDoc(targetDateDoc, { date: targetDate.value.toISOString() });
+    setDoc(doc(db, 'countdown', 'targetDate'), { date: targetDate.value.toISOString() });
     updateCountdown();
     return;
   }
@@ -65,62 +65,83 @@ onUnmounted(() => {
 function redirectToTwitch() {
   window.open('https://www.twitch.tv/deliriosybarbaries', '_blank');
 }
-
-const countdownRef = ref(null);
-
-function handleMouseMove(event) {
-  const rect = countdownRef.value.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
-  const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-
-  if (distance < rect.width / 4) {
-    countdownRef.value.classList.add('scale');
-  } else {
-    countdownRef.value.classList.remove('scale');
-  }
-}
 </script>
 
 <template>
-  <div ref="countdownRef" class="countdown" @click="redirectToTwitch" @mousemove="handleMouseMove">
-    <h2>Próximo Capítulo en:</h2>
-    <div class="time">{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</div>
+  <div class="countdown-container" @click="redirectToTwitch">
+    <div class="logo-container">
+      <img :src="twitchLogo" alt="Twitch Logo" class="twitch-logo" />
+    </div>
+    <div class="countdown-box">
+      <h2>Próximo capítulo en:</h2>
+      <div class="time">{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.countdown {
-  background: rgba(124, 7, 7, 0.8);
-  padding: 10px 20px;
-  border-radius: 10px;
-  color: white;
+.countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.logo-container {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: -30px;
+  position: relative;
+  z-index: 2;
+}
+
+.twitch-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.countdown-box {
+  background: #8f10d8;
+  padding: 25px 30px;
+  border-radius: 15px;
+  margin-top: 11px;
+  color: rgb(251, 251, 251);
   font-size: 1.5rem;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s ease-in-out;
 }
 
-.countdown.scale {
-  transform: scale(1.1);
+.countdown-container:hover .countdown-box {
+  transform: scale(1.02);
 }
 
-.countdown h2 {
+.countdown-box h2 {
   font-size: 1.2rem;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-  .countdown {
-    font-size: 1rem;
-    padding: 5px 10px;
-  }
+.time {
+  font-size: 1.5rem;
+}
 
-  .countdown h2 {
+@media (max-width: 768px) {
+  .countdown-box {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+  .countdown-box h2 {
     font-size: 1rem;
   }
 }

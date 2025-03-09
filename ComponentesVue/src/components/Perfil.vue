@@ -385,15 +385,32 @@ input, select {
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(94, 32, 32, 0.95);
   color: #ffffff;
   font-size: 1rem;
   transition: all 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 12px) center;
+  padding-right: 35px;
 }
-input:focus, select:focus {
-  background: rgba(255, 255, 255, 0.15);
+
+select:focus {
+  background-color: rgba(124, 7, 7, 0.95);
   border-color: #881919;
   outline: none;
+}
+
+select option {
+  background: rgba(94, 32, 32, 0.95);
+  color: #ffffff;
+  padding: 12px;
+}
+
+select:hover {
+  background-color: rgba(124, 7, 7, 0.95);
 }
 .save-button, .logout-button {
   width: 100%;
