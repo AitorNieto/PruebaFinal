@@ -1,15 +1,15 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
-import { collection, onSnapshot } from "firebase/firestore";
-import imageSrc from '@/assets/DyBia.png';
 import Countdown from './Countdown.vue';
 import Nosotros from './Nosotros.vue';
 import Foro from './Foro.vue';
+import Videos from './Videos.vue'; // ¡Importa tu componente Videos!
 import CookieAlert from './CookieAlert.vue';
 import axios from 'axios';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import imageSrc from '@/assets/DyBia.png';
 
 const Posts = ref([]);
 const db = useFirestore();
@@ -17,7 +17,7 @@ const auth = useFirebaseAuth();
 const currentSection = ref('home');
 const showCookieAlert = ref(false);
 const latestVideoId = ref('');
-const loadingVideo = ref(true); // Para manejar el estado de carga del video
+const loadingVideo = ref(true);
 
 // API de YouTube
 const CHANNEL_ID = 'UCWYxQaXnpQVzXaO1Yz4VyWQ';
@@ -212,8 +212,14 @@ const changeSection = (section) => {
           <p>&copy; 2025 Delirios y Barbaries. Todos los derechos reservados.</p>
         </div>
       </footer>
+      
     </div>
     
+
+      <!-- Nuevo bloque para Videos -->
+      <div v-else-if="currentSection === 'videos'">
+      <Videos @navigate="changeSection" />
+    </div>
 
     <div v-else-if="currentSection === 'foro'">
       <Foro @navigate="changeSection" />
@@ -298,82 +304,231 @@ const changeSection = (section) => {
   left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
   transform: translateY(-50%);
 }
-
-/* Nuevo fondo rojo */
+/* Actualización de la sección de novedades */
 .red-background {
   width: 100%;
-  background: linear-gradient(135deg, rgba(124, 7, 7, 0.97), rgba(80, 0, 0, 0.97));
-  padding: 6rem 1rem;
+  background: 
+    linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(80, 0, 0, 0.95)),
+    url('https://i.imgur.com/ZVdGx0F.jpg') center/cover;
+  padding: 3rem 1rem; /* Reducido */
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    inset 0 0 100px rgba(0, 0, 0, 0.8),
+    inset 0 0 300px rgba(136, 0, 0, 0.4);
 }
-
-.particles {
-  position: absolute;
-  top: 0;
-  left: 0;
+.ultimo-video {
   width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-  animation: particleFloat 20s infinite linear;
-}
-
-.novedades-container {
-  max-width: 1400px;
+  max-width: 800px; /* Reducido de 1200px */
   margin: 0 auto;
-  padding: 2rem;
-  position: relative;
-  z-index: 1;
+  padding: 2rem; /* Reducido */
+  background: rgba(20, 0, 0, 0.8);
+  border-radius: 40px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 
+    0 0 70px rgba(0, 0, 0, 0.5),
+    inset 0 0 50px rgba(255, 215, 0, 0.05);
+  transform: perspective(1000px) rotateX(5deg);
 }
-
-.novedades-title {
-  font-size: 5rem;
+.episode-title {
+  font-size: 2.5rem; /* Reducido de 3.2rem */
   color: #ffd700;
   text-align: center;
-  margin-bottom: 3rem;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 1rem;
+  text-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.2);
+  animation: episodePulse 4s infinite;
+}
+.video-wrapper {
+  max-width: 700px; /* Añadido para limitar el ancho */
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .ultimo-video {
+    padding: 1.5rem;
+    max-width: 95%;
+  }
+  
+  .episode-title {
+    font-size: 2rem;
+  }
+}
+.novedades-title {
+  font-size: 3.5rem; /* Reducido de 5.5rem */
+  margin-bottom: 1rem;
+}
+/* Media queries actualizados */
+@media (max-width: 768px) {
+  .red-background {
+    padding: 2rem 1rem;
+  }
+  .novedades-title {
+    font-size: 2.5rem;
+  }
+  .episode-title {
+    font-size: 1.8rem;
+  }
+  .ultimo-video {
+    padding: 1rem;
+    max-width: 95%;
+  }
+}
+.novedades-title {
+  font-size: 5.5rem;
+  color: #ffd700;
+  text-align: center;
   font-family: 'Cinzel', serif;
   text-shadow: 
     0 0 10px rgba(255, 215, 0, 0.5),
     0 0 20px rgba(255, 215, 0, 0.3),
-    0 0 30px rgba(255, 215, 0, 0.2);
-  position: relative;
-  animation: titleGlow 3s infinite;
+    0 0 30px rgba(255, 215, 0, 0.2),
+    0 0 40px rgba(255, 0, 0, 0.1);
+  animation: titleFloat 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateZ(0px); }
+  50% { transform: translateZ(50px); }
 }
 .ultimo-video {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 30px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 0, 0.1);
+  padding: 3rem;
+  background: rgba(20, 0, 0, 0.8);
+  border-radius: 40px;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 215, 0, 0.2);
   box-shadow: 
-    0 0 50px rgba(0, 0, 0, 0.3),
-    inset 0 0 30px rgba(255, 215, 0, 0.05);
+    0 0 70px rgba(0, 0, 0, 0.5),
+    inset 0 0 50px rgba(255, 215, 0, 0.05);
+  transform: perspective(1000px) rotateX(5deg);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.video-wrapper {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
+
+.ultimo-video:hover {
+  transform: perspective(1000px) rotateX(0deg) translateY(-10px);
+  box-shadow: 
+    0 0 100px rgba(0, 0, 0, 0.7),
+    inset 0 0 70px rgba(255, 215, 0, 0.1);
+}
+
+.episode-header {
+  margin-bottom: 3rem;
   position: relative;
-  border-radius: 20px;
-  padding: 4px;
-  background: linear-gradient(45deg, #ffd700, #ff4500);
-  box-shadow: 0 0 30px rgba(136, 25, 25, 0.5);
 }
+
+.episode-title {
+  font-size: 3.2rem;
+  color: #ffd700;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 1rem;
+  text-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.2);
+  animation: episodePulse 4s infinite;
+}
+
+@keyframes episodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.episode-underline {
+  width: 200px;
+  height: 3px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  position: relative;
+  animation: underlinePulse 3s infinite;
+}
+
+@keyframes underlinePulse {
+  0%, 100% { opacity: 0.5; width: 200px; }
+  50% { opacity: 1; width: 250px; }
+}
+
+.video-wrapper {
+  position: relative;
+  border: 3px solid rgba(255, 215, 0, 0.3);
+  border-radius: 25px;
+  padding: 5px;
+  background: linear-gradient(45deg, #ffd700, #ff4500);
+  box-shadow: 
+    0 0 40px rgba(136, 25, 25, 0.6),
+    inset 0 0 30px rgba(255, 215, 0, 0.3);
+  animation: borderGlow 4s infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 40px rgba(136, 25, 25, 0.6),
+      inset 0 0 30px rgba(255, 215, 0, 0.3);
+    border-color: rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 60px rgba(136, 25, 25, 0.8),
+      inset 0 0 50px rgba(255, 215, 0, 0.5);
+    border-color: rgba(255, 215, 0, 0.5);
+  }
+}
+
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
   width: 100%;
   height: 0;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 20px;
   background: #000;
+  transform: translateZ(0);
 }
+
+.video-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ffd700, #ff4500, #ffd700);
+  z-index: -1;
+  animation: borderRotate 6s linear infinite;
+  border-radius: 22px;
+}
+
+@keyframes borderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Media queries actualizados */
+@media (max-width: 768px) {
+  .novedades-title {
+    font-size: 3.5rem;
+  }
+  
+  .episode-title {
+    font-size: 2.5rem;
+  }
+  
+  .ultimo-video {
+    padding: 1.5rem;
+  }
+  
+  .title-decoration {
+    width: 150px;
+  }
+}
+
 .video-container iframe {
   position: absolute;
   top: 0;
