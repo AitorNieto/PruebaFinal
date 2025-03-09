@@ -305,7 +305,7 @@ const changeSection = (section) => {
   width: 100%;
   background: 
     linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(80, 0, 0, 0.95)),
-    url('https://i.imgur.com/ZVdGx0F.jpg') center/cover;
+    url('https://imgur.com/gallery/wallpaper-years-rO3XClp#/t/wallpaper') center/cover;
   padding: 3rem 1rem; /* Reducido */
   position: relative;
   overflow: hidden;
