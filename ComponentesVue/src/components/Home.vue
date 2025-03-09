@@ -77,6 +77,7 @@ onMounted(() => {
 <template>
   <div v-if="currentSection === 'home'">
     <div class="background">
+      <div class="animated-bg"></div>
       <h1 class="title">DELIRIOS Y BARBARIES</h1>
       <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
       <Countdown class="countdown-container" />
@@ -118,9 +119,8 @@ onMounted(() => {
       </div>
     </div>
 
-    <div id="sobre-nosotros" class="large-dark-red-background" @click="changeSection('nosotros')">
-      <h1 class="section-title">Sobre Nosotros</h1>
-    </div>
+    <!-- Componente Nosotros -->
+    <Nosotros />
 
     <!-- Barra de desplazamiento -->
     <div class="scrolling-bar">
@@ -165,10 +165,6 @@ onMounted(() => {
     ),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Título principal */
@@ -179,6 +175,7 @@ onMounted(() => {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Cinzel', serif; /* Fuente estilizada */
   animation: delirio 3s infinite;
+  z-index: 1; /* Asegura que el título esté por encima del fondo animado */
 }
 
 @keyframes delirio {
@@ -199,6 +196,7 @@ onMounted(() => {
   height: auto;
   border-radius: 20px; /* Bordes redondeados */ 
   transition: transform 0.3s ease; /* Transiciones suaves */
+  z-index: 1; /* Asegura que la imagen esté por encima del fondo animado */
 }
 
 .welcome-image:hover {
@@ -208,9 +206,10 @@ onMounted(() => {
 /* Countdown (posición absoluta) */
 .countdown-container {
   position: absolute;
-  top: 20%; /* Ajusta este valor para mover el contador más arriba */
+  top: 10%; /* Ajusta este valor para mover el contador más arriba */
   left: 40px; /* Ajusta este valor para mover el contador más a la derecha */
   transform: translateY(-50%);
+  z-index: 1; /* Asegura que el contador esté por encima del fondo animado */
 }
 
 /* Nuevo fondo rojo */

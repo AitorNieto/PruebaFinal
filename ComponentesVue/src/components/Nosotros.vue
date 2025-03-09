@@ -1,9 +1,6 @@
 <template>
   <div>
     <!-- Imagen del título fija en la parte superior -->
-    <div class="title-container">
-      <img :src="fotoTitulo" alt="Título" class="title-image" />
-    </div>
 
     <!-- Contenido debajo del título -->
     <div class="content" ref="content">
