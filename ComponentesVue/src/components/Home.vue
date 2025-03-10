@@ -505,11 +505,6 @@ onMounted(async () => {
   transition: opacity 0.5s, transform 1s;
 }
 
-.season-1 { top: 40px; left: 40px; }
-.season-2 { top: 40px; right: 40px; }
-.season-3 { bottom: 40px; left: 40px; }
-.season-4 { bottom: 40px; right: 40px; }
-
 .season.bounce-in {
   opacity: 1;
   animation: bounce-in 1s ease-out;
@@ -553,16 +548,24 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.section-title {
-  font-size: 3.5rem;
-  color: #ffd700;
-  font-family: 'Cinzel', serif;
-  text-align: center;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 10px rgba(255,215,0,0.5),
-               0 0 20px rgba(255,215,0,0.3);
+.section-title {  /* Reemplaza la clase con la que ya tenga el botón */
+  background-color: #ffffff; /* Fondo claro para mayor contraste */
+  color: #800000; /* Texto en rojo oscuro */
+  border: 2px solid #800000; /* Borde para resaltar */
+  padding: 10px 20px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  font-size: 1.2rem;
+  border-radius: 8px;
   transition: all 0.3s ease;
 }
+.section-title:hover {  background-color: #800000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
 
 .scrolling-bar {
   position: fixed;
