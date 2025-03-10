@@ -36,7 +36,7 @@
   }
   
   .star {
-    $star-count: 50;
+    $star-count: 3;
     --star-color: #ffd700;
     --star-tail-length: 6em;
     --star-tail-height: 2px;
@@ -65,7 +65,7 @@
         --star-tail-length: #{random_range(500em, 750em) / 100};
         --top-offset: #{random_range(0vh, 10000vh) / 100};
         --fall-duration: #{random_range(6000, 12000s) / 1000};
-        --fall-delay: #{random_range(0, 10000s) / 1000};
+        --fall-delay: #{random_range(0, 0.00001s) / 1000};
       }
     }
   
@@ -79,7 +79,7 @@
       height: 100%;
       background: linear-gradient(45deg, transparent, currentColor, transparent);
       border-radius: inherit;
-      animation: blink 2s linear infinite;
+      animation: blink 9s linear infinite;
     }
   
     &::before {
