@@ -1,7 +1,7 @@
 // firebase.js
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
@@ -20,3 +20,25 @@ export const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
 export const realtimeDb = getDatabase(firebaseApp);
+
+const createUser = async (email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Establecer la suscripción básica por defecto
+    await setDoc(doc(db, 'Profiles', user.uid), {
+      subscription: 'basic',
+      username: user.displayName || '',
+      profileImageUrl: user.photoURL || '',
+      email: user.email,
+      createdAt: new Date().toISOString()
+    });
+
+    console.log('Usuario creado y suscripción básica establecida');
+  } catch (error) {
+    console.error('Error al crear el usuario:', error);
+  }
+};
+
+export { createUser };

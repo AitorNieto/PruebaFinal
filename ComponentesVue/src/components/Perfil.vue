@@ -63,11 +63,8 @@
             </select>
           </div>
 
-          <button @click="navigateToSubscription('Premium')" class="upgrade-button premium-button">
-            Mejorar a Premium👑
-          </button>
-          <button @click="navigateToSubscription('VIP')" class="upgrade-button vip-button">
-            Mejorar a Vip💎
+          <button @click="navigateToSubscription" class="upgrade-button">
+            Mejorar
           </button>
 
           <button type="submit" class="save-button">
@@ -85,37 +82,7 @@
   </div>
 
   <div v-else>
-    <v-container>
-      <v-card class="pa-4">
-        <v-card-title>Elige tu suscripción</v-card-title>
-        <v-card-text>
-          <v-radio-group v-model="seleccion" column>
-            <v-radio
-              v-for="plan in planes"
-              :key="plan.nombre"
-              :label="plan.nombre"
-              :value="plan.nombre"
-            />
-          </v-radio-group>
-
-          <v-divider class="my-4"></v-divider>
-
-          <v-card class="pa-3" color="blue-lighten-5">
-            <v-card-title>{{ seleccion }}</v-card-title>
-            <v-card-subtitle>
-              {{ planes.find(plan => plan.nombre === seleccion).precio }}
-            </v-card-subtitle>
-            <v-card-text>
-              <ul>
-                <li v-for="beneficio in planes.find(plan => plan.nombre === seleccion).beneficios" :key="beneficio">
-                  {{ beneficio }}
-                </li>
-              </ul>
-            </v-card-text>
-          </v-card>
-        </v-card-text>
-      </v-card>
-    </v-container>
+    <SeleccionSubcripcion />
   </div>
 
   <!-- Modal para actualizar la URL de la imagen -->
@@ -155,23 +122,17 @@ import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 import '@fortawesome/fontawesome-free/css/all.css';
+import SeleccionSubcripcion from './SeleccionSubcripcion.vue';
 
 const emit = defineEmits(['navigate', 'profileSaved']);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const defaultImage = new URL('@/assets/avatar-default.png', import.meta.url).href;
 
-const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '' });
+const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '', subscription: 'basic' });
 const editingImage = ref(false);
 const tempImageUrl = ref('');
 const showSubscription = ref(false);
-const seleccion = ref("Básico");
-
-const planes = [
-  { nombre: "Básico", precio: "5€/mes", beneficios: ["Acceso limitado", "1 usuario"] },
-  { nombre: "Premium", precio: "10€/mes", beneficios: ["Acceso completo", "3 usuarios", "Soporte prioritario"] },
-  { nombre: "VIP", precio: "20€/mes", beneficios: ["Acceso total", "Usuarios ilimitados", "Asesor personalizado"] },
-];
 
 // Computed para el src del avatar, reactivo a los cambios
 const avatarSrc = computed(() => {
@@ -282,8 +243,7 @@ const closeImageEditor = () => {
   editingImage.value = false;
 };
 
-const navigateToSubscription = (plan) => {
-  seleccion.value = plan;
+const navigateToSubscription = () => {
   showSubscription.value = true;
 };
 
@@ -614,6 +574,8 @@ select:hover {
   gap: 10px;
   transition: all 0.3s ease;
   cursor: pointer;
+  background-color:rgb(207, 196, 33);
+  color: white;
 }
 
 .premium-button {
