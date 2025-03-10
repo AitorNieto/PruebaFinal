@@ -15,20 +15,23 @@ const showCommentsModal = ref(false);
 const activeReview = ref(null);
 const showSearchForm = ref(false);
 
-onMounted(async () => {
+onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     isLoggedIn.value = !!user;
     userId.value = user ? user.uid : null;
   });
 
-  const querySnapshot = await getDocs(collection(db, 'reviews'));
-  querySnapshot.forEach((doc) => {
-    reviews.value.push({ id: doc.id, ...doc.data() });
+  getDocs(collection(db, 'reviews')).then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      reviews.value.push({ id: doc.id, ...doc.data() });
+    });
+    filteredReviews.value = reviews.value;
+  }).catch((error) => {
+    console.error('Error fetching reviews: ', error);
   });
-  filteredReviews.value = reviews.value;
 });
 
-const addComment = async (review) => {
+const addComment = (review) => {
   if (!isLoggedIn.value) {
     alert('Debes estar registrado para agregar un comentario.');
     return;
@@ -41,36 +44,45 @@ const addComment = async (review) => {
       date: new Date().toLocaleString()
     };
     const reviewRef = doc(db, 'reviews', review.id);
-    await updateDoc(reviewRef, {
+    updateDoc(reviewRef, {
       comments: arrayUnion(commentWithAuthor)
+    }).then(() => {
+      review.comments.push(commentWithAuthor);
+      review.newComment = '';
+    }).catch((error) => {
+      console.error('Error adding comment: ', error);
     });
-    review.comments.push(commentWithAuthor);
-    review.newComment = '';
   } else {
     alert('El comentario no puede estar vacío.');
   }
 };
 
-const likeReview = async (review) => {
+const likeReview = (review) => {
   if (!isLoggedIn.value) {
     alert('Debes estar registrado para dar like.');
     return;
   }
   const reviewRef = doc(db, 'reviews', review.id);
   if (!review.likedBy.includes(userId.value)) {
-    await updateDoc(reviewRef, {
+    updateDoc(reviewRef, {
       likes: review.likes + 1,
       likedBy: arrayUnion(userId.value)
+    }).then(() => {
+      review.likes++;
+      review.likedBy.push(userId.value);
+    }).catch((error) => {
+      console.error('Error liking review: ', error);
     });
-    review.likes++;
-    review.likedBy.push(userId.value);
   } else {
-    await updateDoc(reviewRef, {
+    updateDoc(reviewRef, {
       likes: review.likes - 1,
       likedBy: arrayRemove(userId.value)
+    }).then(() => {
+      review.likes--;
+      review.likedBy = review.likedBy.filter(id => id !== userId.value);
+    }).catch((error) => {
+      console.error('Error unliking review: ', error);
     });
-    review.likes--;
-    review.likedBy = review.likedBy.filter(id => id !== userId.value);
   }
 };
 
@@ -78,15 +90,14 @@ const goToHome = () => {
   window.location.href = '/home'; // Redirige a la página de inicio
 };
 
-const handleAddReview = async (newReview) => {
-  try {
-    const docRef = await addDoc(collection(db, 'reviews'), newReview);
+const handleAddReview = (newReview) => {
+  addDoc(collection(db, 'reviews'), newReview).then((docRef) => {
     newReview.id = docRef.id;
     reviews.value.push(newReview);
     filteredReviews.value = reviews.value;
-  } catch (error) {
+  }).catch((error) => {
     console.error('Error adding review: ', error);
-  }
+  });
 };
 
 const toggleCommentsModal = (review) => {
@@ -262,9 +273,15 @@ const filterReviews = (criteria) => {
   background-color: #830f0f;
   color: #fff;
   border: none;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 20px; /* Aumenta el tamaño del botón */
+  border-radius: 50%;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
 }
 
 .review {
@@ -375,13 +392,13 @@ const filterReviews = (criteria) => {
 .search-form {
   position: absolute;
   top: 260px; /* Ajusta la posición según sea necesario */
-  left: 8%;
+  left: 50%;
   transform: translateX(-50%);
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 10%; /* Haz el formulario más largo */
+  width: 80%; /* Haz el formulario más largo */
   max-width: 1000px; /* Ajusta el ancho máximo */
   z-index: 1000;
 }
