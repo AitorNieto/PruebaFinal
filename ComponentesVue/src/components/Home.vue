@@ -126,12 +126,10 @@ onMounted(async () => {
 </script>
 
 <template>
+  <StarBackground />
   <div class="home-wrapper">
-    <StarBackground />
     <div v-if="currentSection === 'home'">
-      <!-- Sección de portada -->
       <div class="background">
-        <div class="animated-bg"></div>
         <h1 class="title">DELIRIOS Y BARBARIES</h1>
         <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
         <Countdown class="countdown-container" />
@@ -172,16 +170,16 @@ onMounted(async () => {
       </div>
 
       <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
-      <div id="podcast" class="scroll-bg" @click="changeSection('videos')">
-        <h1 class="section-title">Ver Videos</h1>
-
+      <div id="podcast" class="scroll-bg">
+        <button class="spectacular-button" @click="changeSection('videos')">
+          Ver Videos
+        </button>
       </div>
 
-      <!-- Bloque para el Foro -->
-      <div id="foro" class="large-red-background foro-background" @click="changeSection('foro')">
-        <div class="foro-content">
-          <h1 class="section-title">Nuestro Foro</h1>
-        </div>
+      <div id="foro" class="large-red-background foro-background">
+        <button class="spectacular-button" @click="changeSection('foro')">
+          Nuestro Foro
+        </button>
       </div>
 
       <!-- Componente Nosotros -->
@@ -264,6 +262,52 @@ onMounted(async () => {
   min-height: 100vh;
 }
 
+/* Botón espectacular */
+.spectacular-button {
+  display: block;
+  margin: 0 auto;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(45deg, #ff5722, #e64a19);
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.spectacular-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff5722, #e64a19);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  border-radius: 50px;
+  z-index: -1;
+}
+
+.spectacular-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.spectacular-button:hover::before {
+  opacity: 0.8;
+}
+
+.spectacular-button:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Fondo principal */
 .background {
   width: 100%;
@@ -279,20 +323,13 @@ onMounted(async () => {
 
 /* Título principal */
 .title {
-  font-size: 4rem; /* Tamaño del título */
-  font-weight: 700; /* Peso de la fuente */
-  color: #ffffff; /* Color blanco */
-  font-family: 'Georgia', serif; /* Fuente clásica */
-  text-align: center; /* Alineación del texto */
-  margin-bottom: 1rem; /* Espaciado inferior */
-  text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8); /* Sombra del texto en color granate */
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Transición suave */
-  margin-top: auto;
-}
-.title:hover {
-  color: #722424; /* Cambiar color al pasar el ratón a granate */
-  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
-  text-shadow: 3px 3px 3px rgba(255, 255, 255, 0.8); /* Sombra del texto en color blanco */
+  font-size: 5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Cinzel', serif;
+  animation: delirio 3s infinite;
+  z-index: 1;
 }
 
 @keyframes delirio {
@@ -332,13 +369,15 @@ onMounted(async () => {
 /* Sección de Novedades */
 .red-background {
   width: 100%;
-  background: linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(80, 0, 0, 0.95)),
-              url('https://imgur.com/gallery/wallpaper-years-rO3XClp#/t/wallpaper') center/cover;
+  background: 
+    linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(80, 0, 0, 0.95)),
+    url('https://imgur.com/gallery/wallpaper-years-rO3XClp#/t/wallpaper') center/cover;
   padding: 3rem 1rem;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8),
-              inset 0 0 300px rgba(136, 0, 0, 0.4);
+  box-shadow: 
+    inset 0 0 100px rgba(0, 0, 0, 0.8),
+    inset 0 0 300px rgba(136, 0, 0, 0.4);
 }
 
 /* Título "Novedades" (combinado con efecto slide-in) */

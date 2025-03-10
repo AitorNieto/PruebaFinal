@@ -3,8 +3,10 @@
    
      
 
-    <div class="dark-red-background">
-      <h2>Conoce a nuestro equipo</h2>    
+    <div id="nosotros" class="dark-red-background">
+      <div class="title-wrapper">
+        <h1 class="nosotros-title">Conoce a Nuestro Equipo</h1>
+      </div>   
       <div class="image-container">
         <div class="image-box">
           <div class="flip-card">
@@ -64,9 +66,33 @@ import { onMounted, ref } from 'vue';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 
 const content = ref(null);
+// Una vez que el componente se monte, agregamos la clase "slide-in" al título
+onMounted(() => {
+  const titleElement = document.querySelector('.nosotros-title');
+  if (titleElement) {
+    titleElement.classList.add('slide-in');
+  }
+});
 </script>
 
 <style scoped>
+.nosotros-title {
+  font-size: 3.5rem;
+  color: #ffd700;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 0 10px rgba(255,215,0,0.5),
+               0 0 20px rgba(255,215,0,0.3),
+               0 0 30px rgba(255,215,0,0.2),
+               0 0 40px rgba(255,0,0,0.1);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 1s, transform 1s;
+}
+.nosotros-title.slide-in {
+  opacity: 1;
+  transform: translateX(0);
+}
 /* Contenedor del título fijo */
 .title-container {
   position: fixed;
