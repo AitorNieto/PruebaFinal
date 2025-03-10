@@ -185,11 +185,11 @@ onMounted(async () => {
       </div>
 
       <!-- Componente Nosotros -->
-      <Nosotros>
-        <div id="nosotros" class="large-red-background foro-background" @click="changeSection('nosotros')">
-
+    
+        <div id="nosotros" @click="changeSection('nosotros')">
+        <Nosotros />
         </div>
-      </Nosotros>
+      
 
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
