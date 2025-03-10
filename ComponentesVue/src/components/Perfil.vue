@@ -73,6 +73,12 @@
             Cerrar Sesión
           </button>
         </form>
+        <button @click="upgradeToPremium" class="upgrade-button premium-button">
+          Mejorar a Premium
+        </button>
+        <button @click="upgradeToVip" class="upgrade-button vip-button">
+          Mejorar a Vip
+        </button>
       </div>
     </div>
   </div>
@@ -231,6 +237,14 @@ const openImageEditor = () => {
 
 const closeImageEditor = () => {
   editingImage.value = false;
+};
+
+const upgradeToPremium = () => {
+  alert('Has mejorado a Premium');
+};
+
+const upgradeToVip = () => {
+  alert('Has mejorado a Vip');
 };
 
 onMounted(fetchPerfil);
@@ -545,6 +559,36 @@ select:hover {
 }
 .accept-button:hover {
   background: #a32b2b;
+}
+
+.upgrade-button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.premium-button {
+  background: linear-gradient(45deg, #ffd700, #ffcc00);
+  color: #000;
+}
+
+.vip-button {
+  background: linear-gradient(45deg, #c0c0c0, #a9a9a9);
+  color: #000;
+}
+
+.upgrade-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsividad */
