@@ -130,7 +130,7 @@ onMounted(async () => {
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <div class="background">
-        <h1 class="title">DELIRIOS Y BARBARIES</h1>
+        <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
         <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
         <Countdown class="countdown-container" />
       </div>
@@ -337,15 +337,35 @@ onMounted(async () => {
 }
 
 /* Título principal */
-.title {
-  font-size: 5rem;
-  font-weight: bold;
-  color: #ffd700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-family: 'Cinzel', serif;
-  animation: delirio 3s infinite;
-  z-index: 1;
+.titulo {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Georgia', serif;
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
+
+.titulo::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 120%;
+  height: 140%;
+  background: transparent;
+  pointer-events: all; /* Permite detectar el hover en un área más grande */
+}
+
+.titulo:hover {
+  color: #722424;
+  transform: scale(1.05);
+  text-shadow: 3px 3px 3px rgba(255, 255, 255, 0.8);
+}
+
 
 @keyframes delirio {
   0%, 100% {
