@@ -262,22 +262,23 @@ onMounted(async () => {
   min-height: 100vh;
 }
 
-/* Botón espectacular */
+/* Botón legendario */
 .spectacular-button {
   display: block;
   margin: 0 auto;
-  padding: 15px 30px;
-  font-size: 1.5rem;
+  padding: 20px 40px;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #fff;
-  background: linear-gradient(45deg, #ff5722, #e64a19);
+  color: #ffffff;
+  background: linear-gradient(135deg, #360a0a, #ff0000);
   border: none;
   border-radius: 50px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .spectacular-button::before {
@@ -285,26 +286,27 @@ onMounted(async () => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #ff5722, #e64a19);
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgb(43, 16, 16) 20%, transparent 20%);
+  background-size: 10px 10px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
   border-radius: 50px;
   z-index: -1;
 }
 
 .spectacular-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .spectacular-button:hover::before {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .spectacular-button:active {
-  transform: translateY(0);
+  transform: translateY(-2px) scale(0.98);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
