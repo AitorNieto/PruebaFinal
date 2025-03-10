@@ -83,10 +83,6 @@ import { onMounted, ref } from 'vue';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 
 const content = ref(null);
-
-onMounted(() => {
-  content.value.scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
 </script>
 
 <style scoped>
@@ -121,6 +117,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   text-align: center; /* Centra el texto */
+  
 }
 
 /* Título de la sección */
@@ -129,6 +126,7 @@ onMounted(() => {
   color: white;
   margin-top: 30vh; /* Ajusta este valor para mover el h1 más abajo */
   margin-bottom: 1rem;
+  
 }
 
 /* Texto de bienvenida */
@@ -154,9 +152,9 @@ onMounted(() => {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
-  margin-top: 0; /* Elimina el espacio superior */
+  margin-top:0; /* Elimina el espacio superior */
   width: 100%; /* Ajusta el ancho para ocupar todo el ancho de la pantalla */
-  min-height: 100vh; /* Ocupa todo el largo de la pantalla */
+  min-height: 50vh; /* Ocupa todo el largo de la pantalla */
   display: flex;
   flex-direction: column;
   align-items: center;

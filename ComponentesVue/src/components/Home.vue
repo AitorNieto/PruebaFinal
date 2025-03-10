@@ -26,6 +26,7 @@ const loadingVideo = ref(true);
 const CHANNEL_ID = 'UCWYxQaXnpQVzXaO1Yz4VyWQ';
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
+
 // Función para obtener el último video del canal
 const fetchLatestVideo = async () => {
   try {
@@ -173,10 +174,7 @@ onMounted(async () => {
       <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
       <div id="podcast" class="scroll-bg" @click="changeSection('videos')">
         <h1 class="section-title">Ver Videos</h1>
-        <div class="season season-1">Temporada 1</div>
-        <div class="season season-2">Temporada 2</div>
-        <div class="season season-3">Temporada 3</div>
-        <div class="season season-4">Temporada 4</div>
+
       </div>
 
       <!-- Bloque para el Foro -->
@@ -274,13 +272,19 @@ onMounted(async () => {
 
 /* Título principal */
 .title {
-  font-size: 5rem;
-  font-weight: bold;
-  color: #ffd700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  font-family: 'Cinzel', serif;
-  animation: delirio 3s infinite;
-  z-index: 1;
+  font-size: 4rem; /* Tamaño del título */
+  font-weight: 700; /* Peso de la fuente */
+  color: #ffffff; /* Color blanco */
+  font-family: 'Georgia', serif; /* Fuente clásica */
+  text-align: center; /* Alineación del texto */
+  margin-bottom: 1rem; /* Espaciado inferior */
+  text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8); /* Sombra del texto en color granate */
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Transición suave */
+}
+.title:hover {
+  color: #722424; /* Cambiar color al pasar el ratón a granate */
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+  text-shadow: 3px 3px 3px rgba(255, 255, 255, 0.8); /* Sombra del texto en color blanco */
 }
 
 @keyframes delirio {
@@ -806,13 +810,5 @@ onMounted(async () => {
     height: 40px;
     font-size: 1.5rem;
   }
-}
-.title {
-  font-size: 4rem; /* Tamaño del título */
-  font-weight: 700; /* Peso de la fuente */
-  color: #333; /* Color del texto */
-  font-family: 'Georgia', serif; /* Fuente clásica */
-  text-align: center; /* Alineación del texto */
-  margin-bottom: 1rem; /* Espaciado inferior */
 }
 </style>
