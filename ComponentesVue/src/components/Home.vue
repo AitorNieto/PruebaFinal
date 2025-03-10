@@ -600,57 +600,65 @@ onMounted(async () => {
 .site-footer {
   background: linear-gradient(135deg, #1a1a1a, #000000);
   color: #ffffff;
-  padding: 3rem 0 1rem;
+  padding: 1.5rem 0; /* Menos padding para reducir la altura */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5); /* Sombra más sutil */
 }
 
 .footer-content {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem; /* Menor separación entre elementos */
 }
 
-.footer-social,
+.footer-social{
+  text-align: center;
+}
+
 .footer-info {
   flex: 1 1 300px;
   text-align: center;
 }
 
 .footer-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 1.4rem; /* Tamaño reducido */
+  margin-bottom: 0.5rem;
   color: #ffd700;
   font-family: 'Cinzel', serif;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem; /* Menor gap */
 }
+
 .social-link {
-  position: relative;
-  overflow: hidden;
-  color: #ffffff;
-  font-size: 1.8rem;
-  transition: all 0.4s ease;
-  padding: 0.5rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  width: 50px;
-  height: 50px;
+  padding: 0.3rem;
+  width: 40px;  /* Íconos un poco más pequeños */
+  height: 40px;
+  color: white;
+  font-size: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: rgb(0, 0, 0);
+  transition: all 0.4s ease;
 }
+.footer-bottom {
+  text-align: center;
+  padding-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
 .youtube {
   position: relative;
   overflow: hidden;
