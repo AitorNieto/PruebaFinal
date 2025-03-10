@@ -1,23 +1,10 @@
 <template>
   <div>
-    <!-- Imagen del título fija en la parte superior -->
-
-    <!-- Contenido debajo del título -->
-    <div class="content" ref="content">
-      <h1 class="section-title">Quiénes Somos</h1>
-      <p class="welcome-text">
-        Bienvenido a Delirios & Barbaries, el rincón donde la realidad se descompone en debates crudos, ideas disruptivas y conversaciones sin censura. Cada episodio es un viaje sin retorno a lo más profundo del pensamiento crítico. ¿Listo para el caos?
-      </p>
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12" md="6">
-            <v-img src="@/assets/fotoGrupo.jpeg" class="group-image" contain></v-img>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+   
+     
 
     <div class="dark-red-background">
+      <h2>Conoce a nuestro equipo</h2>    
       <div class="image-container">
         <div class="image-box">
           <div class="flip-card">
@@ -29,8 +16,6 @@
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Jimmy</h2>
-                  <p>Edad: 21</p>
-                  <p>Nacimiento: 01/01/2003</p>
                   <p>Insta: @dfghjk</p>
                 </div>
               </div>
@@ -47,8 +32,6 @@
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Daniel Lomas</h2>
-                  <p>Edad: 21</p>
-                  <p>Nacimiento: 01/01/2003</p>
                   <p>Insta: @dfghjk</p>
                 </div>
               </div>
@@ -65,8 +48,6 @@
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
                   <h2>Monzón</h2>
-                  <p>Edad: 22</p>
-                  <p>Nacimiento: 01/01/2002</p>
                   <p>Insta: @dfghjk</p>
                 </div>
               </div>

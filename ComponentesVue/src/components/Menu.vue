@@ -110,7 +110,7 @@ function handleLogout() {
           <li><a href="#" @click.prevent="navigate('novedades')">Novedades</a></li>
           <li><a href="#" @click.prevent="navigate('podcast')">Podcast</a></li>
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
-          <li><a href="#" @click.prevent="navigate('sobre-nosotros')">Sobre Nosotros</a></li>
+          <li><a href="#" @click.prevent="navigate('nosotros')">Nuestro Equipo</a></li>
           <li class="user-section">
             <!-- Al hacer clic, se navega al perfil -->
             <a href="#" @click.prevent="navigate('profile')">

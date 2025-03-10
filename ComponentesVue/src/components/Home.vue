@@ -185,7 +185,11 @@ onMounted(async () => {
       </div>
 
       <!-- Componente Nosotros -->
-      <Nosotros />
+      <Nosotros>
+        <div id="nosotros" class="large-red-background foro-background" @click="changeSection('nosotros')">
+
+        </div>
+      </Nosotros>
 
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
@@ -280,6 +284,7 @@ onMounted(async () => {
   margin-bottom: 1rem; /* Espaciado inferior */
   text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8); /* Sombra del texto en color granate */
   transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Transición suave */
+  margin-top: auto;
 }
 .title:hover {
   color: #722424; /* Cambiar color al pasar el ratón a granate */
