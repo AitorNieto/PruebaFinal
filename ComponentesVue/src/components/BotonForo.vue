@@ -5,39 +5,38 @@ import { collection, addDoc } from 'firebase/firestore';
 
 const emit = defineEmits(['add-review']);
 
-const title = ref('');
-const comment = ref('');
-const showReviewForm = ref(false);
+const showForm = ref(false);
+const newReview = ref({
+  title: '',
+  comment: '',
+  likes: 0,
+  author: 'Anónimo',
+  date: new Date().toLocaleString(),
+  comments: [],
+  likedBy: []
+});
 
-const toggleReviewForm = () => {
-  showReviewForm.value = !showReviewForm.value;
+const toggleForm = () => {
+  showForm.value = !showForm.value;
 };
 
 const addReview = async () => {
-  if (!title.value || !comment.value) {
+  if (!newReview.value.title.trim() || !newReview.value.comment.trim()) {
     alert('El título y el comentario no pueden estar vacíos.');
     return;
   }
 
   const user = auth.currentUser;
-  const newReview = {
-    title: title.value,
-    comment: comment.value,
-    likes: 0,
-    likedBy: [], // Lista de usuarios que han dado like
-    comments: [],
-    newComment: '',
-    author: user ? user.displayName : 'Anónimo',
-    date: new Date().toLocaleString()
-  };
+  newReview.value.author = user ? user.displayName : 'Anónimo';
+  newReview.value.date = new Date().toLocaleString();
 
   try {
-    const docRef = await addDoc(collection(db, 'reviews'), newReview);
+    const docRef = await addDoc(collection(db, 'reviews'), newReview.value);
     console.log('Document written with ID: ', docRef.id);
-    emit('add-review', { id: docRef.id, ...newReview });
-    title.value = '';
-    comment.value = '';
-    showReviewForm.value = false; // Ocultar el formulario después de agregar la reseña
+    emit('add-review', { id: docRef.id, ...newReview.value });
+    newReview.value.title = '';
+    newReview.value.comment = '';
+    showForm.value = false; // Ocultar el formulario después de agregar la reseña
   } catch (e) {
     console.error('Error adding document: ', e);
   }
@@ -45,62 +44,48 @@ const addReview = async () => {
 </script>
 
 <template>
-  <div>
-    <button @click="toggleReviewForm" class="add-review">Añadir opinión</button>
-    <div v-if="showReviewForm" class="modal-overlay" @click="toggleReviewForm">
-      <div class="modal-content" @click.stop>
-        <button @click="toggleReviewForm" class="close-button">X</button>
-        <input v-model="title" placeholder="Título de la reseña" class="input" />
-        <textarea v-model="comment" placeholder="Comentario" class="textarea"></textarea>
-        <button @click="addReview" class="button">Agregar Reseña</button>
-      </div>
+  <div class="add-review-container" @mouseenter="showForm = true" @mouseleave="showForm = false">
+    <button class="add-review">Añadir Opinión</button>
+    <div v-if="showForm" class="review-form">
+      <input v-model="newReview.title" placeholder="Título" class="input" />
+      <textarea v-model="newReview.comment" placeholder="Comentario" class="textarea"></textarea>
+      <button @click="addReview" class="button">Agregar</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.add-review {
-  background-color: #830f0f;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px; /* Ajusta según sea necesario */
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.add-review-container {
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(5px); /* Aplica el desenfoque al fondo */
-  z-index: 1000;
+  position: relative;
 }
 
-.modal-content {
+.add-review {
+  width: 100%;
+  height: 100%;
+  background-color: #830f0f;
+  color: #fff;
+  border: none;
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.review-form {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+  width: 300px;
+  z-index: 1000;
 }
 
 .input, .textarea {

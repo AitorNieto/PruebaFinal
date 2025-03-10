@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { auth, db } from '@/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, getDocs, updateDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { collection, getDocs, updateDoc, doc, arrayUnion, arrayRemove, addDoc } from 'firebase/firestore';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 import BotonForo from './BotonForo.vue';
 import BusquedaForo from './BusquedaForo.vue';
@@ -78,9 +78,15 @@ const goToHome = () => {
   window.location.href = '/home'; // Redirige a la página de inicio
 };
 
-const handleAddReview = (newReview) => {
-  reviews.value.push(newReview);
-  filteredReviews.value = reviews.value;
+const handleAddReview = async (newReview) => {
+  try {
+    const docRef = await addDoc(collection(db, 'reviews'), newReview);
+    newReview.id = docRef.id;
+    reviews.value.push(newReview);
+    filteredReviews.value = reviews.value;
+  } catch (error) {
+    console.error('Error adding review: ', error);
+  }
 };
 
 const toggleCommentsModal = (review) => {
