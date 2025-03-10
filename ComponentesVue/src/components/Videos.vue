@@ -856,7 +856,7 @@ const videos = ref([
 
 
 // Definimos las temporadas disponibles
-const seasons = [1, 2, 3, 4];
+const seasons = [4 , 3 , 2 , 1 ];
 
 // Computamos los videos de la temporada actual
 const currentSeasonVideos = computed(() => {
