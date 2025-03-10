@@ -62,6 +62,12 @@
               <option value="prefiero no decirlo">Prefiero no decirlo</option>
             </select>
           </div>
+          <button @click="upgradeToPremium" class="upgrade-button premium-button">
+          Mejorar a Premium
+        </button>
+        <button @click="upgradeToVip" class="upgrade-button vip-button">
+          Mejorar a Vip
+        </button>
 
           <button type="submit" class="save-button">
             <i class="fas fa-save"></i>
@@ -73,12 +79,7 @@
             Cerrar Sesión
           </button>
         </form>
-        <button @click="upgradeToPremium" class="upgrade-button premium-button">
-          Mejorar a Premium
-        </button>
-        <button @click="upgradeToVip" class="upgrade-button vip-button">
-          Mejorar a Vip
-        </button>
+  
       </div>
     </div>
   </div>
