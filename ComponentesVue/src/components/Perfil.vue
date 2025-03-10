@@ -1,5 +1,5 @@
 <template>
-  <div class="perfil-container" :class="{ 'blurred': editingImage }">
+  <div v-if="!showSubscription" class="perfil-container" :class="{ 'blurred': editingImage }">
     <button @click="navigateHome" class="back-button">
       <i class="fas fa-arrow-left"></i>
     </button>
@@ -63,6 +63,13 @@
             </select>
           </div>
 
+          <button @click="navigateToSubscription('Premium')" class="upgrade-button premium-button">
+            Mejorar a Premium👑
+          </button>
+          <button @click="navigateToSubscription('VIP')" class="upgrade-button vip-button">
+            Mejorar a Vip💎
+          </button>
+
           <button type="submit" class="save-button">
             <i class="fas fa-save"></i>
             Guardar Perfil
@@ -75,6 +82,40 @@
         </form>
       </div>
     </div>
+  </div>
+
+  <div v-else>
+    <v-container>
+      <v-card class="pa-4">
+        <v-card-title>Elige tu suscripción</v-card-title>
+        <v-card-text>
+          <v-radio-group v-model="seleccion" column>
+            <v-radio
+              v-for="plan in planes"
+              :key="plan.nombre"
+              :label="plan.nombre"
+              :value="plan.nombre"
+            />
+          </v-radio-group>
+
+          <v-divider class="my-4"></v-divider>
+
+          <v-card class="pa-3" color="blue-lighten-5">
+            <v-card-title>{{ seleccion }}</v-card-title>
+            <v-card-subtitle>
+              {{ planes.find(plan => plan.nombre === seleccion).precio }}
+            </v-card-subtitle>
+            <v-card-text>
+              <ul>
+                <li v-for="beneficio in planes.find(plan => plan.nombre === seleccion).beneficios" :key="beneficio">
+                  {{ beneficio }}
+                </li>
+              </ul>
+            </v-card-text>
+          </v-card>
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
 
   <!-- Modal para actualizar la URL de la imagen -->
@@ -123,6 +164,14 @@ const defaultImage = new URL('@/assets/avatar-default.png', import.meta.url).hre
 const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '' });
 const editingImage = ref(false);
 const tempImageUrl = ref('');
+const showSubscription = ref(false);
+const seleccion = ref("Básico");
+
+const planes = [
+  { nombre: "Básico", precio: "5€/mes", beneficios: ["Acceso limitado", "1 usuario"] },
+  { nombre: "Premium", precio: "10€/mes", beneficios: ["Acceso completo", "3 usuarios", "Soporte prioritario"] },
+  { nombre: "VIP", precio: "20€/mes", beneficios: ["Acceso total", "Usuarios ilimitados", "Asesor personalizado"] },
+];
 
 // Computed para el src del avatar, reactivo a los cambios
 const avatarSrc = computed(() => {
@@ -231,6 +280,11 @@ const openImageEditor = () => {
 
 const closeImageEditor = () => {
   editingImage.value = false;
+};
+
+const navigateToSubscription = (plan) => {
+  seleccion.value = plan;
+  showSubscription.value = true;
 };
 
 onMounted(fetchPerfil);
@@ -545,6 +599,36 @@ select:hover {
 }
 .accept-button:hover {
   background: #a32b2b;
+}
+
+.upgrade-button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.premium-button {
+  background: linear-gradient(45deg, #ffd700, #ffcc00);
+  color: #000;
+}
+
+.vip-button {
+  background: linear-gradient(45deg, #c0c0c0, #a9a9a9);
+  color: #000;
+}
+
+.upgrade-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsividad */
