@@ -12,6 +12,7 @@ import axios from 'axios';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import imageSrc from '@/assets/DyBia.png';
+import Puzzles from './Puzzles.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);
@@ -123,6 +124,18 @@ onMounted(async () => {
     }
   });
 });
+
+
+
+// Variable que controla la visibilidad de Puzzles
+let showPuzzles = false;
+
+// Función para cambiar el estado de showPuzzles y mostrar el componente
+const emit = defineEmits(['navigate']);
+
+const goToPuzzlesPage = () => {
+  currentSection.value = 'puzzles'; // Cambia la sección a 'puzzles'
+}
 </script>
 
 <template>
@@ -211,9 +224,10 @@ onMounted(async () => {
 
                 </div>
       </div>
-
+      
       <!-- Footer -->
       <footer class="site-footer">
+        <span class="puzzle-emoji" @click="goToPuzzlesPage">🧩</span>
         <div class="footer-content">
           <div class="footer-social">
             <h3 class="footer-title">Síguenos en nuestras Redes!</h3>
@@ -240,6 +254,9 @@ onMounted(async () => {
           <p>&copy; 2025 Delirios y Barbaries. Todos los derechos reservados.</p>
         </div>
       </footer>
+      <div v-if="currentSection === 'puzzles'">
+      <Puzzles /> <!-- Muestra el componente Puzzles -->
+      </div>
     </div>
 
     <!-- Otras secciones según la navegación -->
@@ -690,6 +707,20 @@ onMounted(async () => {
   flex-wrap: wrap;
   gap: 1rem; /* Menor separación entre elementos */
 }
+
+.puzzle-emoji {
+  font-size: 24px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  filter: brightness(0) invert(0); /* Hace que el emoji sea negro */
+  transition: filter 0.3s ease-in-out;
+}
+
+.puzzle-emoji:hover {
+  filter: brightness(1) invert(1); /* Invierte los colores para que sea claro al pasar el ratón */
+}
+
 
 .footer-social{
   text-align: center;
