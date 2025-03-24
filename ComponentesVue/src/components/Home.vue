@@ -12,7 +12,7 @@ import axios from 'axios';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import imageSrc from '@/assets/DyBia.png';
-import Puzzles from './Puzzles.vue';
+import Juegos from './Juegos.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);
@@ -126,15 +126,8 @@ onMounted(async () => {
 });
 
 
-
-// Variable que controla la visibilidad de Puzzles
-let showPuzzles = false;
-
-// Función para cambiar el estado de showPuzzles y mostrar el componente
-const emit = defineEmits(['navigate']);
-
-const goToPuzzlesPage = () => {
-  currentSection.value = 'puzzles'; // Cambia la sección a 'puzzles'
+function goToJuegosPage() {
+  currentSection.value = 'juegos';
 }
 </script>
 
@@ -227,7 +220,7 @@ const goToPuzzlesPage = () => {
       
       <!-- Footer -->
       <footer class="site-footer">
-        <span class="puzzle-emoji" @click="goToPuzzlesPage">🧩</span>
+        <span class="puzzle-emoji" @click="goToJuegosPage">🧩</span>
         <div class="footer-content">
           <div class="footer-social">
             <h3 class="footer-title">Síguenos en nuestras Redes!</h3>
@@ -276,6 +269,9 @@ const goToPuzzlesPage = () => {
 
     <!-- Alerta de cookies -->
     <CookieAlert v-if="showCookieAlert" />
+  </div>
+  <div v-if="currentSection === 'juegos'">
+    <Juegos @navigate="changeSection" />
   </div>
 </template>
 

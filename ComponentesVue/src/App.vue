@@ -10,6 +10,7 @@ import Nosotros from './components/Nosotros.vue';
 import Videos from './components/Videos.vue';
 import Foro from './components/Foro.vue';
 
+
 const currentSection = ref('prehome');
 
 function changeSection(section) {
@@ -51,6 +52,7 @@ onMounted(() => {
     <div v-else-if="currentSection === 'foro'">
       <Foro />
     </div>
+
 
     <div v-if="currentSection !== 'prehome' && currentSection !== 'profile'">
       <Menu @navigate="changeSection" />
