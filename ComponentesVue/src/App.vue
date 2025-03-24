@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import Menu from './components/Menu.vue';
+import Menu from './components/ComponentesHome/Menu.vue';
 import Login from './components/Autentificacion/Login.vue';
 import Register from './components/Autentificacion/Register.vue';
 import Home from './components/ComponentesHome/Home.vue';

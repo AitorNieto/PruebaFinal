@@ -2,8 +2,8 @@
 import { ref, defineEmits, onMounted, onUnmounted } from 'vue';
 import { useFirebaseAuth } from 'vuefire';
 import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
-import { firebaseApp } from '../firebase';
-import defaultAvatar from '../assets/avatar-default.png';
+import { firebaseApp } from '@/firebase';
+import defaultAvatar from '@/assets/avatar-default.png';
 
 const props = defineProps({
   currentView: {
