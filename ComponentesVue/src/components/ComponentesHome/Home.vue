@@ -3,16 +3,16 @@ import { ref, onMounted } from 'vue';
 import { useFirestore, useFirebaseAuth } from 'vuefire';
 import { collection, onSnapshot } from 'firebase/firestore';
 import Countdown from './Countdown.vue';
-import Nosotros from './Nosotros.vue';
-import Foro from './Foro.vue';
-import Videos from './Videos.vue';
+import Nosotros from './ComponentesNosotros/Nosotros.vue';
+import Foro from './ComponentesForo/Foro.vue';
+import Videos from './ComponenteVideos/Videos.vue';
 import CookieAlert from './CookieAlert.vue';
 import StarBackground from './StarBackground.vue';
 import axios from 'axios';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import imageSrc from '@/assets/DyBia.png';
-import Juegos from './Juegos.vue';
+import Juegos from './Games/Juegos.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);

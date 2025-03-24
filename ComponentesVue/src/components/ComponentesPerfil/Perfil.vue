@@ -120,7 +120,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
-import { firebaseApp } from '../firebase';
+import { firebaseApp } from '../../firebase';
 import '@fortawesome/fontawesome-free/css/all.css';
 import SeleccionSubcripcion from './SeleccionSubcripcion.vue';
 

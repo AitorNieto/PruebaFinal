@@ -39,7 +39,7 @@
 import { ref, onMounted } from 'vue';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { firebaseApp } from '../firebase';
+import { firebaseApp } from '../../firebase';
 
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);

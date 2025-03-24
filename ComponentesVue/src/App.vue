@@ -1,14 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Menu from './components/Menu.vue';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
-import Home from './components/Home.vue';
-import Perfil from './components/Perfil.vue';
-import PreHome from './components/PreHome.vue';
-import Nosotros from './components/Nosotros.vue';
-import Videos from './components/Videos.vue';
-import Foro from './components/Foro.vue';
+import Login from './components/Autentificacion/Login.vue';
+import Register from './components/Autentificacion/Register.vue';
+import Home from './components/ComponentesHome/Home.vue';
+import Perfil from './components/ComponentesPerfil/Perfil.vue';
+import PreHome from './components/ComponentesHome/PreHome.vue';
+import Nosotros from './components/ComponentesNosotros/Nosotros.vue';
+import Videos from './components/ComponenteVideos/Videos.vue';
+import Foro from './components/ComponentesForo/Foro.vue';
 
 
 const currentSection = ref('prehome');

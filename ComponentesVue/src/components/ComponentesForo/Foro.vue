@@ -4,8 +4,8 @@ import { auth, db } from '@/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, updateDoc, doc, arrayUnion, arrayRemove, addDoc } from 'firebase/firestore';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
-import BotonForo from './BotonForo.vue';
-import BusquedaForo from './BusquedaForo.vue';
+import BotonForo from './ComponentesForo/BotonForo.vue';
+import BusquedaForo from './ComponentesForo/BusquedaForo.vue';
 
 const reviews = ref([]);
 const filteredReviews = ref([]);
