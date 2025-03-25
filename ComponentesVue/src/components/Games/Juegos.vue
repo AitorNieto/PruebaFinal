@@ -12,16 +12,26 @@
           </div>
         </div>
       </div>
+      <div class="game-container" @click="goToWordle">
+          <h2>Wordle</h2>
+          <div class="grid wordle-grid">
+            <div v-for="(letter, index) in wordlePreview" :key="index" class="wordle-cell">
+              {{ letter }}
+            </div>
+          </div>
+        </div>
     </div>
 
     <!-- Vista del componente TresEnRaya -->
     <TresEnRaya v-else @go-back="goBack" />
+    <Wordle v-else @go-back="goBack" />
   </div>
 </template>
   
 <script setup>
 import { ref } from "vue";
 import TresEnRaya from './TresEnRaya.vue';
+import Wordle from "./Wordle.vue";
 
 // Controlar la vista actual
 const currentView = ref('juegos');
@@ -42,6 +52,12 @@ const goToTresEnRaya = () => {
 const goBack = () => {
   currentView.value = 'juegos';
 };
+
+const goToWordle = () => {
+  currentView.value = "wordle";
+};
+
+const wordlePreview = ref(["W", "O", "R", "D", "L"]);
 </script>
   
 <style scoped>
@@ -53,10 +69,43 @@ const goBack = () => {
 
 .puzzles-container {
   position: relative;
-  top: -500px;
+  top: -800px;
   text-align: center;
   color: white;
   padding: 20px;
+}
+.game-container{
+  background-color: #8B1E1E; /* Un tono más claro de granate */
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+  transition: transform 0.2s ease;
+}
+.game-container:hover{
+  transform: scale(1.05);
+}
+.wordle-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.wordle-cell {
+  width: 40px;
+  height: 40px;
+  background-color: #444;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 /* Contenedor del Tres en Raya */

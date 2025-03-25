@@ -12,7 +12,7 @@
         :class="{ disabled: cell }"
         @click="makeMove(index)"
       >
-        {{ cell }}
+        <span v-if="cell" class="graffiti">{{ cell }}</span>
       </div>
     </div>
 
@@ -20,7 +20,7 @@
     <p v-if="winner" class="winner-message">
       ¡{{ winner === 'Empate' ? 'Es un empate' : `Ganador: ${winner}` }}!
     </p>
-    <p v-else class="turn-message">Turno de: {{ currentPlayer }}</p>
+    <p v-else class="turn-message">Turno de: <span class="graffiti">{{ currentPlayer }}</span></p>
 
     <!-- Botones -->
     <button class="reset-button" @click="resetGame">Reiniciar Juego</button>
@@ -37,7 +37,7 @@ const emit = defineEmits(['go-back']);
 const board = ref(Array(9).fill(''));
 
 // Jugador actual
-const currentPlayer = ref('X');
+const currentPlayer = ref('D');
 
 // Ganador del juego
 const winner = ref(null);
@@ -51,7 +51,7 @@ const makeMove = (index) => {
     } else if (board.value.every((cell) => cell)) {
       winner.value = 'Empate';
     } else {
-      currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X';
+      currentPlayer.value = currentPlayer.value === 'D' ? 'B' : 'D';
     }
   }
 };
@@ -82,7 +82,7 @@ const checkWinner = () => {
 // Reiniciar el juego
 const resetGame = () => {
   board.value = Array(9).fill('');
-  currentPlayer.value = 'X';
+  currentPlayer.value = 'D';
   winner.value = null;
 };
 
@@ -93,12 +93,15 @@ const goBack = () => {
 </script>
 
 <style scoped>
+/* Importamos la fuente de grafiti */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 .tres-en-raya-page {
   text-align: center;
   color: white;
   padding: 20px;
-  position: relative; /* Permite ajustar la posición */
-  top: -500px; /* Mueve el contenido hacia arriba */
+  position: relative;
+  top: -800px;
 }
 
 .board {
@@ -113,9 +116,6 @@ const goBack = () => {
   width: 100px;
   height: 100px;
   background-color: #a83232;
-  color: white;
-  font-size: 2rem;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -126,11 +126,19 @@ const goBack = () => {
 
 .cell.disabled {
   cursor: not-allowed;
-  background-color: #701515;
+  background-color: #830f0f;
 }
 
 .cell:hover:not(.disabled) {
   background-color: #830f0f;
+}
+
+/* Estilo de grafiti para "D" y "B" */
+.graffiti {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 3rem;
+  color: #ffdd00;
+  text-shadow: 3px 3px 0px #000, 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
 .winner-message {
@@ -163,6 +171,6 @@ const goBack = () => {
 }
 
 :global(body) {
-  background-color: #701515; /* Granate oscuro */
+  background-color: #701515;
 }
 </style>
