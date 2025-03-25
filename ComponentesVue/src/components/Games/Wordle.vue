@@ -100,7 +100,7 @@
     color: white;
     padding: 20px;
     position: relative;
-    top: -800px; /* Mueve el contenido más arriba */
+    top: -500px; /* Mueve el contenido más arriba */
   }
   
   .grid {

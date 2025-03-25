@@ -4,30 +4,62 @@
     <div v-if="currentView === 'juegos'" class="puzzles-container">
       <h1>Bienvenido a la página de Puzzles 🧩</h1>
       <p>Aquí podrás encontrar información sobre los puzzles.</p>
-  
-      <div class="tres-en-raya-container" @click="goToTresEnRaya">
-        <div class="grid">
-          <div v-for="(cell, index) in board" :key="index" class="cell">
-            <span v-if="cell" class="piece">{{ cell }}</span>
+
+      <!-- Contenedor principal para alinear los juegos -->
+      <div class="games-container">
+        <!-- Contenedor de la Sopa de Letras -->
+        <div class="sopa-letras-container" @click="goToSopaLetras">
+          <div class="sopa-grid">
+            <div v-for="(cell, index) in sopaLetrasPreview" :key="index" class="sopa-cell">
+              {{ cell }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="game-container" @click="goToWordle">
-          <h2>Wordle</h2>
-          <div class="grid wordle-grid">
+
+        <!-- Contenedor del Tres en Raya -->
+        <div class="tres-en-raya-container" @click="goToTresEnRaya">
+          <div class="grid">
+            <div v-for="(cell, index) in board" :key="index" class="cell">
+              <span v-if="cell" class="piece">{{ cell }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor del Wordle -->
+        <div class="wordle-container" @click="goToWordle">
+          <div class="wordle-row">
             <div v-for="(letter, index) in wordlePreview" :key="index" class="wordle-cell">
               {{ letter }}
             </div>
           </div>
         </div>
+      </div>
     </div>
 
     <!-- Vista del componente TresEnRaya -->
-    <TresEnRaya v-else @go-back="goBack" />
-    <Wordle v-else @go-back="goBack" />
+    <TresEnRaya v-else-if="currentView === 'tresenraya'" @go-back="goBack" />
+
+    <!-- Vista del componente Wordle -->
+    <Wordle v-else-if="currentView === 'wordle'" @go-back="goBack" />
+
+    <!-- Vista del componente Sopa de Letras -->
+    <div v-else-if="currentView === 'sopaletras'" class="sopa-letras-page">
+      <h1>¡Bienvenido a la Sopa de Letras!</h1>
+      <button class="back-button" @click="goBack">⬅ Volver</button>
+    </div>
+    <div>
+    <!-- Contenedor del Crucigrama -->
+    <div class="crucigrama-container" @click="goToCrucigrama">
+      <div class="crucigrama-grid">
+        <div v-for="(cell, index) in crucigramaPreview" :key="index" class="crucigrama-cell">
+          {{ cell }}
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
-  
+
 <script setup>
 import { ref } from "vue";
 import TresEnRaya from './TresEnRaya.vue';
@@ -43,9 +75,29 @@ const board = ref([
   "B", "", "D"
 ]);
 
+// Vista previa de la sopa de letras (5x5)
+const sopaLetrasPreview = ref([
+  "M", "&", "B", "&", "C", "C",
+  "J", "O", "B", "E", "&", "B",
+  "B", "I", "N", "G", "H", "&",
+  "I", "J", "M", "Z", "M", "D",
+  "&", "J", "K", "M", "O", "D",
+  "D", "A", "N", "I", "Y" ,"N"
+]);
+
 // Cambiar a la vista del Tres en Raya
 const goToTresEnRaya = () => {
   currentView.value = 'tresenraya';
+};
+
+// Cambiar a la vista del Wordle
+const goToWordle = () => {
+  currentView.value = "wordle";
+};
+
+// Cambiar a la vista de la Sopa de Letras
+const goToSopaLetras = () => {
+  currentView.value = "sopaletras";
 };
 
 // Volver a la vista principal de Juegos
@@ -53,13 +105,23 @@ const goBack = () => {
   currentView.value = 'juegos';
 };
 
-const goToWordle = () => {
-  currentView.value = "wordle";
-};
+const wordlePreview = ref(["W", "O", "R", "D", "L", "E"]);
 
-const wordlePreview = ref(["W", "O", "R", "D", "L"]);
+const crucigramaPreview = ref([
+  "C", "A", "S", "A", "", "",
+  "", "O", "", "I", "", "",
+  "P", "E", "R", "R", "O", "",
+  "", "", "U", "", "", "",
+  "", "", "E", "", "", "",
+  "", "", "S", "", "", ""
+]);
+
+// Cambiar a la vista del Crucigrama
+const goToCrucigrama = () => {
+  console.log("Ir a la vista del crucigrama");
+};
 </script>
-  
+
 <style scoped>
 :global(body) {
   background-color: #701515; /* Granate oscuro */
@@ -69,16 +131,26 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
 
 .puzzles-container {
   position: relative;
-  top: -800px;
+  top: -500px;
   text-align: center;
   color: white;
   padding: 20px;
 }
-.game-container{
+
+/* Contenedor principal para alinear los juegos */
+.games-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px; /* Espaciado entre los divs */
+  margin-top: 20px;
+}
+
+/* Contenedor de la Sopa de Letras */
+.sopa-letras-container {
   background-color: #8B1E1E; /* Un tono más claro de granate */
   width: 200px;
   height: 200px;
-  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,26 +158,29 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
   cursor: pointer; /* Cambia el cursor para indicar que es clicable */
   transition: transform 0.2s ease;
 }
-.game-container:hover{
-  transform: scale(1.05);
-}
-.wordle-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
+
+.sopa-letras-container:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
 }
 
-.wordle-cell {
-  width: 40px;
-  height: 40px;
-  background-color: #444;
+.sopa-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Cinco columnas */
+  gap: 5px;
+  width: 90%;
+  height: 90%;
+}
+
+.sopa-cell {
+  background-color: #A83232; /* Otro tono más claro de granate */
   color: white;
-  font-size: 24px;
+  font-size: 16px; /* Ajusta el tamaño de la fuente */
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
 }
 
 /* Contenedor del Tres en Raya */
@@ -113,7 +188,6 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
   background-color: #8B1E1E; /* Un tono más claro de granate */
   width: 200px;
   height: 200px;
-  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,6 +198,51 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
 
 .tres-en-raya-container:hover {
   transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+}
+
+/* Contenedor del Wordle */
+.wordle-container {
+  background-color: #8B1E1E; /* Un tono más claro de granate */
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+  transition: transform 0.2s ease;
+  overflow: hidden; /* Evita que el contenido sobresalga */
+}
+
+.wordle-container:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+}
+
+.wordle-row {
+  display: flex; /* Alinea las letras en una fila */
+  gap: 5px; /* Espaciado entre las letras */
+  margin-top: 10px;
+  justify-content: center; /* Centra las letras horizontalmente */
+  align-items: center; /* Centra las letras verticalmente */
+}
+
+.wordle-cell {
+  width: 30px; /* Ajusta el ancho para que las letras quepan dentro del contenedor */
+  height: 30px; /* Ajusta la altura para que las letras sean proporcionales */
+  background-color: #A83232; /* Otro tono más claro de granate */
+  color: white;
+  font-size: 20px; /* Ajusta el tamaño de la fuente */
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
+}
+
+.wordle-cell:hover {
+  background-color: #830f0f; /* Efecto de hover */
 }
 
 /* Estilo del tablero */
@@ -146,7 +265,7 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
   border-radius: 5px;
 }
 
-/* Fichas (D y B) con estilo de piezas de juego */
+/* Fichas (D, &, B) con estilo de piezas de juego */
 .piece {
   display: flex;
   justify-content: center;
@@ -159,6 +278,48 @@ const wordlePreview = ref(["W", "O", "R", "D", "L"]);
   font-weight: bold;
   font-family: "Arial Black", sans-serif; /* Fuente gruesa */
   border-radius: 50%; /* Hace que parezca una ficha redonda */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
+}
+
+.crucigrama-container {
+  background-color: #8B1E1E; /* Un tono más claro de granate */
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+  transition: transform 0.2s ease;
+  grid-column: span 3; /* Ocupa todo el ancho de la fila */
+  justify-self: center; /* Centrado horizontal */
+  margin-top: -500px;
+}
+
+
+.crucigrama-container:hover {
+  transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+}
+
+/* Estructura del Crucigrama */
+.crucigrama-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Seis columnas */
+  gap: 5px;
+  width: 90%;
+  height: 90%;
+}
+
+/* Celdas del Crucigrama */
+.crucigrama-cell {
+  background-color: #A83232; /* Otro tono más claro de granate */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
 }
 </style>
