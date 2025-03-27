@@ -1,8 +1,7 @@
 <template>
-    <div class="sopa-letras">
-      <h1>Sopa de Letras 🧩</h1>
+    <div class="sopa-letras-container">
+      <h2>Sopa de Letras</h2>
       <p>Encuentra las palabras ocultas en la sopa de letras.</p>
-  
       <div class="sopa-grid">
         <div
           v-for="(row, rowIndex) in grid"
@@ -10,109 +9,121 @@
           class="sopa-row"
         >
           <div
-            v-for="(cell, colIndex) in row"
+            v-for="(letter, colIndex) in row"
             :key="colIndex"
             class="sopa-cell"
             :class="{ selected: isSelected(rowIndex, colIndex) }"
-            @click="selectCell(rowIndex, colIndex)"
+            @mousedown="startSelection(rowIndex, colIndex)"
+            @mouseover="continueSelection(rowIndex, colIndex)"
+            @mouseup="endSelection"
           >
-            {{ cell }}
+            {{ letter }}
           </div>
         </div>
       </div>
-  
-      <button class="back-button" @click="$emit('go-back')">🔙 Volver</button>
+      <button @click="goBack">Volver</button>
     </div>
   </template>
   
   <script setup>
   import { ref } from "vue";
-  import { defineEmits } from "vue";
   
   const emit = defineEmits(["go-back"]);
   
-  // Matriz de la Sopa de Letras
   const grid = ref([
-    ["M", "&", "B", "&", "C", "C"],
-    ["J", "O", "B", "E", "&", "B"],
-    ["B", "I", "N", "G", "H", "&"],
-    ["I", "J", "M", "Z", "M", "D"],
-    ["&", "J", "K", "M", "O", "D"],
-    ["D", "A", "N", "I", "Y", "N"],
+    ["M", "A", "N", "Z", "A"],
+    ["O", "L", "I", "V", "O"],
+    ["T", "O", "M", "A", "T"],
+    ["U", "V", "A", "P", "O"],
+    ["N", "A", "R", "A", "N"]
   ]);
   
-  // Estado de las celdas seleccionadas
+  const words = ["MANZANA", "OLIVO", "TOMATE", "UVA", "NARANJA"];
+  
   const selectedCells = ref([]);
   
-  // Función para seleccionar celdas
-  const selectCell = (row, col) => {
-    const cellIndex = `${row}-${col}`;
-    if (!selectedCells.value.includes(cellIndex)) {
-      selectedCells.value.push(cellIndex);
+  const startSelection = (row, col) => {
+    selectedCells.value = [{ row, col }];
+  };
+  
+  const continueSelection = (row, col) => {
+    if (selectedCells.value.length > 0) {
+      selectedCells.value.push({ row, col });
     }
   };
   
-  // Verifica si una celda está seleccionada
+  const endSelection = () => {
+    const selectedWord = selectedCells.value
+      .map(({ row, col }) => grid.value[row][col])
+      .join("");
+    
+    if (words.includes(selectedWord)) {
+      alert(`¡Encontraste la palabra: ${selectedWord}!`);
+    }
+  
+    selectedCells.value = [];
+  };
+  
   const isSelected = (row, col) => {
-    return selectedCells.value.includes(`${row}-${col}`);
+    return selectedCells.value.some(cell => cell.row === row && cell.col === col);
+  };
+  
+  const goBack = () => {
+    emit("go-back");
   };
   </script>
   
   <style scoped>
-  .sopa-letras {
+  .sopa-letras-container {
     text-align: center;
     color: white;
     padding: 20px;
-    top: -500px;
+    position: relative;
+    top: -400px;
+    left: -400;
   }
   
   .sopa-grid {
     display: grid;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 5px;
     justify-content: center;
     margin: 20px auto;
   }
   
-  .sopa-row {
-    display: flex;
-    justify-content: center;
-  }
-  
   .sopa-cell {
-    width: 40px;
-    height: 40px;
-    background-color: #a83232;
+    width: 50px;
+    height: 50px;
+    background-color: #A83232;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
     cursor: pointer;
-    transition: background 0.2s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
   }
   
   .sopa-cell.selected {
-    background-color: #ffcc00; /* Amarillo cuando se selecciona */
+    background-color: yellow;
     color: black;
   }
   
-  .back-button {
-    background-color: #8b1e1e;
-    color: white;
+  button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: white;
     border: none;
-    padding: 10px 20px;
+    color: black;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 20px;
   }
   
-  .back-button:hover {
-    background-color: #a83232;
+  button:hover {
+    background-color: lightgray;
   }
   </style>
   
