@@ -189,12 +189,8 @@ function goToJuegosPage() {
       </div>
 
       <!-- Componente Nosotros -->
+      <Nosotros />
     
-        <div id="nosotros" @click="changeSection('nosotros')">
-        <Nosotros />
-        </div>
-      
-
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
         <div class="scrolling-text">
@@ -259,13 +255,7 @@ function goToJuegosPage() {
     <div v-else-if="currentSection === 'foro'">
       <Foro @navigate="changeSection" />
     </div>
-    <div v-else-if="currentSection === 'resenas'">
-      <!-- Si tienes componente de Reseñas, inclúyelo aquí -->
-      <!-- <Reseñas /> -->
-    </div>
-    <div v-else-if="currentSection === 'nosotros'">
-      <Nosotros />
-    </div>
+
 
     <!-- Alerta de cookies -->
     <CookieAlert v-if="showCookieAlert" />

@@ -37,8 +37,15 @@
         <!-- Contenedor del Crucigrama -->
         <div class="crucigrama-container" @click="goToCrucigrama">
           <div class="crucigrama-grid">
-            <div v-for="(cell, index) in crucigramaPreview" :key="index" class="crucigrama-cell">
-              {{ cell }}
+            <div v-for="(row, rowIndex) in crucigramaPreview" :key="rowIndex" class="crucigrama-row">
+              <div
+                v-for="(cell, colIndex) in row"
+                :key="colIndex"
+                class="crucigrama-cell"
+                :class="{ 'filled': cell !== '' }"
+              >
+                {{ cell }}
+              </div>
             </div>
           </div>
         </div>
@@ -48,11 +55,8 @@
     <!-- Vista de los juegos individuales -->
     <TresEnRaya v-if="currentView === 'tresenraya'" @go-back="goBack" />
     <Wordle v-if="currentView === 'wordle'" @go-back="goBack" />
+    <SopaLetras v-if="currentView === 'sopaletras'" @go-back="goBack" />
 
-    <div v-if="currentView === 'sopaletras'" class="sopa-letras-page">
-      <h1>¡Bienvenido a la Sopa de Letras!</h1>
-      <button class="back-button" @click="goBack">⬅ Volver</button>
-    </div>
   </div>
 </template>
 
@@ -62,6 +66,8 @@
 import { ref } from "vue";
 import TresEnRaya from './TresEnRaya.vue';
 import Wordle from "./Wordle.vue";
+import SopaLetras from "./SopaLetras.vue";
+
 
 // Controlar la vista actual
 const currentView = ref('juegos');
@@ -118,6 +124,7 @@ const crucigramaPreview = ref([
 const goToCrucigrama = () => {
   console.log("Ir a la vista del crucigrama");
 };
+
 </script>
 
 <style scoped>
@@ -319,5 +326,10 @@ const goToCrucigrama = () => {
   align-items: center;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
+}
+
+.filled {
+  background-color: #ffffff !important;
+  color: black;
 }
 </style>
