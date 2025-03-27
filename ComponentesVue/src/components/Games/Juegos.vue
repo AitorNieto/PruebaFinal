@@ -33,32 +33,30 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Vista del componente TresEnRaya -->
-    <TresEnRaya v-else-if="currentView === 'tresenraya'" @go-back="goBack" />
-
-    <!-- Vista del componente Wordle -->
-    <Wordle v-else-if="currentView === 'wordle'" @go-back="goBack" />
-
-    <!-- Vista del componente Sopa de Letras -->
-    <div v-else-if="currentView === 'sopaletras'" class="sopa-letras-page">
-      <h1>¡Bienvenido a la Sopa de Letras!</h1>
-      <button class="back-button" @click="goBack">⬅ Volver</button>
-    </div>
-    <div>
-    <!-- Contenedor del Crucigrama -->
-    <div class="crucigrama-container" @click="goToCrucigrama">
-      <div class="crucigrama-grid">
-        <div v-for="(cell, index) in crucigramaPreview" :key="index" class="crucigrama-cell">
-          {{ cell }}
+        <!-- Contenedor del Crucigrama -->
+        <div class="crucigrama-container" @click="goToCrucigrama">
+          <div class="crucigrama-grid">
+            <div v-for="(cell, index) in crucigramaPreview" :key="index" class="crucigrama-cell">
+              {{ cell }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Vista de los juegos individuales -->
+    <TresEnRaya v-if="currentView === 'tresenraya'" @go-back="goBack" />
+    <Wordle v-if="currentView === 'wordle'" @go-back="goBack" />
+
+    <div v-if="currentView === 'sopaletras'" class="sopa-letras-page">
+      <h1>¡Bienvenido a la Sopa de Letras!</h1>
+      <button class="back-button" @click="goBack">⬅ Volver</button>
+    </div>
   </div>
 </template>
+
+
 
 <script setup>
 import { ref } from "vue";
@@ -293,7 +291,7 @@ const goToCrucigrama = () => {
   transition: transform 0.2s ease;
   grid-column: span 3; /* Ocupa todo el ancho de la fila */
   justify-self: center; /* Centrado horizontal */
-  margin-top: -500px;
+  margin-top: -0px;
 }
 
 

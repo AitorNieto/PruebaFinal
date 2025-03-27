@@ -1,5 +1,5 @@
 <template>
-    <div class="wordle-container">
+    <div class="wordle-div">
       <h1>Wordle</h1>
       <p>Adivina la palabra en 6 intentos</p>
   
@@ -46,7 +46,7 @@
   
   const emit = defineEmits(["go-back"]);
   
-  const wordToGuess = ref("TONTO"); // Cambia esto por una palabra aleatoria si quieres
+  const wordToGuess = ref("AUDIO"); // Cambia esto por una palabra aleatoria si quieres
   const attempts = ref(Array(6).fill("").map(() => Array(5).fill("")));
   const currentRow = ref(0);
   const currentWord = ref("");
@@ -95,12 +95,12 @@
   </script>
   
   <style scoped>
-  .wordle-container {
+  .wordle-div {
     text-align: center;
     color: white;
     padding: 20px;
     position: relative;
-    top: -500px; /* Mueve el contenido más arriba */
+    top: -800px;  /* Mueve el contenido más arriba */
   }
   
   .grid {
@@ -151,6 +151,9 @@
     padding: 10px;
     text-align: center;
     font-size: 18px;
+    background-color: #8b1e1e;
+    border-radius: 5px;
+    color: white;
   }
   
   .buttons-container {
