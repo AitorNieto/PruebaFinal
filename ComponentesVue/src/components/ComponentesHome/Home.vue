@@ -136,8 +136,10 @@ function goToJuegosPage() {
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <div class="background">
-      <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
+      <div class="hero-container">
+        <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
         <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+      </div>
         <Countdown class="countdown-container" />
       </div>
 
@@ -339,18 +341,60 @@ function goToJuegosPage() {
 }
 
 /* Título principal */
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+}
+
 .titulo {
-  font-size: 4rem;
+  font-size: 4.7vw;
   font-weight: 700;
   color: #ffffff;
   font-family: 'Georgia', serif;
   text-align: center;
-  margin-bottom: 1rem;
-  margin-left: 28.5%;
-  margin-top: 3.2%;
-  text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
+  margin: 2.8%;
   position: absolute;
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+  top: 0%; /* Centra verticalmente */
+  left: 20%; /* Centra horizontalmente */
+    text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
+  transition: color 0.5s ease, text-shadow 2s ease; /* Transición solo para color y sombra */
+  z-index: 2; /* Asegura que el título esté por encima de otros elementos */
+}
+
+.titulo:hover {
+  color: #ffd700; /* Cambia el color al pasar el ratón */
+  text-shadow: 3px 3px 3px rgba(255, 255, 255, 0.8); /* Cambia el efecto de sombra */
+}   
+
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 8vw;
+  }
+}
+.welcome-image {
+  width: 50vw;
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  border-radius: 20px;
+  transition: transform 0.3s ease; /* Solo afecta a la transformación de la imagen */
+  z-index: 1; /* Asegura que la imagen esté detrás del título */
+}
+
+.welcome-image:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+}
+@media (max-width: 768px) {
+  .welcome-image {
+    width: 70vw;
+  }
 }
 
 .titulo::before {
