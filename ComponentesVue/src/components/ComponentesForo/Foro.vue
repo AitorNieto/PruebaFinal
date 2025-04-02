@@ -24,7 +24,7 @@ export default {
 .foro-container {
   width: 100%;
   height: 100vh;
-  background-image: url('@/assets/ForoMan.png'); /* Ruta a la imagen */
+  background-image: url('@/assets/ForoMan2.png'); /* Ruta a la imagen */
   background-size: cover;
   background-position: center;
   display: flex;
