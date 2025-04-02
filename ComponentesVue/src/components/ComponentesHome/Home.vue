@@ -136,7 +136,7 @@ function goToJuegosPage() {
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <div class="background">
-        <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
+      <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
         <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
         <Countdown class="countdown-container" />
       </div>
@@ -346,8 +346,10 @@ function goToJuegosPage() {
   font-family: 'Georgia', serif;
   text-align: center;
   margin-bottom: 1rem;
+  margin-left: 28.5%;
+  margin-top: 3.2%;
   text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
-  position: relative;
+  position: absolute;
   transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
 
@@ -383,7 +385,8 @@ function goToJuegosPage() {
 /* Imagen de bienvenida */
 .welcome-image {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
+  margin-top: -3%;
   height: auto;
   border-radius: 20px;
   transition: transform 0.3s ease;
@@ -397,8 +400,8 @@ function goToJuegosPage() {
 /* Countdown */
 .countdown-container {
   position: absolute;
-  top: 10%;
-  left: 40px;
+  top: 7%;
+  left: 50px;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -920,5 +923,4 @@ function goToJuegosPage() {
     font-size: 1.5rem;
   }
 }
-
 </style>
