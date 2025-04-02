@@ -17,8 +17,6 @@
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
-                  <h2>Jimmy</h2>
-                  <p>Insta: @dfghjk</p>
                 </div>
               </div>
             </div>
@@ -33,8 +31,6 @@
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
-                  <h2>Daniel Lomas</h2>
-                  <p>Insta: @dfghjk</p>
                 </div>
               </div>
             </div>
@@ -49,8 +45,6 @@
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
                 <div class="card-info">
-                  <h2>Monzón</h2>
-                  <p>Insta: @dfghjk</p>
                 </div>
               </div>
             </div>
@@ -247,7 +241,6 @@ onMounted(() => {
 
 .card-info {
   z-index: 2;
-  background-color: rgba(211, 211, 211, 0.4); /* Fondo grisáceo transparente */
   color: #800000; /* Cambia el color del texto a rojo-granate */
   text-align: center;
   width: 100%;
