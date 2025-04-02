@@ -11,15 +11,15 @@
         <div id="paypal-button-basic"></div>
         <div v-if="currentSubscription === 'basic'" class="tick">&#10003;</div>
       </div>
-      <div class="subscription-option premium" :class="{ active: currentSubscription === 'premium' }">
-        <h2>Premium</h2>
+      <div class="subscription-option prime" :class="{ active: currentSubscription === 'prime' }">
+        <h2>Prime</h2>
         <ul>
-          <li>Acceso a contenido premium</li>
+          <li>Acceso a contenido prime</li>
           <li>Soporte prioritario</li>
           <li>Descuentos exclusivos</li>
         </ul>
-        <div id="paypal-button-premium"></div>
-        <div v-if="currentSubscription === 'premium'" class="tick">&#10003;</div>
+        <div id="paypal-button-prime"></div>
+        <div v-if="currentSubscription === 'prime'" class="tick">&#10003;</div>
       </div>
       <div class="subscription-option vip" :class="{ active: currentSubscription === 'vip' }">
         <h2>VIP</h2>
@@ -84,8 +84,8 @@ const loadPayPalButtons = (plan, price) => {
 };
 
 onMounted(() => {
-  loadPayPalButtons('basic', '10.00'); // Precio para el plan básico
-  loadPayPalButtons('premium', '20.00'); // Precio para el plan premium
+  loadPayPalButtons('basic', '0.00'); // Precio para el plan básico
+  loadPayPalButtons('prime', '20.00'); // Precio para el plan premium
   loadPayPalButtons('vip', '30.00'); // Precio para el plan VIP
 });
 </script>
@@ -126,13 +126,13 @@ onMounted(() => {
   color: #fff;
 }
 
-.subscription-option.premium {
-  background-color: #b8860b; /* Dorado más oscuro */
+.subscription-option.prime {
+  background-color: #b80bb8; /* Dorado más oscuro */
   color: #fff;
 }
 
 .subscription-option.vip {
-  background-color: #b9f2ff; /* Diamante */
+  background-color: #b8860b; /* Diamante */
   color: #fff;
 }
 
