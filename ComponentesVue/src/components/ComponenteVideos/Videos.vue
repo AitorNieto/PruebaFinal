@@ -57,10 +57,11 @@
               </template>
               <template v-else>
                 <iframe
-                  :src="`https://www.youtube.com/embed/${video.id}?autoplay=1`"
+                  :src="`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1&origin=${window.location.origin}`"
                   frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowfullscreen
+                  referrerpolicy="origin"
                 ></iframe>
               </template>
             </div>
@@ -71,6 +72,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Reemplazar la sección de shorts con el componente -->
+    <ShortsYoutube />
   </div>
 </template>
 
@@ -78,91 +82,63 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { videoList, availableSeasons } from './videoData';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
+import ShortsYoutube from './ShortsYoutube.vue';
 
-// Cambiamos el valor inicial a 4 en lugar de 1
+// Variables esenciales
 const currentSeason = ref(4);
-const currentVideoIndex = ref(0);
 const episodesWrapper = ref(null);
 const videos = ref(videoList);
 const seasons = availableSeasons;
+const isDragging = ref(false);
+const startX = ref(0);
+const scrollLeft = ref(0);
 
-// Computamos los videos de la temporada current
+// Computed
 const currentSeasonVideos = computed(() => {
   const seasonData = videos.value.find(s => s.season === currentSeason.value);
   return seasonData ? seasonData.episodes : [];
 });
 
-// Función para cambiar de temporada y reiniciar el índice
+// Funciones principales
 const selectSeason = (season) => {
   currentSeason.value = season;
-  currentVideoIndex.value = 0;
 };
 
 const emit = defineEmits(['navigate']);
-const goBack = () => {
-  emit('navigate', 'home');
-};
+const goBack = () => emit('navigate', 'home');
 
-// Función para reproducir/pausar un video
 const openVideo = (video) => {
-  const seasonData = videos.value.find(s => s.season === currentSeason.value);
-  if (seasonData) {
-    seasonData.episodes.forEach(ep => {
-      if (ep.id !== video.id) {
-        ep.playing = false;
-      }
-    });
+  try {
+    const seasonData = videos.value.find(s => s.season === currentSeason.value);
+    if (seasonData) {
+      seasonData.episodes.forEach(ep => {
+        if (ep.id !== video.id) ep.playing = false;
+      });
+    }
+    video.playing = !video.playing;
+  } catch (err) {
+    console.error('Error al reproducir el video:', err);
   }
-  video.playing = !video.playing;
 };
 
-// Función para navegar entre videos
-const navigateVideo = (direction) => {
-  if (direction === 'next' && currentVideoIndex.value < currentSeasonVideos.value.length - 1) {
-    currentVideoIndex.value++;
-  } else if (direction === 'prev' && currentVideoIndex.value > 0) {
-    currentVideoIndex.value--;
-  }
-  const videoCards = document.querySelectorAll('.video-card');
-  videoCards[currentVideoIndex.value]?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'nearest',
-    inline: 'center'
-  });
-};
-
-// Añadir estas variables para el scroll con arrastre
-const isDragging = ref(false);
-const startX = ref(0);
-const scrollLeft = ref(0);
-
-// Funciones para el drag-to-scroll
+// Funciones de arrastre
 const startDragging = (e) => {
-  // Asegúrate de que solo responda al click izquierdo
   if (e.button !== 0) return;
-  
   isDragging.value = true;
   startX.value = e.pageX - episodesWrapper.value.offsetLeft;
   scrollLeft.value = episodesWrapper.value.scrollLeft;
-  
-  // Añadir clase mientras se arrastra
-  episodesWrapper.value.classList.add('dragging');
 };
 
 const moveScroll = (e) => {
   if (!isDragging.value) return;
-  
   const x = e.pageX - episodesWrapper.value.offsetLeft;
-  const walk = (startX.value - x) * 1; // Multiplicador de velocidad
+  const walk = (startX.value - x);
   episodesWrapper.value.scrollLeft = scrollLeft.value + walk;
 };
 
-const stopDragging = () => {
-  isDragging.value = false;
-  episodesWrapper.value.classList.remove('dragging');
-};
+const stopDragging = () => isDragging.value = false;
 
-// Importante: Añadir y limpiar event listeners globales
+// Lifecycle hooks
 onMounted(() => {
   window.addEventListener('mouseup', stopDragging);
   window.addEventListener('mouseleave', stopDragging);
@@ -606,5 +582,117 @@ onUnmounted(() => {
 /* Ocultar scrollbar pero mantener funcionalidad */
 .episodes-wrapper::-webkit-scrollbar {
   display: none;
+}
+
+/* Estilos para la sección de shorts */
+.shorts-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 0.95), 
+    rgba(80, 0, 0, 0.95)
+  );
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+  margin-top: 4rem;
+}
+
+.shorts-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  background: linear-gradient(45deg, #ffffff, #ffd700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  animation: titleGlow 3s infinite;
+}
+
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.short-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.short-card:hover {
+  transform: translateY(-10px);
+  border-color: #ffd700;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+.short-container {
+  position: relative;
+  width: 100%;
+  padding-top: 177.77%; /* Ratio para shorts (9:16) */
+}
+
+.short-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.short-info {
+  padding: 1.5rem;
+  background: linear-gradient(to top, 
+    rgba(0, 0, 0, 0.95), 
+    rgba(80, 0, 0, 0.8)
+  );
+}
+
+.short-info h3 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #ff0000;
+}
+
+/* Mejora los estilos del iframe */
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  transition: opacity 0.3s ease;
+  background: #000000;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* Mantén el aspect ratio 16:9 */
+  background: #000000;
+  overflow: hidden;
 }
 </style>
