@@ -13,6 +13,7 @@
   import 'aos/dist/aos.css';
   import imageSrc from '@/assets/DyBia.png';
   import Juegos from '../Games/Juegos.vue';
+  import ZDrinks from '../Patrocinadores/ZDrinks.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);
@@ -192,6 +193,8 @@ function goToJuegosPage() {
 
       <!-- Componente Nosotros -->
       <Nosotros />
+      <!-- Componente ZDrinks -->
+      <ZDrinks />
     
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
