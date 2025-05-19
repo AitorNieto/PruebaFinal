@@ -1,4 +1,4 @@
-  <script setup>
+<script setup>
   import { ref, onMounted } from 'vue';
   import { useFirestore, useFirebaseAuth } from 'vuefire';
   import { collection, onSnapshot } from 'firebase/firestore';
@@ -193,12 +193,16 @@ function goToJuegosPage() {
 
       <!-- Componente Nosotros -->
       <Nosotros />
-      <!-- Componente ZDrinks -->
-      <ZDrinks />
-    
+       <!-- Título Patrocinadores -->
+      <h2 class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
+ <!-- Componente ZDrinks -->
+      <ZDrinks />    
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
         <div class="scrolling-text">
+          D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
+          D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
+          D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
           D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
           D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
           D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •D&B • Kappah • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
@@ -969,5 +973,25 @@ function goToJuegosPage() {
     height: 40px;
     font-size: 1.5rem;
   }
+}
+
+.patrocinadores-title {
+  font-size: 3.5rem;
+  color: #ffd700;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  text-shadow: 0 0 10px rgba(255,215,0,0.5),
+               0 0 20px rgba(255,215,0,0.3),
+               0 0 30px rgba(255,215,0,0.2),
+               0 0 40px rgba(255,0,0,0.1);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 1s, transform 1s;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+.patrocinadores-title.slide-in {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>
