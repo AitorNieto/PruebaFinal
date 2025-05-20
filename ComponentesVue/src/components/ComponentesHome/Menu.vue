@@ -199,6 +199,7 @@ function handleLogout() {
   background: linear-gradient(135deg, rgba(20, 0, 0, 0.95), rgba(80, 0, 0, 0.95));
   padding: 10px 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 11000 !important;
 }
 
 .menu ul {
@@ -288,7 +289,7 @@ function handleLogout() {
   cursor: pointer;
   font-size: 1.8rem;
   display: none;
-  z-index: 1000;
+  z-index: 11001 !important;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
