@@ -106,46 +106,56 @@ const sendEmail = () => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Cinzel:wght@700&display=swap');
+
 .form-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2.5rem 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: 2.5rem auto;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #8b0000 0%, #b22222 100%);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(139,0,0,0.10), 0 1.5px 8px #ffd70044;
+  border: 2.5px solid #ffd700;
   text-align: center;
-  transition: box-shadow 0.3s;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  transition: box-shadow 0.3s, border 0.3s;
 }
 
 .form-title {
   cursor: pointer;
   margin-bottom: 0.5rem;
-  font-size: 1.7rem;
-  color: #2c3e50;
+  font-size: 2.1rem;
+  color: #343a40; /* gris fuerte y elegante */
+  font-family: 'Cinzel', serif;
   font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #fff3, 0 2px 8px #fff8;
   transition: color 0.2s;
 }
 .form-title.clickable:hover {
-  color: #3498db;
+  color: #8b0000; /* rojo vino al pasar el ratón */
 }
 
 .open-form-btn {
   margin: 1.2rem auto 0 auto;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-  font-weight: 600;
+  background: linear-gradient(90deg, #8b0000 60%, #ffd700 100%);
+  color: #fff;
+  font-weight: 700;
   padding: 0.8rem 2.2rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 1.1rem;
-  transition: background 0.3s, transform 0.2s;
+  font-size: 1.15rem;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  box-shadow: 0 2px 12px #8b000033;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   display: block;
 }
 .open-form-btn:hover {
-  background: linear-gradient(135deg, #2980b9, #3498db);
+  background: linear-gradient(90deg, #ffd700 0%, #8b0000 100%);
+  color: #8b0000;
   transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 18px #ffd70055;
 }
 
 .expand-form {
@@ -168,7 +178,6 @@ const sendEmail = () => {
   opacity: 1;
 }
 
-/* Resto de tus estilos existentes... */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -176,69 +185,79 @@ label {
   display: block;
   font-weight: 600;
   margin-bottom: 0.6rem;
-  color: #34495e;
-  font-size: 0.95rem;
+  color: #343a40; /* gris fuerte y elegante */
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
 }
 input,
 select,
 textarea {
   width: 100%;
   padding: 0.8rem 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
+  border: 2px solid #ffd700;
+  border-radius: 12px;
   font-size: 1rem;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
   transition: all 0.3s ease;
-  background-color: #f9f9f9;
+  background-color: #fff8f0;
+  color: #8b0000;
 }
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-  background-color: white;
+  border-color: #ff9f1c;
+  box-shadow: 0 0 0 3px #ffd70066;
+  background-color: #fff;
 }
 textarea {
-  min-height: 150px;
+  min-height: 120px;
   resize: vertical;
 }
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b0000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1em;
 }
+
 button[type="submit"] {
   width: 100%;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-  font-weight: 600;
+  background: linear-gradient(90deg, #8b0000 60%, #ffd700 100%);
+  color: #fff;
+  font-weight: 700;
   padding: 1rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-top: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  box-shadow: 0 2px 12px #8b000033;
 }
 button[type="submit"]:hover {
-  background: linear-gradient(135deg, #2980b9, #3498db);
+  background: linear-gradient(90deg, #ffd700 0%, #8b0000 100%);
+  color: #8b0000;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+  box-shadow: 0 5px 18px #ffd70055;
 }
 button[type="submit"]:active {
   transform: translateY(0);
 }
 button[type="submit"]:disabled {
-  background: #95a5a6;
+  background: #b22222;
   cursor: not-allowed;
   transform: none !important;
+  color: #fff;
 }
+
 .loading {
   display: inline-flex;
   align-items: center;
@@ -250,7 +269,7 @@ button[type="submit"]:disabled {
   height: 1rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top-color: white;
+  border-top-color: #ffd700;
   animation: spin 1s linear infinite;
 }
 @keyframes spin {
@@ -258,12 +277,14 @@ button[type="submit"]:disabled {
 }
 .notification {
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-top: 1.5rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   font-weight: 500;
+  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-size: 1.05rem;
 }
 .notification svg {
   width: 1.5rem;
@@ -271,14 +292,14 @@ button[type="submit"]:disabled {
   flex-shrink: 0;
 }
 .success {
-  background-color: rgba(46, 204, 113, 0.1);
+  background-color: rgba(46, 204, 113, 0.13);
   color: #27ae60;
 }
 .success svg {
   fill: #27ae60;
 }
 .error {
-  background-color: rgba(231, 76, 60, 0.1);
+  background-color: rgba(231, 76, 60, 0.13);
   color: #e74c3c;
 }
 .error svg {
@@ -286,11 +307,11 @@ button[type="submit"]:disabled {
 }
 @media (max-width: 640px) {
   .form-container {
-    padding: 1.5rem;
+    padding: 1rem;
     margin: 1rem;
   }
-  h2 {
-    font-size: 1.5rem;
+  .form-title {
+    font-size: 1.3rem;
   }
 }
 </style>
