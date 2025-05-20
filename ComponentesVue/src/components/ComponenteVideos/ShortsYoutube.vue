@@ -1,6 +1,6 @@
 <template>
   <div class="shorts-container">
-    <h2 class="shorts-title">Últimos Shorts</h2>
+    <h2 class="shorts-title">Últimos Reels</h2>
     <div class="shorts-grid">
       <div v-for="short in shorts" :key="short.id" class="short-card">
         <div class="short-container">
@@ -35,7 +35,7 @@ const shorts = ref([
     
   },
   {
-    id: '8OWHIQ0vuTo',
+    id: 'PYbCOyRAk3I',
   }
 ]);
 </script>

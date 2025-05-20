@@ -142,6 +142,12 @@ const stopDragging = () => isDragging.value = false;
 
 // Lifecycle hooks
 onMounted(() => {
+  // Scroll suave al inicio de la página
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+  
   window.addEventListener('mouseup', stopDragging);
   window.addEventListener('mouseleave', stopDragging);
 });
