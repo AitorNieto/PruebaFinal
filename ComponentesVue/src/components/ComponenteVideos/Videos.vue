@@ -75,6 +75,7 @@
 
     <!-- Reemplazar la sección de shorts con el componente -->
     <ShortsYoutube />
+    <VideosTiktok />
   </div>
 </template>
 
@@ -83,6 +84,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { videoList, availableSeasons } from './videoData';
 import fotoTitulo from '@/assets/fotoTitulo.jpeg';
 import ShortsYoutube from './ShortsYoutube.vue';
+import VideosTiktok from './VideosTiktok.vue';
 
 // Variables esenciales
 const currentSeason = ref(4);
@@ -694,5 +696,112 @@ iframe {
   padding-top: 56.25%; /* Mantén el aspect ratio 16:9 */
   background: #000000;
   overflow: hidden;
+}
+
+/* Ajustes responsive */
+@media (max-width: 1024px) {
+  .main-title {
+    font-size: 3.5rem;
+  }
+
+  .video-card {
+    width: 350px;
+  }
+
+  .episodes-wrapper {
+    padding: 2rem 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.5rem;
+  }
+
+  .title-container {
+    height: 200px;
+  }
+
+  .video-card {
+    width: 300px;
+  }
+
+  .seasons-nav {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .season-button {
+    padding: 1rem 1.5rem;
+  }
+
+  .episodes-wrapper {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .fancy-button {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title {
+    font-size: 2rem;
+  }
+
+  .title-container {
+    height: 150px;
+  }
+
+  .video-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .seasons-nav {
+    padding: 0.5rem;
+  }
+
+  .season-button {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .video-info h3 {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .play-overlay i {
+    font-size: 3rem;
+  }
+
+  .episodes-wrapper {
+    padding: 0.5rem;
+  }
+
+  .fancy-button {
+    width: 90%;
+    max-width: 280px;
+  }
+}
+
+/* Ajustes para mejorar la navegación táctil */
+@media (hover: none) {
+  .video-card:hover {
+    transform: none;
+  }
+
+  .play-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .season-button:hover {
+    transform: none;
+  }
 }
 </style>

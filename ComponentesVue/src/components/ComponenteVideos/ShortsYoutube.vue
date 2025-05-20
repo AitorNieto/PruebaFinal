@@ -24,19 +24,18 @@ import { ref } from 'vue';
 const shorts = ref([
   {
     id: 'b9O0My-GqM0',
-    title: 'Short 1'
+    
   },
   {
     id: 'Q1XEq2urGJY',
-    title: 'Short 2'
+    
   },
   {
     id: 'hG_dv3FXAPI',
-    title: 'Short 3'
+    
   },
   {
     id: '8OWHIQ0vuTo',
-    title: 'Short 4'
   }
 ]);
 </script>
@@ -61,10 +60,11 @@ const shorts = ref([
 
 .shorts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1400px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Reducido de 300px a 200px */
+  gap: 1.5rem;
+  max-width: 1200px; /* Reducido de 1400px */
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .short-card {
@@ -110,5 +110,33 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Ajustes responsive para títulos y contenedores */
+@media (max-width: 768px) {
+  .shorts-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .shorts-container {
+    padding: 2rem 1rem;
+  }
+
+  .shorts-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .shorts-grid {
+    grid-template-columns: 1fr; /* 1 columna en móviles */
+  }
+
+  .short-card {
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
 </style>
