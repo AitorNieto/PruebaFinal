@@ -1,12 +1,12 @@
 <template>
-  <div class="foro-container">
-    <!-- Botón de volver al Home -->
-    <button class="fancy-button back-button" @click="goBack">
-      <i class="fas fa-arrow-left"></i>
-      <span>Volver al Inicio</span>
-      <div class="button-glow"></div>
-    </button>
+  <!-- Botón fijo arriba a la izquierda -->
+  <button class="fancy-button back-button-fixed" @click="goBack">
+    <i class="fas fa-arrow-left"></i>
+    <span>Volver al Inicio</span>
+    <div class="button-glow"></div>
+  </button>
 
+  <div class="foro-container">
     <!-- Contenido nuevo del foro -->
     <div class="forum-content">
       <!-- Tema semanal -->
@@ -50,7 +50,8 @@
         <button @click="postComment">Enviar comentario</button>
       </div>
       <div v-else class="auth-warning">
-        🔒 Debes <a @click="$emit('navigate', 'auth')">iniciar sesión</a> para participar.
+        🔒 Debes <a @click="$emit('navigate', 'auth')">iniciar sesión</a> o 
+        <a @click="$emit('navigate', 'register')">registrarte</a> para participar.
       </div>
     </div>
   </div>
@@ -325,5 +326,28 @@ textarea, button:not(.fancy-button) {
 
 button:not(.fancy-button) {
   background: #800000;
+}
+
+.auth-warning a {
+  color: #ffd900;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.auth-warning a:hover {
+  color: #fff;
+}
+
+.fancy-button.back-button {
+  align-self: flex-start;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.back-button-fixed {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10010;
+  margin: 0;
 }
 </style>

@@ -195,11 +195,11 @@ function goToJuegosPage() {
       <!-- Componente Nosotros -->
       <Nosotros />
        <!-- Título Patrocinadores -->
-      <h2 class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
+      <h2 id="patrocinadores" class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
  <!-- Componente ZDrinks -->
       <ZDrinks />    
       <!-- Componente Formulario -->
-       <h2 class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
+       <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
       <Formulario/>   
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       
