@@ -16,7 +16,7 @@
             <option value="" disabled selected>Selecciona una opción</option>
             <option value="General">General</option>
             <option value="Soporte">Soporte</option>
-            <option value="Presupuesto">Presupuesto</option>
+            <option value="Presupuesto">Colaboraciones</option>
           </select>
         </div>
 
@@ -138,7 +138,7 @@ const sendEmail = () => {
 
 .open-form-btn {
   margin: 1.2rem auto 0 auto;
-  background: linear-gradient(90deg, #8b0000 60%, #ffd700 100%);
+  background: linear-gradient(90deg, #8b0000 60%, #020000 100%);
   color: #fff;
   font-weight: 700;
   padding: 0.8rem 2.2rem;
@@ -152,8 +152,8 @@ const sendEmail = () => {
   display: block;
 }
 .open-form-btn:hover {
-  background: linear-gradient(90deg, #ffd700 0%, #8b0000 100%);
-  color: #8b0000;
+  background: linear-gradient(90deg, #020000 0%, #8b0000 100%);
+  color: #f3f3f3;
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 4px 18px #ffd70055;
 }
@@ -225,7 +225,7 @@ select {
 
 button[type="submit"] {
   width: 100%;
-  background: linear-gradient(90deg, #8b0000 60%, #ffd700 100%);
+  background: linear-gradient(90deg, #8b0000 60%, #020000 100%);
   color: #fff;
   font-weight: 700;
   padding: 1rem;
@@ -243,8 +243,8 @@ button[type="submit"] {
   box-shadow: 0 2px 12px #8b000033;
 }
 button[type="submit"]:hover {
-  background: linear-gradient(90deg, #ffd700 0%, #8b0000 100%);
-  color: #8b0000;
+  background: linear-gradient(90deg, #020000 0%, #8b0000 100%);
+  color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 5px 18px #ffd70055;
 }
@@ -313,5 +313,9 @@ button[type="submit"]:disabled {
   .form-title {
     font-size: 1.3rem;
   }
+}
+.site-footer {
+  /* ...tus estilos previos... */
+  padding-bottom: 2.7rem; /* Añade espacio para la barra de invitados */
 }
 </style>
