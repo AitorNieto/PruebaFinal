@@ -14,7 +14,7 @@
   import imageSrc from '@/assets/DyBia.png';
   import Juegos from '../Games/Juegos.vue';
   import ZDrinks from '../Patrocinadores/ZDrinks.vue';
-
+  import Formulario from './Formulario.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -197,6 +197,9 @@ function goToJuegosPage() {
       <h2 class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
  <!-- Componente ZDrinks -->
       <ZDrinks />    
+      <!-- Componente Formulario -->
+       <h2 class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
+      <Formulario/>   
       <!-- Barra de desplazamiento extra (amigable y con info) -->
       <div class="scrolling-bar">
         <div class="scrolling-text">
@@ -993,5 +996,11 @@ function goToJuegosPage() {
 .patrocinadores-title.slide-in {
   opacity: 1;
   transform: translateX(0);
+}
+.form-container {
+  position: relative;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  background: white;
 }
 </style>
