@@ -17,7 +17,7 @@
   import Formulario from './Formulario.vue';
   import BarraInvitados from './Extras/BarraInvitados.vue';
   import Novedades from './Novedades.vue';
-  import Confetti from './Extras/confetti.vue';
+  import Confetti from './Extras/Confetti.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
