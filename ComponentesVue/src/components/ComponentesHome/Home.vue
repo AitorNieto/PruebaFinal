@@ -2,16 +2,13 @@
   import { ref, onMounted } from 'vue';
   import { useFirestore, useFirebaseAuth } from 'vuefire';
   import { collection, onSnapshot } from 'firebase/firestore';
-  import Countdown from './Extras/Countdown.vue';
   import Nosotros from '../ComponentesNosotros/Nosotros.vue';
   import Foro from '../ComponentesForo/Foro.vue';
   import Videos from '../ComponenteVideos/Videos.vue';
   import CookieAlert from './Extras/CookieAlert.vue';
   import StarBackground from './Extras/StarBackground.vue';
-  import axios from 'axios';
   import AOS from 'aos';
   import 'aos/dist/aos.css';
-  import imageSrc from '@/assets/FondoDyB.png';
   import Juegos from '../Games/Juegos.vue';
   import ZDrinks from '../Patrocinadores/ZDrinks.vue';
   import Formulario from './Formulario.vue';
@@ -27,8 +24,6 @@ const db = useFirestore();
 const auth = useFirebaseAuth();
 const currentSection = ref('home');
 const showCookieAlert = ref(false);
-const latestVideoId = ref('g7jLY3Z17uk'); // Video por defecto
-const loadingVideo = ref(true);
 
 
 // Función para cambiar de sección y hacer scroll suave
@@ -133,9 +128,7 @@ function scrollToZDrinks() {
        <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
       <Formulario/>   
       <Footer @go-juegos="goToJuegosPage" />
-      <div v-if="currentSection === 'puzzles'">
-      <Puzzles /> <!-- Muestra el componente Puzzles -->
-      </div>
+   
     </div>
 
     <!-- Otras secciones según la navegación -->
