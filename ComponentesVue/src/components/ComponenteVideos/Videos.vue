@@ -33,8 +33,8 @@
         <div 
           class="episodes-wrapper" 
           ref="episodesWrapper"
-          @mousedown.prevent="startDragging"
-          @mousemove.prevent="moveScroll"
+          @mousedown="startDragging"
+          @mousemove="moveScroll"
           @mouseup="stopDragging"
           @mouseleave="stopDragging"
           :class="{ 'dragging': isDragging }"
@@ -44,9 +44,13 @@
             :key="video.id" 
             class="video-card"
             :class="{ 'video-playing': video.playing }"
-            @click="openVideo(video)"
           >
-            <div class="video-container">
+            <div class="video-container" 
+                 @click="openVideo(video, $event)"
+                 @mousedown.stop="startDragging"
+                 @mousemove.stop="moveScroll"
+                 @mouseup.stop="stopDragging"
+                 @mouseleave.stop="stopDragging">
               <template v-if="!video.playing">
                 <div class="video-thumbnail">
                   <img :src="video.thumbnail" :alt="video.title">
@@ -57,11 +61,10 @@
               </template>
               <template v-else>
                 <iframe
-                  :src="`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1&origin=${window.location.origin}`"
+                  :src="`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`"
                   frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen
-                  referrerpolicy="origin"
                 ></iframe>
               </template>
             </div>
@@ -94,6 +97,13 @@ const seasons = availableSeasons;
 const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
+const clickStartTime = ref(0); // Añadida esta variable
+const clickStartX = ref(0);    // Añadida esta variable
+const clickTimeout = ref(null); // Añadida para mejor manejo del click
+
+// Añadir estas variables para mejor control
+const isClick = ref(true); // Nueva variable para controlar si es click
+const moveDistance = ref(0); // Nueva variable para medir el movimiento
 
 // Computed
 const currentSeasonVideos = computed(() => {
@@ -103,20 +113,38 @@ const currentSeasonVideos = computed(() => {
 
 // Funciones principales
 const selectSeason = (season) => {
+  // Resetear el estado de reproducción de todos los videos
+  videos.value.forEach(seasonData => {
+    if (seasonData.episodes) {
+      seasonData.episodes.forEach(ep => {
+        ep.playing = false;
+      });
+    }
+  });
   currentSeason.value = season;
 };
 
 const emit = defineEmits(['navigate']);
 const goBack = () => emit('navigate', 'home');
 
-const openVideo = (video) => {
+const openVideo = (video, event) => {
+  // Prevenir la propagación del evento
+  event?.stopPropagation();
+  
+  // Solo reproducir si fue un click y no un arrastre
+  if (isDragging.value || moveDistance.value > 5) return;
+  
   try {
     const seasonData = videos.value.find(s => s.season === currentSeason.value);
     if (seasonData) {
+      // Primero cerrar todos los videos excepto el actual
       seasonData.episodes.forEach(ep => {
-        if (ep.id !== video.id) ep.playing = false;
+        if (ep.id !== video.id) {
+          ep.playing = false;
+        }
       });
     }
+    // Cambiar el estado del video actual
     video.playing = !video.playing;
   } catch (err) {
     console.error('Error al reproducir el video:', err);
@@ -126,19 +154,38 @@ const openVideo = (video) => {
 // Funciones de arrastre
 const startDragging = (e) => {
   if (e.button !== 0) return;
-  isDragging.value = true;
-  startX.value = e.pageX - episodesWrapper.value.offsetLeft;
+  isClick.value = true;
+  isDragging.value = false;
+  startX.value = e.pageX;
   scrollLeft.value = episodesWrapper.value.scrollLeft;
+  clickStartTime.value = Date.now();
+  clickStartX.value = e.pageX;
+  moveDistance.value = 0;
 };
 
 const moveScroll = (e) => {
-  if (!isDragging.value) return;
-  const x = e.pageX - episodesWrapper.value.offsetLeft;
-  const walk = (startX.value - x);
-  episodesWrapper.value.scrollLeft = scrollLeft.value + walk;
+  if (!e.buttons) return;
+  const x = e.pageX;
+  const walk = x - startX.value;
+  moveDistance.value = Math.abs(x - clickStartX.value);
+  
+  if (moveDistance.value > 5) {
+    isDragging.value = true;
+    episodesWrapper.value.scrollLeft = scrollLeft.value - walk;
+  }
 };
 
-const stopDragging = () => isDragging.value = false;
+const stopDragging = (e) => {
+  if (moveDistance.value < 5) {
+    isDragging.value = false;
+  }
+  
+  setTimeout(() => {
+    isDragging.value = false;
+    moveDistance.value = 0;
+    isClick.value = true;
+  }, 50);
+};
 
 // Lifecycle hooks
 onMounted(() => {
@@ -153,6 +200,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  // Limpiar el timeout al desmontar
+  if (clickTimeout.value) {
+    clearTimeout(clickTimeout.value);
+  }
   window.removeEventListener('mouseup', stopDragging);
   window.removeEventListener('mouseleave', stopDragging);
 });
@@ -248,11 +299,16 @@ onUnmounted(() => {
 
 .episodes-wrapper.dragging {
   cursor: grabbing;
-  scroll-behavior: auto; /* Desactivar scroll suave mientras se arrastra */
+  scroll-behavior: auto;
+}
+
+.video-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .episodes-wrapper.dragging .video-card {
-  pointer-events: none; /* Evita clicks mientras se arrastra */
+  pointer-events: none;
 }
 
 /* Mejoramos la apariencia del scroll */
