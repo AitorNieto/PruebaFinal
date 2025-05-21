@@ -16,7 +16,7 @@
               <div class="video-container">
                 <iframe
                   class="video-iframe"
-                  :src="'https://www.youtube.com/embed/' + latestVideoId"
+                  src="https://www.youtube.com/embed/g7jLY3Z17uk"
                   title="Último episodio de Delirios y Barbaries"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -32,48 +32,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
 
-const latestVideoId = ref('g7jLY3Z17uk');
-const loadingVideo = ref(true);
-const CHANNEL_ID = 'UCWYxQaXnpQVzXaO1Yz4VyWQ';
-const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-
-const fetchLatestVideo = async () => {
-  try {
-    if (!API_KEY || API_KEY === 'TU_API_KEY') {
-      console.log('Using default video');
-      return;
-    }
-    loadingVideo.value = true;
-    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        key: API_KEY,
-        channelId: CHANNEL_ID,
-        part: 'snippet',
-        order: 'date',
-        maxResults: 1,
-        type: 'video'
-      }
-    });
-    if (response.data.items && response.data.items.length > 0) {
-      latestVideoId.value = response.data.items[0].id.videoId;
-    }
-  } catch (error) {
-    console.error('Error obteniendo el último video:', error);
-    latestVideoId.value = 'Hs2FQvz-Qn4';
-  } finally {
-    loadingVideo.value = false;
-  }
-};
-
-onMounted(async () => {
-  await fetchLatestVideo();
-  setTimeout(() => {
-    setInterval(fetchLatestVideo, 1800000);
-  }, 3000);
-});
 </script>
 
 <style scoped>
@@ -89,8 +48,6 @@ onMounted(async () => {
     inset 0 0 100px rgba(0, 0, 0, 0.8),
     inset 0 0 300px rgba(136, 0, 0, 0.4);
 }
-
-
 
 /* Contenedor principal */
 .novedades-container {
@@ -138,9 +95,9 @@ onMounted(async () => {
 /* Video y efectos */
 .ultimo-video {
   width: 100%;
-  max-width: 1400px; /* Aumentado el ancho máximo */
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem; /* Aumentado el padding */
+  padding: 4rem;
   background: rgba(20, 0, 0, 0.8);
   border-radius: 40px;
   backdrop-filter: blur(15px);
@@ -194,11 +151,11 @@ onMounted(async () => {
 .video-wrapper {
   position: relative;
   width: 100%;
-  max-width: 1000px; /* Aumentado el ancho máximo */
+  max-width: 1000px;
   margin: 0 auto;
   border: 4px solid rgba(255,215,0,0.3);
   border-radius: 30px;
-  padding: 12px; /* Aumentado el padding */
+  padding: 12px;
   background: linear-gradient(45deg, #ffd700, #ff4500);
   box-shadow: 
     0 0 50px rgba(136,25,25,0.7),
@@ -214,7 +171,7 @@ onMounted(async () => {
 
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* Ratio 16:9 */
+  padding-bottom: 56.25%;
   width: 100%;
   height: 0;
   overflow: hidden;
@@ -229,8 +186,8 @@ onMounted(async () => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100% !important; /* Forzar ancho completo */
-  height: 100% !important; /* Forzar alto completo */
+  width: 100% !important;
+  height: 100% !important;
   border: none;
   object-fit: cover;
 }
