@@ -11,13 +11,14 @@
   import axios from 'axios';
   import AOS from 'aos';
   import 'aos/dist/aos.css';
-  import imageSrc from '@/assets/DyBia.png';
+  import imageSrc from '@/assets/FondoDyB.png';
   import Juegos from '../Games/Juegos.vue';
   import ZDrinks from '../Patrocinadores/ZDrinks.vue';
   import Formulario from './Formulario.vue';
   import BarraInvitados from './Extras/BarraInvitados.vue';
   import Novedades from './Novedades.vue';
   import Confetti from './Extras/confetti.vue';
+  import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -88,6 +89,13 @@ onMounted(async () => {
 function goToJuegosPage() {
   currentSection.value = 'juegos';
 }
+
+function scrollToZDrinks() {
+  const section = document.getElementById('patrocinadores');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 </script>
 
 <template>
@@ -95,11 +103,12 @@ function goToJuegosPage() {
   <Confetti/>
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
+      <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
       <div class="background">
-      <div class="hero-container">
-        <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
-        <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
-      </div>
+        <div class="hero-container">
+          <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
+          <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+        </div>
         <Countdown class="countdown-container" />
       </div>
 
@@ -167,10 +176,10 @@ function goToJuegosPage() {
 
     <!-- Otras secciones según la navegación -->
     <div v-else-if="currentSection === 'videos'">
-      <Videos @navigate="changeSection" />
+      <Videos @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
     </div>
     <div v-else-if="currentSection === 'foro'">
-      <Foro @navigate="changeSection" />
+      <Foro @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
     </div>
 
 
@@ -296,14 +305,13 @@ function goToJuegosPage() {
   }
 }
 .welcome-image {
-  width: 50vw;
-  max-width: 600px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 2rem; /* antes: -3% */
   height: auto;
-  margin: 0 auto;
-  display: block;
   border-radius: 20px;
-  transition: transform 0.3s ease; /* Solo afecta a la transformación de la imagen */
-  z-index: 1; /* Asegura que la imagen esté detrás del título */
+  transition: transform 0.3s ease;
+  z-index: 1;
 }
 
 .welcome-image:hover {
@@ -348,7 +356,7 @@ function goToJuegosPage() {
 .welcome-image {
   width: 100%;
   max-width: 1200px;
-  margin-top: -3%;
+  margin-top: 2rem; /* antes: -3% */
   height: auto;
   border-radius: 20px;
   transition: transform 0.3s ease;
