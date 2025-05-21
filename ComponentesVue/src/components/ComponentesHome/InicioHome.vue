@@ -1,9 +1,13 @@
 <template>
   <div class="background">
     <div class="hero-container">
+      <!-- Contador en posición absoluta dentro del hero -->
+      <Countdown class="countdown-container" />
+      
       <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
       <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
-      <!-- Panel de colaboración fuera del content-wrapper y pegado al borde derecho -->
+      
+      <!-- Panel de colaboración en posición absoluta dentro del hero -->
       <div class="collaboration-panel">
         <div class="collaboration-badge">
           <span class="badge-text">ZDrinks</span>
@@ -13,7 +17,6 @@
         <p class="partner-text">Patrocinador Oficial</p>
       </div>
     </div>
-    <Countdown class="countdown-container" />
   </div>
 </template>
 
@@ -57,40 +60,36 @@ import imageSrc from '@/assets/FondoDyB.png';
   margin: 2rem auto 0 auto;
   display: block;
   transition: transform 0.3s;
-  /* Borde eliminado */
+  z-index: 1;
 }
 
 .welcome-image:hover {
   transform: scale(1.03);
 }
 
-/* Panel de colaboración pegado al borde derecho de la pantalla */
+/* Panel de colaboración - Posición absoluta dentro del hero */
 .collaboration-panel {
-  position: fixed;
-  top: 60px;
-  right: 0;
-  transform: translateY(0);
+  position: absolute;
+  top: 300px;
+  right: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
-  border-radius: 15px 0 0 15px;
-  padding: 30px 18px 30px 24px;
+  border-radius: 15px;
+  padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  width: 260px;
-  max-width: 320px;
-  min-width: 180px;
-  margin-right: 0;
-  z-index: 1002;
+  width: 220px;
+  z-index: 2;
 }
 
 .collaboration-badge {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .badge-text {
@@ -104,23 +103,23 @@ import imageSrc from '@/assets/FondoDyB.png';
 
 .badge-line {
   height: 1px;
-  width: 50px;
+  width: 40px;
   background: linear-gradient(to right, #ffffff, transparent);
-  margin-left: 15px;
+  margin-left: 12px;
 }
 
 .partner-logo {
   width: 100%;
-  max-width: 180px;
+  max-width: 160px;
   height: auto;
-  margin: 15px 0;
+  margin: 10px 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .partner-text {
   color: white;
-  font-size: 1.1rem;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 8px;
   font-style: italic;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
@@ -131,44 +130,31 @@ import imageSrc from '@/assets/FondoDyB.png';
   color: #ffffff;
   font-family: 'Georgia', serif;
   text-align: center;
-  margin: 1.2% auto 0 auto;
-  position: static;
+  margin: 0.8% auto 0 auto;
+  position: relative;
   text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
   transition: color 0.5s ease, text-shadow 2s ease;
   z-index: 2;
 }
 
+/* Contador en posición absoluta dentro del hero */
 .countdown-container {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  z-index: 1001;
+  position: absolute;
+  top: 350px;
+  left: 30px;
+  z-index: 2;
 }
 
-/* RESPONSIVE: Panel y contador abajo en móvil, ambos visibles */
-@media (max-width: 900px) {
+/* Ajustes responsive */
+@media (max-width: 1024px) {
   .welcome-image {
-    width: 95vw;
-    max-width: 98vw;
-    margin: 0 auto;
+    width: 85vw;
   }
+  
   .collaboration-panel {
-    top: 10px;
-    right: 0;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    width: 80vw;
-    max-width: 320px;
-    border-radius: 15px 0 0 15px;
-    padding: 12px 8px 12px 14px;
-  }
-  .countdown-container {
-    top: 10px;
-    left: 0;
-    right: auto;
-    bottom: auto;
-    transform: none;
+    width: 200px;
+    padding: 15px;
+    right: 15px;
   }
 }
 
@@ -176,11 +162,45 @@ import imageSrc from '@/assets/FondoDyB.png';
   .titulo {
     font-size: 8vw;
   }
+  
+  .hero-container {
+    padding-top: 5rem;
+  }
+  
+  .welcome-image {
+    width: 90vw;
+    margin-top: 1rem;
+  }
+  
+  .collaboration-panel {
+    top: 15px;
+    right: 10px;
+    width: 160px;
+    padding: 12px;
+  }
+  
   .badge-text {
     font-size: 1rem;
   }
+  
   .partner-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+  }
+  
+  .countdown-container {
+    top: 15px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collaboration-panel {
+    width: 140px;
+    padding: 10px;
+  }
+  
+  .partner-logo {
+    max-width: 120px;
   }
 }
 </style>
