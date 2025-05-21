@@ -19,7 +19,7 @@
         
         <div class="offer-card">
           <p class="offer-description">Usa el código</p>
-          <div class="promo-code">DELIRIOS10</div>
+          <div class="promo-code">DELIRIOSYBARBARIES10</div>
           <p class="offer-description">y obtén un <span class="discount">10% DE DESCUENTO</span></p>
         </div>
 
