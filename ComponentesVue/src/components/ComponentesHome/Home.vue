@@ -16,6 +16,7 @@
   import ZDrinks from '../Patrocinadores/ZDrinks.vue';
   import Formulario from './Formulario.vue';
   import BarraInvitados from './Extras/BarraInvitados.vue';
+  import Novedades from './Novedades.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -25,39 +26,6 @@ const showCookieAlert = ref(false);
 const latestVideoId = ref('g7jLY3Z17uk'); // Video por defecto
 const loadingVideo = ref(true);
 
-// API de YouTube (usa la variable de entorno)
-const CHANNEL_ID = 'UCWYxQaXnpQVzXaO1Yz4VyWQ';
-const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-
-
-// Función para obtener el último video del canal
-const fetchLatestVideo = async () => {
-  try {
-    if (!API_KEY || API_KEY === 'TU_API_KEY') {
-      console.log('Using default video');
-      return;
-    }
-    loadingVideo.value = true;
-    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        key: API_KEY,
-        channelId: CHANNEL_ID,
-        part: 'snippet',
-        order: 'date',
-        maxResults: 1,
-        type: 'video'
-      }
-    });
-    if (response.data.items && response.data.items.length > 0) {
-      latestVideoId.value = response.data.items[0].id.videoId;
-    }
-  } catch (error) {
-    console.error('Error obteniendo el último video:', error);
-    latestVideoId.value = 'Hs2FQvz-Qn4'; // Video de respaldo
-  } finally {
-    loadingVideo.value = false;
-  }
-};
 
 // Función para cambiar de sección y hacer scroll suave
 function changeSection(section) {
@@ -87,12 +55,6 @@ onMounted(async () => {
   // Inicializa AOS para animaciones
   AOS.init({ duration: 1000, once: true });
   
-  // Obtiene el último video y programa actualizaciones cada 30 minutos
-  await fetchLatestVideo();
-  setTimeout(() => {
-    setInterval(fetchLatestVideo, 1800000);
-  }, 3000);
-
   // Descarga los posts del usuario
   descargarPosts();
 
@@ -102,16 +64,10 @@ onMounted(async () => {
   }, 2000);
 
   // Detecta el scroll para animar algunos elementos
-  const novedadesTitle = document.querySelector('.novedades-title');
+  
   const videoSection = document.querySelector('.scroll-bg');
   const seasons = document.querySelectorAll('.season');
   window.addEventListener('scroll', () => {
-    if (novedadesTitle) {
-      const rect = novedadesTitle.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        novedadesTitle.classList.add('slide-in');
-      }
-    }
     if (videoSection) {
       const rect = videoSection.getBoundingClientRect();
       if (rect.top < window.innerHeight) {
@@ -145,39 +101,8 @@ function goToJuegosPage() {
         <Countdown class="countdown-container" />
       </div>
 
-      <!-- Sección de Novedades -->
-      <div id="novedades" class="red-background">
-        <div class="novedades-container">
-          <div class="title-wrapper">
-            <div class="title-decoration left"></div>
-            <h1 class="novedades-title">Novedades</h1>
-            <div class="title-decoration right"></div>
-          </div>
-          <div class="home-content">
-            <div class="content-row">
-              <div class="ultimo-video">
-                <div class="episode-header">
-                  <h2 class="episode-title">Último Video</h2>
-                  <div class="episode-underline"></div>
-                </div>
-                <div class="video-wrapper">
-                  <div class="video-container">
-                    <iframe
-                      width="560"
-                      height="315"
-                      :src="'https://www.youtube.com/embed/' + latestVideoId"
-                      title="Último episodio de Delirios y Barbaries"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Reemplazar la sección de novedades con el componente -->
+      <Novedades />
 
       <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
       <div id="podcast" class="scroll-bg">
@@ -441,139 +366,6 @@ function goToJuegosPage() {
   z-index: 1;
 }
 
-/* Sección de Novedades */
-.red-background {
-  width: 100%;
-  background: 
-    linear-gradient(135deg, rgba(20, 0, 0, 0.9), rgba(80, 0, 0, 0.95)),
-    url('https://imgur.com/gallery/wallpaper-years-rO3XClp#/t/wallpaper') center/cover;
-  padding: 3rem 1rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 
-    inset 0 0 100px rgba(0, 0, 0, 0.8),
-    inset 0 0 300px rgba(136, 0, 0, 0.4);
-}
-
-/* Título "Novedades" (combinado con efecto slide-in) */
-.novedades-title {
-  font-size: 5.5rem;
-  color: #ffd700;
-  text-align: center;
-  font-family: 'Cinzel', serif;
-  text-shadow: 0 0 10px rgba(255,215,0,0.5),
-               0 0 20px rgba(255,215,0,0.3),
-               0 0 30px rgba(255,215,0,0.2),
-               0 0 40px rgba(255,0,0,0.1);
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: opacity 1s, transform 1s;
-}
-
-.novedades-title.slide-in {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Último Video */
-.ultimo-video {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem;
-  background: rgba(20, 0, 0, 0.8);
-  border-radius: 40px;
-  backdrop-filter: blur(15px);
-  border: 2px solid rgba(255, 215, 0, 0.2);
-  box-shadow: 0 0 70px rgba(0,0,0,0.5),
-              inset 0 0 50px rgba(255,215,0,0.05);
-  transform: perspective(1000px) rotateX(5deg);
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.ultimo-video:hover {
-  transform: perspective(1000px) rotateX(0deg) translateY(-10px);
-  box-shadow: 0 0 100px rgba(0,0,0,0.7),
-              inset 0 0 70px rgba(255,215,0,0.1);
-}
-
-.episode-header {
-  margin-bottom: 3rem;
-  position: relative;
-}
-
-.episode-title {
-  font-size: 3.2rem;
-  color: #ffd700;
-  text-align: center;
-  font-family: 'Cinzel', serif;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 15px rgba(255,215,0,0.4),
-               0 0 30px rgba(255,215,0,0.2);
-  animation: episodePulse 4s infinite;
-}
-
-@keyframes episodePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.episode-underline {
-  width: 200px;
-  height: 3px;
-  margin: 0 auto;
-  background: linear-gradient(90deg, transparent, #ffd700, transparent);
-  animation: underlinePulse 3s infinite;
-}
-
-@keyframes underlinePulse {
-  0%, 100% { opacity: 0.5; width: 200px; }
-  50% { opacity: 1; width: 250px; }
-}
-
-/* Video Wrapper y Contenedor */
-.video-wrapper {
-  position: relative;
-  border: 3px solid rgba(255,215,0,0.3);
-  border-radius: 25px;
-  padding: 5px;
-  background: linear-gradient(45deg, #ffd700, #ff4500);
-  box-shadow: 0 0 40px rgba(136,25,25,0.6),
-              inset 0 0 30px rgba(255,215,0,0.3);
-  animation: borderGlow 4s infinite;
-}
-
-@keyframes borderGlow {
-  0%, 100% {
-    box-shadow: 0 0 40px rgba(136,25,25,0.6),
-                inset 0 0 30px rgba(255,215,0,0.3);
-    border-color: rgba(255,215,0,0.3);
-  }
-  50% {
-    box-shadow: 0 0 60px rgba(136,25,25,0.8),
-                inset 0 0 50px rgba(255,215,0,0.5);
-    border-color: rgba(255,215,0,0.5);
-  }
-}
-
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  width: 100%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 20px;
-  background: #000;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
 
 /* Navegación: Fondo desplazable para "Ver Videos" */
 .scroll-bg {
