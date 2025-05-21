@@ -16,6 +16,7 @@
   import ZDrinks from '../Patrocinadores/ZDrinks.vue';
   import Formulario from './Formulario.vue';
   import BarraInvitados from './Extras/BarraInvitados.vue';
+  import Confetti from './Extras/confetti.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -135,6 +136,7 @@ function goToJuegosPage() {
 
 <template>
   <StarBackground />
+  <Confetti/>
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <div class="background">
