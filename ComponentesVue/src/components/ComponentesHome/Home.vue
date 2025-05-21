@@ -169,26 +169,6 @@ function scrollToZDrinks() {
   width: 100%;
   min-height: 100vh;
 }
-
-/* Botón legendario */
-.spectacular-button {
-  display: block;
-  margin: 0 auto;
-  padding: 20px 40px;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #ffffff;
-  background: linear-gradient(135deg, #360a0a, #ff0000);
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 10px 20px rgb(0, 0, 0);
-  cursor: pointer;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
 .spectacular-button::before {
   content: '';
   position: absolute;
