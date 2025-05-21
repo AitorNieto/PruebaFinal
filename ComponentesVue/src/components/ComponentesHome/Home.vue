@@ -14,7 +14,7 @@
   import Formulario from './Formulario.vue';
   import BarraInvitados from './Extras/BarraInvitados.vue';
   import Novedades from './Novedades.vue';
-  import Confetti from './Extras/confetti.vue';
+  import Confetti from './Extras/Confetti.vue';
   import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
   import InicioHome from './InicioHome.vue';
   import Footer from './Footer.vue';
@@ -326,5 +326,120 @@ function scrollToZDrinks() {
   z-index: 10000 !important;
   pointer-events: auto !important;
   background: white;
+}
+
+/* Responsive para Home */
+@media (max-width: 1200px) {
+  .home-wrapper {
+    padding: 0 1vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 280px;
+  }
+  .patrocinadores-title {
+    font-size: 2.2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-wrapper {
+    padding: 0 2vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 180px;
+  }
+  .patrocinadores-title {
+    font-size: 1.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+  .section-title {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-wrapper {
+    padding: 0 2vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 110px;
+    min-height: 90px;
+  }
+  .patrocinadores-title {
+    font-size: 1.1rem;
+    margin-top: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+  .form-container {
+    padding: 0.5rem;
+  }
+  .foro-content {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Botón espectacular más adaptable */
+.spectacular-button {
+  font-size: 1.2rem;
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: none;
+  background: #800000;
+  color: #fff;
+  font-weight: bold;
+  margin: 1rem 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+@media (max-width: 900px) {
+  .spectacular-button {
+    font-size: 1rem;
+    padding: 10px 18px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .spectacular-button {
+    font-size: 0.95rem;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+}
+
+/* Responsive para temporadas */
+@media (max-width: 600px) {
+  .season {
+    font-size: 1rem;
+    padding: 6px;
+  }
+}
+
+/* Responsive para el foro */
+@media (max-width: 600px) {
+  .foro-content {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.5rem;
+  }
 }
 </style>
