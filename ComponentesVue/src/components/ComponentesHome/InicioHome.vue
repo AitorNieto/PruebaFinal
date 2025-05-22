@@ -51,12 +51,13 @@ import imageSrc from '@/assets/FondoDyB.png';
 }
 
 .welcome-image {
-  width: 70vw;
-  max-width: 1000px;
+  width: 85vw;
+  max-width: 1200px;
   min-width: 320px;
   height: auto;
   border-radius: 15px;
-  margin: 2rem auto 0 auto;
+  /* Sube la imagen principal acercando el margen superior */
+  margin: -2.8rem auto 0 auto;
   display: block;
   transition: transform 0.3s;
   z-index: 1;
@@ -83,6 +84,12 @@ import imageSrc from '@/assets/FondoDyB.png';
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   width: 220px;
   z-index: 2;
+  transition: box-shadow 0.3s, background 0.3s;
+}
+
+.collaboration-panel:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 40px 0 #ffd70055, 0 8px 32px rgba(0,0,0,0.25);
 }
 
 .collaboration-badge {
@@ -113,6 +120,13 @@ import imageSrc from '@/assets/FondoDyB.png';
   height: auto;
   margin: 10px 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), filter 0.3s;
+  will-change: transform, filter;
+}
+
+.partner-logo:hover {
+  transform: scale(1.08) rotate(-3deg);
+  filter: brightness(1.15) drop-shadow(0 2px 8px #ffd70088);
 }
 
 .partner-text {
@@ -121,6 +135,13 @@ import imageSrc from '@/assets/FondoDyB.png';
   margin-top: 8px;
   font-style: italic;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), filter 0.3s;
+  will-change: transform, filter;
+}
+
+.partner-text:hover {
+  transform: scale(1.08) rotate(-3deg);
+  filter: brightness(1.15) drop-shadow(0 2px 8px #ffd70088);
 }
 
 .titulo {
