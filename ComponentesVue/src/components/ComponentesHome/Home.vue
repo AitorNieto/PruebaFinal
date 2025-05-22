@@ -156,15 +156,16 @@ function scrollToZDrinks() {
 
 <style scoped>
 * {
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .home-wrapper {
   width: 100%;
   min-height: 100vh;
+  background: #800000 !important;
 }
 .spectacular-button::before {
   content: '';
@@ -308,22 +309,30 @@ function scrollToZDrinks() {
 }
 .patrocinadores-title {
   font-size: 3.5rem;
-  color: #ffd700;
+  color: #cec8a4;
   text-align: center;
   font-family: 'Cinzel', serif;
-  text-shadow: 0 0 10px rgba(255,215,0,0.5),
-               0 0 20px rgba(255,215,0,0.3),
-               0 0 30px rgba(255,215,0,0.2),
-               0 0 40px rgba(255,0,0,0.1);
   opacity: 0;
   transform: translateX(-100%);
-  transition: opacity 1s, transform 1s;
+  transition: 
+    opacity 1s, 
+    transform 1s,
+    box-shadow 0.3s,
+    filter 0.3s,
+    scale 0.3s;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+  cursor: pointer;
 }
+
 .patrocinadores-title.slide-in {
   opacity: 1;
   transform: translateX(0);
+}
+
+.patrocinadores-title:hover {
+  filter: brightness(1.2);
+  transform: translateX(0) scale(1.05) rotate(-1deg);
 }
 .form-container {
   position: relative;
