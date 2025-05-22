@@ -3,6 +3,7 @@ const emit = defineEmits(['navigate']);
 </script>
 
 <template>
+  
   <div class="random-flex-container">
     <div class="materiales-section">
       <h2>Materiales necesarios</h2>

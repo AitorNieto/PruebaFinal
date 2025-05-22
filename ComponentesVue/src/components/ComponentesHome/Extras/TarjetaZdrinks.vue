@@ -10,8 +10,9 @@
       :style="stripStyle"
     >
       <div class="strip-tab">
-        <img src="@/assets/LogoZdrinks.avif" alt="ZDrinks" class="mini-logo" />
-        <span class="collab-symbol">⚡</span>
+        <img src="/favicon.ico" alt="Delirios y Barbaries" class="mini-logo delirios-logo" />
+        <span class="logo-x">×</span>
+        <img src="@/assets/LogoZdrinks.avif" alt="ZDrinks" class="mini-logo zdrinks-logo" />
       </div>
       <transition name="slide-content">
         <div class="strip-content" v-show="hovered">
@@ -273,6 +274,33 @@ export default {
 
 .mini-code:hover {
   transform: scale(1.05);
+}
+
+.delirios-logo {
+  height: 28px;
+  margin-right: 2px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(196,0,0,0.08);
+}
+.zdrinks-logo {
+  height: 28px;
+  margin-left: 2px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,168,255,0.08);
+}
+
+.logo-x {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #C40000;
+  margin: 0 4px;
+  line-height: 1;
+  user-select: none;
+  text-shadow: 1px 1px 4px #fff, 0 1px 8px #C4000033;
+  display: flex;
+  align-items: center;
 }
 
 @keyframes pulse {
