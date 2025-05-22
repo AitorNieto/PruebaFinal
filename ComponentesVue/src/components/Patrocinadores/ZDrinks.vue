@@ -20,7 +20,7 @@
         <div class="offer-card">
           <p class="offer-description">Usa el código</p>
           <div class="promo-code">DELIRIOSYBARBARIES</div>
-          <p class="offer-description">y obtén un <span class="discount">10% DE DESCUENTO</span></p>
+          <p class="offer-description">y obtén un <span class="discount-main">10% DE DESCUENTO</span></p>
         </div>
 
         <a href="https://www.zetadrinks.com/discount/DeliriosyBarbaries?ref=gtqnutxd/" target="_blank" class="action-btn">
@@ -213,6 +213,26 @@ export default {
   color: #c40000;
 }
 
+.discount-main {
+  color: #fff;
+  background: linear-gradient(90deg, #c40000 60%, #800000 100%);
+  font-size: 2.1rem;
+  font-weight: 900;
+  padding: 0.3rem 1.5rem;
+  border-radius: 40px;
+  box-shadow: 0 4px 16px rgba(196,0,0,0.10);
+  letter-spacing: 1.5px;
+  display: inline-block;
+  margin: 0 0.2rem;
+  text-shadow: 1px 1px 6px #fff8, 0 1px 6px #80000033;
+  vertical-align: middle;
+  transition: transform 0.2s;
+}
+
+.discount-main:hover {
+  transform: scale(1.06) rotate(-2deg);
+}
+
 .action-btn {
   display: flex;
   justify-content: center; /* Centra el contenido horizontalmente */
@@ -307,6 +327,11 @@ export default {
   
   .collab-title {
     font-size: 2rem;
+  }
+  
+  .discount-main {
+    font-size: 1.3rem;
+    padding: 0.2rem 0.7rem;
   }
 }
 
