@@ -46,7 +46,7 @@ export default {
   --zd-blue-dark: #0077B6;
   --zd-accent: #FF9F1C;
   --zd-text: #2D9CDB;
-  --zd-bg: #E6F7FF;
+  --zd-bg: #ffe6fc;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@700&display=swap');
@@ -129,6 +129,16 @@ export default {
   transform: rotate(-5deg) scale(1.1);
 }
 
+.partner-logo {
+  height: 60px;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+  transition: transform 0.3s ease;
+}
+
+.partner-logo:hover {
+  transform: rotate(-5deg) scale(1.1);
+}
+
 .collab-title {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
@@ -185,7 +195,7 @@ export default {
   display: inline-block;
   color: #0077B6; /* azul oscuro */
   background: linear-gradient(135deg, #E6F7FF, #B3E0FF);
-  color: white;
+  color: rgb(245, 164, 44);
   padding: 0.7rem 2.5rem;
   border-radius: 50px;
   font-size: 1.8rem;
@@ -300,5 +310,20 @@ export default {
   .collab-title {
     font-size: 2rem;
   }
+}
+
+.zdrinks-collab,
+.collab-title,
+.slogan,
+.offer-description,
+.promo-code,
+.discount,
+.action-btn,
+.brand-presentation,
+.dyb-text {
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 </style>
