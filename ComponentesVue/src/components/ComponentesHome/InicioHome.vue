@@ -31,8 +31,8 @@ import imageSrc from '@/assets/FondoDyB.png';
   min-height: 100vh;
   background: linear-gradient(
       10deg,
-      rgba(150, 15, 15, 0.8),
-      rgba(165, 47, 47, 0.8)
+      #800000,
+      rgba(90, 2, 2, 0.89)
     ),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
@@ -55,8 +55,7 @@ import imageSrc from '@/assets/FondoDyB.png';
   max-width: 1000px;
   min-width: 320px;
   height: auto;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
   margin: 2rem auto 0 auto;
   display: block;
   transition: transform 0.3s;
@@ -128,13 +127,19 @@ import imageSrc from '@/assets/FondoDyB.png';
   font-size: 4.7vw;
   font-weight: 700;
   color: #ffffff;
-  font-family: 'Georgia', serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
   text-align: center;
   margin: 0.8% auto 0 auto;
   position: relative;
-  text-shadow: 3px 3px 3px rgba(114, 36, 36, 0.8);
-  transition: color 0.5s ease, text-shadow 2s ease;
+  text-shadow: 3px 3px 3px #800000;
+  transition: color 0.4s, text-shadow 0.4s;
   z-index: 2;
+  letter-spacing: 1px;
+}
+
+.titulo:hover {
+  color: #800000; /* Rojo vino en el texto */
+  text-shadow: 2px 2px 8px #bbb6b6, 0 0 2px #a30000;
 }
 
 /* Contador en posición absoluta dentro del hero */
@@ -146,50 +151,43 @@ import imageSrc from '@/assets/FondoDyB.png';
 }
 
 /* Ajustes responsive */
-@media (max-width: 1024px) {
-  .welcome-image {
-    width: 85vw;
-  }
-  
-  .collaboration-panel {
-    width: 200px;
-    padding: 15px;
-    right: 15px;
-  }
-}
-
 @media (max-width: 768px) {
+  .hero-container {
+    padding-top: 2rem;
+    position: relative;
+  }
+
   .titulo {
     font-size: 8vw;
+    margin-top: 1rem;
   }
-  
-  .hero-container {
-    padding-top: 5rem;
-  }
-  
+
   .welcome-image {
     width: 90vw;
     margin-top: 1rem;
   }
-  
+
+  /* El contador se muestra debajo de la imagen principal */
+  .countdown-container {
+    position: relative !important;
+    top: unset !important;
+    left: unset !important;
+    margin: 1.5rem auto 1.5rem auto !important;
+    display: block !important;
+    width: fit-content;
+    z-index: 2;
+  }
+
+  /* El panel de patrocinadores debajo del contador */
   .collaboration-panel {
-    top: 15px;
-    right: 10px;
+    position: relative !important;
+    top: unset !important;
+    right: unset !important;
+    margin: 1rem auto 0 auto !important;
     width: 160px;
     padding: 12px;
-  }
-  
-  .badge-text {
-    font-size: 1rem;
-  }
-  
-  .partner-text {
-    font-size: 0.8rem;
-  }
-  
-  .countdown-container {
-    top: 15px;
-    left: 10px;
+    align-self: center;
+    z-index: 2;
   }
 }
 
@@ -198,7 +196,7 @@ import imageSrc from '@/assets/FondoDyB.png';
     width: 140px;
     padding: 10px;
   }
-  
+
   .partner-logo {
     max-width: 120px;
   }
