@@ -18,6 +18,8 @@
   import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
   import InicioHome from './InicioHome.vue';
   import Footer from './Footer.vue';
+  import Menu from './Menu.vue';
+  import Perfil from '../ComponentesPerfil/Perfil.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -29,10 +31,6 @@ const showCookieAlert = ref(false);
 // Función para cambiar de sección y hacer scroll suave
 function changeSection(section) {
   currentSection.value = section;
-  const element = document.getElementById(section);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
 }
 
 // Función para descargar posts desde Firebase
@@ -98,6 +96,8 @@ function scrollToZDrinks() {
 <template>
   <StarBackground />
   <Confetti/>
+  <!-- SOLO muestra el menú en la sección home -->
+  <Menu v-if="currentSection === 'home'" :currentView="currentSection" @navigate="changeSection" />
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
@@ -133,10 +133,14 @@ function scrollToZDrinks() {
 
     <!-- Otras secciones según la navegación -->
     <div v-else-if="currentSection === 'videos'">
-      <Videos @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
+      <Videos @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'foro'">
-      <Foro @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
+      <Foro @navigate="changeSection" />
+    </div>
+    <!-- AÑADE esto para el perfil -->
+    <div v-else-if="currentSection === 'profile'">
+      <Perfil @navigate="changeSection" />
     </div>
 
 

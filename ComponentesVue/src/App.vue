@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import Menu from './components/ComponentesHome/Menu.vue';
 import Login from './components/Autentificacion/Login.vue';
 import Register from './components/Autentificacion/Register.vue';
 import Home from './components/ComponentesHome/Home.vue';
@@ -51,11 +50,6 @@ onMounted(() => {
     </div>
     <div v-else-if="currentSection === 'foro'">
       <Foro />
-    </div>
-
-
-    <div v-if="currentSection !== 'prehome' && currentSection !== 'profile'">
-      <Menu @navigate="changeSection" />
     </div>
   </div>
 </template>
