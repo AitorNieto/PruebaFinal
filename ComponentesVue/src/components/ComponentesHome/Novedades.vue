@@ -111,7 +111,6 @@
 
 .ultimo-video:hover {
   transform: perspective(1000px) rotateX(0deg) translateY(-10px);
-  border-color: rgba(255, 215, 0, 0.4);
   box-shadow: 
     0 0 100px rgba(0,0,0,0.7),
     inset 0 0 70px rgba(255,215,0,0.1);
@@ -124,14 +123,34 @@
 }
 
 .episode-title {
-  font-size: 4rem;
-  color: #ffd700;
+  font-size: 3.5rem;
+  color: #cec8a4;
+  text-align: center;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  font-stretch: condensed;
+  font-weight: 700;
+  letter-spacing: 1px;
   margin: 0;
-  font-family: 'Cinzel', serif;
-  text-shadow: 
-    0 0 20px rgba(255,215,0,0.5),
-    0 0 40px rgba(255,0,0,0.3);
   animation: episodePulse 3s infinite;
+  opacity: 1;
+  transform: translateX(0);
+  transition: 
+    opacity 1s, 
+    transform 1s,
+    box-shadow 0.3s,
+    filter 0.3s,
+    scale 0.3s;
+  cursor: pointer;
+}
+
+.episode-title.slide-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.episode-title:hover {
+  filter: brightness(1.2);
+  transform: translateX(0) scale(1.05) rotate(-1deg);
 }
 
 .episode-underline {
