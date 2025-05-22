@@ -3,54 +3,38 @@ const emit = defineEmits(['navigate']);
 </script>
 
 <template>
-  <div class="random-layout">
-    <h2 class="random-title">Cómo hacer un botijo</h2>
-    <div class="random-content-horizontal">
-      <div class="pasos-section-horizontal">
-        <div class="pasos-columns-horizontal">
-          <ol start="1">
-            <li><b>Preparar la arcilla:</b> Amasa la arcilla para eliminar burbujas de aire y lograr una textura homogénea. Mantén una parte húmeda para modelar los detalles (pitorro, asa, etc.).</li>
-            <li><b>Modelar el cuerpo:</b> Forma una bola de arcilla y colócala sobre el torno o trabaja a mano. Da forma de esfera achatada o algo ovoide. Asegúrate de dejarlo hueco por dentro. Puedes usar la técnica del vaciado si es una bola maciza (hacer un hueco dentro).</li>
-            <li><b>Hacer el cuello y la boca:</b> Aplana una zona superior para abrir un agujero donde irá el cuello (por donde se llena el agua). Modela un tubo corto para el cuello y únelo con barbotina (mezcla de barro y agua como “pegamento”).</li>
-            <li><b>Colocar el pitorro:</b> Haz un agujero lateral en la parte superior. Modela un pequeño tubo cónico (el pitorro por donde se bebe) y colócalo ahí. Asegúrate de que quede bien unido y sellado.</li>
-          </ol>
-          <ol start="5">
-            <li><b>Añadir el asa:</b> Modela una tira de arcilla y dale forma curva. Une el asa desde la parte superior del cuello al cuerpo del botijo.</li>
-            <li><b>Alisar y decorar:</b> Usa una esponja húmeda para suavizar la superficie. Puedes decorar con grabados o engobes naturales si lo deseas.</li>
-            <li><b>Secado:</b> Deja secar lentamente en un lugar ventilado durante varios días. Evita corrientes de aire directas para que no se agriete.</li>
-            <li><b>Cocción:</b> Cuece el botijo en un horno cerámico a unos 950 ºC durante varias horas. Si no se cuece bien, el botijo puede filtrar o romperse.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="materiales-section-horizontal">
-        <h3>Materiales necesarios</h3>
-        <ul>
-          <li>Arcilla roja (también llamada barro rojo) – preferiblemente arcilla refractaria si vas a cocerla.</li>
-          <li>Torno de alfarero (opcional pero recomendable)</li>
-          <li>Herramientas básicas de alfarero:
-            <ul>
-              <li>Esteca o espátula</li>
-              <li>Hilo de corte</li>
-              <li>Esponja</li>
-              <li>Palillo o punzón</li>
-            </ul>
-          </li>
-          <li>Agua</li>
-          <li>Engobe o barniz natural (opcional)</li>
-          <li>Horno cerámico (cocción entre 900 y 1000 ºC)</li>
-        </ul>
-      </div>
-      <div class="video-section-horizontal">
-        <h3 class="video-title">Vídeo</h3>
-        <div class="video-responsive-horizontal">
-          <iframe
-            src="https://www.youtube.com/embed/O23ku32T7dY"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
+  <div class="random-flex-container">
+    <div class="materiales-section">
+      <h2>Materiales necesarios</h2>
+      <ul>
+        <li>Arcilla roja (también llamada barro rojo) – preferiblemente arcilla refractaria si vas a cocerla.</li>
+        <li>Torno de alfarero (opcional pero recomendable)</li>
+        <li>Herramientas básicas de alfarero:
+          <ul>
+            <li>Esteca o espátula</li>
+            <li>Hilo de corte</li>
+            <li>Esponja</li>
+            <li>Palillo o punzón</li>
+          </ul>
+        </li>
+        <li>Agua</li>
+        <li>Engobe o barniz natural (opcional)</li>
+        <li>Horno cerámico (cocción entre 900 y 1000 ºC)</li>
+      </ul>
+    </div>
+
+    <div class="pasos-section">
+      <h2>🛠️ Pasos para hacer un botijo</h2>
+      <ol>
+        <li><b>Preparar la arcilla:</b> Amasa la arcilla para eliminar burbujas de aire y lograr una textura homogénea. Mantén una parte húmeda para modelar los detalles (pitorro, asa, etc.).</li>
+        <li><b>Modelar el cuerpo:</b> Forma una bola de arcilla y colócala sobre el torno o trabaja a mano. Da forma de esfera achatada o algo ovoide. Asegúrate de dejarlo hueco por dentro. Puedes usar la técnica del vaciado si es una bola maciza (hacer un hueco dentro).</li>
+        <li><b>Hacer el cuello y la boca:</b> Aplana una zona superior para abrir un agujero donde irá el cuello (por donde se llena el agua). Modela un tubo corto para el cuello y únelo con barbotina (mezcla de barro y agua como “pegamento”).</li>
+        <li><b>Colocar el pitorro:</b> Haz un agujero lateral en la parte superior. Modela un pequeño tubo cónico (el pitorro por donde se bebe) y colócalo ahí. Asegúrate de que quede bien unido y sellado.</li>
+        <li><b>Añadir el asa:</b> Modela una tira de arcilla y dale forma curva. Une el asa desde la parte superior del cuello al cuerpo del botijo.</li>
+        <li><b>Alisar y decorar:</b> Usa una esponja húmeda para suavizar la superficie. Puedes decorar con grabados o engobes naturales si lo deseas.</li>
+        <li><b>Secado:</b> Deja secar lentamente en un lugar ventilado durante varios días. Evita corrientes de aire directas para que no se agriete.</li>
+        <li><b>Cocción:</b> Cuece el botijo en un horno cerámico a unos 950 ºC durante varias horas. Si no se cuece bien, el botijo puede filtrar o romperse.</li>
+      </ol>
     </div>
     <button class="spectacular-button" @click="emit('navigate', 'home')">
       Volver al Home

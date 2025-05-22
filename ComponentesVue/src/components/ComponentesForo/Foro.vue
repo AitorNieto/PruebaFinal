@@ -72,48 +72,92 @@
         <div 
           v-for="comment in sortedComments" 
           :key="comment.id" 
-          :class="['comment', { 'reply': comment.isReply }]"
+          class="comment-thread"
         >
-          <div class="comment-header">
-            <div class="user-info">
-              <img 
-                :src="comment.userPhoto" 
-                :alt="comment.userName"
-                @error="handleImageError"
-                class="user-avatar"
-              />
-              <div class="user-details">
-                <span class="user-name">{{ comment.userName || comment.userEmail }}</span>
-                <span class="comment-date">{{ formatDate(comment.date) }}</span>
+          <!-- Comentario principal -->
+          <div class="comment">
+            <div class="comment-header">
+              <div class="user-info">
+                <img 
+                  :src="comment.userPhoto" 
+                  :alt="comment.userName"
+                  @error="handleImageError"
+                  class="user-avatar"
+                />
+                <div class="user-details">
+                  <span class="user-name">{{ comment.userName || comment.userEmail }}</span>
+                  <span class="comment-date">{{ formatDate(comment.date) }}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <p class="comment-text">{{ comment.text }}</p>
-          
-          <!-- Añadir la sección de likes -->
-          <div class="comment-actions">
-            <button 
-              class="like-button" 
-              @click="toggleLike(comment)"
-              :class="{ 'liked': comment.hasLiked }"
-            >
-              <i class="fas fa-heart"></i>
-              <span class="like-count">{{ comment.likes || 0 }}</span>
-            </button>
+            <p class="comment-text">{{ comment.text }}</p>
             
-            <button 
-              v-if="!comment.isReply && isAuthenticated" 
-              @click="toggleReply(comment.id)"
-              class="reply-button"
-            >
-              Responder
-            </button>
-          </div>
+            <div class="comment-actions">
+              <button 
+                class="like-button" 
+                @click="toggleLike(comment)"
+                :class="{ 'liked': comment.hasLiked }"
+              >
+                <i class="fas fa-heart"></i>
+                <span class="like-count">{{ comment.likes || 0 }}</span>
+              </button>
+              
+              <button 
+                v-if="isAuthenticated" 
+                @click="toggleReply(comment.id)"
+                class="reply-button"
+              >
+                Responder
+              </button>
+            </div>
 
-          <!-- Formulario de respuesta -->
-          <div v-if="activeReply === comment.id" class="reply-form">
-            <textarea v-model="replyText" placeholder="Escribe tu respuesta..."></textarea>
-            <button @click="postReply(comment.id)">Enviar respuesta</button>
+            <!-- Formulario de respuesta -->
+            <div v-if="activeReply === comment.id" class="reply-form">
+              <textarea 
+                v-model="replyText" 
+                placeholder="Escribe tu respuesta..."
+                class="reply-textarea"
+              ></textarea>
+              <button @click="postReply(comment.id)" class="submit-reply">
+                Enviar respuesta
+              </button>
+            </div>
+
+            <!-- Respuestas -->
+            <div v-if="comment.replies && comment.replies.length > 0" class="replies">
+              <div 
+                v-for="reply in comment.replies" 
+                :key="reply.id" 
+                class="comment reply"
+              >
+                <div class="comment-header">
+                  <div class="user-info">
+                    <img 
+                      :src="reply.userPhoto" 
+                      :alt="reply.userName"
+                      @error="handleImageError"
+                      class="user-avatar"
+                    />
+                    <div class="user-details">
+                      <span class="user-name">{{ reply.userName || reply.userEmail }}</span>
+                      <span class="comment-date">{{ formatDate(reply.date) }}</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-text">{{ reply.text }}</p>
+                
+                <div class="comment-actions">
+                  <button 
+                    class="like-button" 
+                    @click="toggleLike(reply)"
+                    :class="{ 'liked': reply.hasLiked }"
+                  >
+                    <i class="fas fa-heart"></i>
+                    <span class="like-count">{{ reply.likes || 0 }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -203,34 +247,49 @@ export default {
     
       let filtered = [...this.comments];
     
+      // Separar comentarios principales y respuestas
+      const mainComments = filtered.filter(c => !c.isReply);
+      const replies = filtered.filter(c => c.isReply);
+    
+      // Agrupar las respuestas con sus comentarios padre
+      const commentsWithReplies = mainComments.map(comment => {
+        const commentReplies = replies.filter(reply => reply.parentId === comment.id)
+          .sort((a, b) => {
+            const dateA = a.date instanceof Date ? a.date : a.date?.toDate();
+            const dateB = b.date instanceof Date ? b.date : b.date?.toDate();
+            return dateB - dateA;
+          });
+        
+        return {
+          ...comment,
+          replies: commentReplies
+        };
+      });
+    
+      // Aplicar filtros
       switch (this.currentFilter) {
         case 'popular':
-          // Filtrar comentarios que tengan al menos 1 like y ordenar por cantidad de likes
-          return filtered
+          return commentsWithReplies
             .filter(comment => (comment.likes || 0) > 0)
             .sort((a, b) => (b.likes || 0) - (a.likes || 0))
-            .slice(0, 5); // Tomar máximo 5 comentarios más populares
+            .slice(0, 5);
       
         case 'recent':
-          // Obtener la fecha actual y establecerla a las 00:00:00
           const today = new Date();
           today.setHours(0, 0, 0, 0);
         
-          // Filtrar comentarios del día actual
-          return filtered
+          return commentsWithReplies
             .filter(comment => {
               const commentDate = comment.date instanceof Date 
                 ? comment.date 
                 : comment.date?.toDate();
             
-              if (!commentDate) return false;
               return commentDate >= today;
             })
             .sort((a, b) => b.date - a.date);
       
-        default: // 'all'
-          // Mostrar todos los comentarios ordenados por fecha más reciente
-          return filtered.sort((a, b) => {
+        default:
+          return commentsWithReplies.sort((a, b) => {
             const dateA = a.date instanceof Date ? a.date : a.date?.toDate();
             const dateB = b.date instanceof Date ? b.date : b.date?.toDate();
             return dateB - dateA;
@@ -286,7 +345,7 @@ export default {
           let userPhoto = data.userPhoto || defaultAvatar;
           let userName = data.userName || data.userEmail;
 
-          // Intenta obtener la foto del perfil si existe userId
+          // Obtener datos del perfil
           if (data.userId) {
             try {
               const userProfileRef = doc(db, 'Profiles', data.userId);
@@ -302,15 +361,19 @@ export default {
             }
           }
 
+          // Asegurarse de que los campos de likes existan
+          const likedBy = data.likedBy || [];
+          const likes = data.likes || 0;
+
           commentsData.push({
             id: docSnapshot.id,
             ...data,
             date: data.date?.toDate() || new Date(),
             userPhoto: userPhoto,
             userName: userName,
-            hasLiked: data.likedBy?.includes(this.user?.uid) || false,
-            likes: data.likes || 0,
-            likedBy: data.likedBy || []
+            hasLiked: this.user ? likedBy.includes(this.user.uid) : false,
+            likes: likes,
+            likedBy: likedBy
           });
         }
 
@@ -406,25 +469,41 @@ export default {
     const commentRef = doc(db, "forumComments", comment.id);
     const userId = this.user.uid;
 
-    if (!comment.likedBy) comment.likedBy = [];
-    const hasLiked = comment.likedBy.includes(userId);
+    // Obtener el documento actual para verificar el estado real
+    const commentDoc = await getDoc(commentRef);
+    if (!commentDoc.exists()) {
+      console.error('Comentario no encontrado');
+      return;
+    }
 
+    const currentData = commentDoc.data();
+    const likedBy = currentData.likedBy || [];
+    const hasLiked = likedBy.includes(userId);
+
+    // Actualizar en Firestore
     await updateDoc(commentRef, {
       likes: increment(hasLiked ? -1 : 1),
-      likedBy: hasLiked ? arrayRemove(userId) : arrayUnion(userId)
+      likedBy: hasLiked 
+        ? arrayRemove(userId)
+        : arrayUnion(userId)
     });
 
     // Actualizar el estado local
     comment.hasLiked = !hasLiked;
     comment.likes = (comment.likes || 0) + (hasLiked ? -1 : 1);
-    
-    if (hasLiked) {
-      comment.likedBy = comment.likedBy.filter(id => id !== userId);
-    } else {
-      comment.likedBy.push(userId);
+    comment.likedBy = hasLiked
+      ? (comment.likedBy || []).filter(id => id !== userId)
+      : [...(comment.likedBy || []), userId];
+
+    // Actualizar las respuestas si es necesario
+    if (comment.replies) {
+      await this.fetchComments();
     }
+
   } catch (error) {
     console.error('Error al actualizar like:', error);
+    // Revertir cambios locales en caso de error
+    await this.fetchComments();
   }
 },
 setFilter(filter) {
@@ -526,20 +605,19 @@ setFilter(filter) {
 /* Mejoras en tipografía y espaciado */
 .weekly-topic h2 {
   font-size: 1.8rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
+  font-weight: 700;
   color: #ff9999;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0;
 }
 
 .topic-text {
   font-size: 1.3rem;
   line-height: 1.7;
-  margin-bottom: 1.5rem;
-  color: #ffffff;
-  font-weight: 400;
-  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+  text-shadow: none;
 }
 
 /* Botones de filtro con diseño moderno */
@@ -586,12 +664,66 @@ setFilter(filter) {
   box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
 }
 
+/* Estilos para el hilo de comentarios */
+.comment-thread {
+  margin-bottom: 2rem;
+}
+
+/* Estilos para las respuestas */
+.replies {
+  margin-left: 3rem;
+  margin-top: 1rem;
+  border-left: 2px solid rgba(128, 0, 0, 0.3);
+  padding-left: 1rem;
+}
+
+.reply {
+  margin-bottom: 1rem;
+  background: rgba(128, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.reply-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.reply-textarea {
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: 1rem;
+}
+
+.submit-reply {
+  background: linear-gradient(135deg, #800000, #ff0000);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submit-reply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
 /* Comentarios con diseño elevado */
 .comments {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   margin-top: 3rem;
+}
+
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .comment {
@@ -608,24 +740,6 @@ setFilter(filter) {
   transform: translateY(-3px) scale(1.01);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.07);
-}
-
-/* Estilos para respuestas */
-.comment.reply {
-  margin-left: 4rem;
-  background: rgba(128, 0, 0, 0.08);
-  border-left: 4px solid rgba(128, 0, 0, 0.6);
-  position: relative;
-}
-
-.comment.reply::before {
-  content: '';
-  position: absolute;
-  left: -3rem;
-  top: 2rem;
-  width: 2rem;
-  height: 2px;
-  background: linear-gradient(90deg, #800000, transparent);
 }
 
 /* Perfil de usuario mejorado */
@@ -696,6 +810,10 @@ setFilter(filter) {
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   margin: 2rem 0;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.2px;
+  text-shadow: none;
 }
 
 .auth-link {
@@ -706,6 +824,8 @@ setFilter(filter) {
   transition: all 0.3s ease;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
+  letter-spacing: 0.2px;
+  text-shadow: none;
 }
 
 .auth-link:hover {
@@ -753,45 +873,291 @@ textarea {
   transition: all 0.3s ease;
 }
 
-textarea:focus {
-  outline: none;
-  border-color: #ff9999;
-  box-shadow: 0 0 0 3px rgba(255, 153, 153, 0.2);
-  background: rgba(0, 0, 0, 0.3);
+/* Configuración global de texto */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.3px;
 }
 
-/* Responsive mejorado */
-@media (max-width: 768px) {
+/* Ajuste de fondos para mejor contraste */
+.comment {
+  background: rgba(30, 41, 59, 0.85);
+}
+
+.reply {
+  background: rgba(30, 41, 59, 0.75);
+}
+
+/* Mejoras en la legibilidad del texto */
+.comment-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.reply .comment-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ff9999;
+  letter-spacing: 0.2px;
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.comment-date {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+/* Mejorar contraste del fondo para mejor legibilidad */
+.comment {
+  background: rgba(30, 41, 59, 0.85);
+}
+
+.reply {
+  background: rgba(30, 41, 59, 0.75);
+}
+
+/* Ajustes responsive */
+@media (max-width: 1024px) {
   .forum-content {
     width: 95%;
     padding: 1.5rem;
   }
 
   .filter-buttons {
-    flex-direction: column;
     padding: 1rem;
+    gap: 0.8rem;
   }
 
-  .comment.reply {
-    margin-left: 2rem;
+  .filter-btn {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .foro-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .forum-content {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 16px;
   }
 
   .weekly-topic-container {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .weekly-topic {
+    padding: 1rem;
+  }
+
+  .weekly-topic h2 {
+    font-size: 1.4rem;
   }
 
   .topic-text {
     font-size: 1.1rem;
   }
 
+  .filter-buttons {
+    flex-direction: column;
+    position: static;
+    margin: 1rem 0;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .comment {
+    padding: 1.2rem;
+  }
+
+  .user-info {
+    gap: 0.8rem;
+  }
+
   .user-avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .comment-actions {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .like-button, 
+  .reply-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .replies {
+    margin-left: 1rem;
+    padding-left: 0.5rem;
+  }
+
+  .new-comment {
+    padding: 1rem;
+  }
+
+  textarea {
+    min-height: 100px;
+    padding: 0.8rem;
+    font-size: 1rem;
   }
 }
 
-/* Transiciones suaves globales */
-* {
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+@media (max-width: 480px) {
+  .forum-content {
+    border-radius: 0;
+  }
+
+  .weekly-topic h2 {
+    font-size: 1.2rem;
+  }
+
+  .topic-text {
+    font-size: 1rem;
+  }
+
+  .comment-text {
+    font-size: 0.95rem;
+  }
+
+  .user-name {
+    font-size: 1rem;
+  }
+
+  .comment-date {
+    font-size: 0.8rem;
+  }
+
+  .comment-actions {
+    justify-content: space-between;
+  }
+
+  .like-button, 
+  .reply-button {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .auth-warning {
+    font-size: 0.95rem;
+    padding: 1rem;
+  }
+
+  .replies {
+    margin-left: 0.5rem;
+  }
+
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  /* Ajustar espaciado para móviles */
+  .comment {
+    margin-bottom: 1rem;
+  }
+
+  .comment-thread {
+    gap: 0.8rem;
+  }
+}
+
+/* Ajustes para dispositivos muy pequeños */
+@media (max-width: 320px) {
+  .weekly-topic h2 {
+    font-size: 1.1rem;
+  }
+
+  .filter-btn {
+    font-size: 0.85rem;
+    padding: 0.7rem;
+  }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .comment {
+    padding: 1rem;
+  }
+}
+
+/* Ajustes de orientación */
+@media (orientation: landscape) and (max-height: 600px) {
+  .foro-container {
+    padding: 0.5rem;
+  }
+
+  .weekly-topic-container {
+    margin-bottom: 1rem;
+  }
+
+  .filter-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    flex: 1 1 auto;
+  }
+}
+
+/* Mejoras de accesibilidad para pantallas táctiles */
+@media (hover: none) {
+  .filter-btn:hover,
+  .comment:hover,
+  .like-button:hover,
+  .submit-button:hover,
+  .submit-reply:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .user-avatar:hover {
+    transform: none;
+  }
+
+  /* Añadir feedback táctil */
+  .filter-btn:active,
+  .like-button:active,
+  .submit-button:active,
+  .submit-reply:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Optimizaciones de rendimiento para móviles */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 </style>

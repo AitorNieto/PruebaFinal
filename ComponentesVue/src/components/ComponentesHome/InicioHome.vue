@@ -52,12 +52,12 @@ import imageSrc from '@/assets/FondoDyB.png';
 
 .welcome-image {
   width: 85vw;
-  max-width: 1200px;
+  max-width: 1150px;
   min-width: 320px;
   height: auto;
   border-radius: 15px;
   /* Sube la imagen principal acercando el margen superior */
-  margin: -2.8rem auto 0 auto;
+  margin: -1rem auto 0 auto;
   display: block;
   transition: transform 0.3s;
   z-index: 1;

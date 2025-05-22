@@ -20,7 +20,7 @@
         <div class="offer-card">
           <p class="offer-description">Usa el código</p>
           <div class="promo-code">DELIRIOSYBARBARIES</div>
-          <p class="offer-description">y obtén un <span class="discount">10% DE DESCUENTO</span></p>
+          <p class="offer-description">y obtén un <span class="discount-main">10% DE DESCUENTO</span></p>
         </div>
 
         <a href="https://www.zetadrinks.com/discount/DeliriosyBarbaries?ref=gtqnutxd/" target="_blank" class="action-btn">
@@ -52,7 +52,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@700&display=swap');
 
 .zdrinks-collab {
-  background: linear-gradient(135deg, #F7FFB0 0%, #D4FFB2 100%); /* verde amarillento suave */
+  background: linear-gradient(135deg, #fff8f0 0%, #ffe6e6 100%);
   border-radius: 25px;
   padding: 0;
   margin: 3rem auto;
@@ -60,7 +60,7 @@ export default {
   box-shadow: 0 10px 30px rgba(0, 168, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.5);
   font-family: 'Fredoka One', 'Comic Neue', cursive, sans-serif;
-  color: #2D9CDB; /* azul alegre */
+  color: #800000; /* Rojo vino oscuro para texto general */
 }
 
 .collab-container {
@@ -103,14 +103,14 @@ export default {
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 2rem;
-  color: #0077B6; /* azul oscuro */
+  color: #800000;
 }
 
 .dyb-text {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #00A8FF; /* azul principal */
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  color: #800000;
+  text-shadow: 1px 1px 2px #fff6;
 }
 
 .collab-symbol {
@@ -142,8 +142,8 @@ export default {
 .collab-title {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #0077B6; /* azul oscuro */
-  text-shadow: 1px 1px 3px #B3E0FF;
+  color: #800000; /* Rojo vino oscuro */
+  text-shadow: 1px 1px 3px #fff3;
 }
 
 .highlight {
@@ -172,7 +172,7 @@ export default {
 .slogan {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  color: #FF9F1C; /* naranja acento */
+  color: #c40000; /* Rojo vino más vivo */
   font-style: italic;
 }
 
@@ -188,20 +188,20 @@ export default {
 .offer-description {
   margin: 0.5rem 0;
   font-size: 1.2rem;
-  color: #00A8FF; /* azul principal */
+  color: #800000;
 }
 
 .promo-code {
   display: inline-block;
-  color: #0077B6; /* azul oscuro */
-  background: linear-gradient(135deg, #E6F7FF, #B3E0FF);
-  color: rgb(245, 164, 44);
+  color: #c40000;
+  background: linear-gradient(135deg, #fff0f0, #ffe6e6);
+  color: #c40000;
   padding: 0.7rem 2.5rem;
   border-radius: 50px;
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0.8rem 0;
-  box-shadow: 0 5px 15px rgba(0, 168, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(128,0,0,0.08);
   transition: transform 0.3s ease;
 }
 
@@ -210,9 +210,27 @@ export default {
 }
 
 .discount {
-  color: #FF9F1C; /* naranja acento */
-  font-weight: bold;
-  font-size: 1.3rem;
+  color: #c40000;
+}
+
+.discount-main {
+  color: #fff;
+  background: linear-gradient(90deg, #c40000 60%, #800000 100%);
+  font-size: 2.1rem;
+  font-weight: 900;
+  padding: 0.3rem 1.5rem;
+  border-radius: 40px;
+  box-shadow: 0 4px 16px rgba(196,0,0,0.10);
+  letter-spacing: 1.5px;
+  display: inline-block;
+  margin: 0 0.2rem;
+  text-shadow: 1px 1px 6px #fff8, 0 1px 6px #80000033;
+  vertical-align: middle;
+  transition: transform 0.2s;
+}
+
+.discount-main:hover {
+  transform: scale(1.06) rotate(-2deg);
 }
 
 .action-btn {
@@ -220,8 +238,8 @@ export default {
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center;
   gap: 1rem;
-  background: linear-gradient(135deg, var(--zd-blue), var(--zd-blue-dark));
-  color: #00A8FF; /* azul principal */
+  background: linear-gradient(135deg, #c40000, #800000);
+  color: #fff;
   padding: 1.2rem 3rem;
   border-radius: 50px;
   font-size: 1.3rem;
@@ -233,7 +251,7 @@ export default {
   border: none;
   cursor: pointer;
   transition: all 0.5s ease;
-  box-shadow: 0 5px 15px rgba(0, 120, 215, 0.4);
+  box-shadow: 0 5px 15px rgba(128,0,0,0.18);
   width: fit-content; /* Ajusta el ancho al contenido */
 }
 
@@ -248,7 +266,7 @@ export default {
   z-index: 2;
   font-size: 1.5rem;
   transition: all 0.3s ease;
-  color: #FF9F1C; /* naranja acento */
+  color: #ffd700; /* dorado suave para el icono */
 }
 
 .action-btn::before {
@@ -309,6 +327,11 @@ export default {
   
   .collab-title {
     font-size: 2rem;
+  }
+  
+  .discount-main {
+    font-size: 1.3rem;
+    padding: 0.2rem 0.7rem;
   }
 }
 
