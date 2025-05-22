@@ -118,6 +118,12 @@ function scrollToZDrinks() {
         </button>
       </div>
 
+      <div id="random" class="large-dark-red-background random-background">
+        <button class="spectacular-button" @click="changeSection('random')">
+          Cosas Random
+        </button>
+      </div>
+
       <!-- Componente Nosotros -->
       <Nosotros />
        <!-- Título Patrocinadores -->
@@ -141,6 +147,9 @@ function scrollToZDrinks() {
     <!-- AÑADE esto para el perfil -->
     <div v-else-if="currentSection === 'profile'">
       <Perfil @navigate="changeSection" />
+    </div>
+    <div v-else-if="currentSection === 'random'">
+      <Random @navigate="changeSection" />
     </div>
 
 
