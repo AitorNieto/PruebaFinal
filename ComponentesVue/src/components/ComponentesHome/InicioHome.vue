@@ -89,7 +89,8 @@ import imageSrc from '@/assets/FondoDyB.png';
 
 .collaboration-panel:hover {
   background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 12px 40px 0 #ffd70055, 0 8px 32px rgba(0,0,0,0.25);
+  /* Elimina el box-shadow dorado */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
 .collaboration-badge {
@@ -126,7 +127,7 @@ import imageSrc from '@/assets/FondoDyB.png';
 
 .partner-logo:hover {
   transform: scale(1.08) rotate(-3deg);
-  filter: brightness(1.15) drop-shadow(0 2px 8px #ffd70088);
+  filter: brightness(1.15) drop-shadow(0 2px 8px #fafafa88);
 }
 
 .partner-text {
