@@ -166,7 +166,7 @@ const emit = defineEmits(['navigate']);
   0% { transform: scale(1); box-shadow: 0 4px 16px #ff00c888; }
   100% { transform: scale(1.13) rotate(-3deg); box-shadow: 0 16px 48px #fffb00cc; filter: hue-rotate(180deg) brightness(1.5); }
 }
-.spectacular-button:hover {
+.spectacular-button-alocado:hover {
   background: repeating-linear-gradient(90deg, #00ffe7 0 20%, #fffb00 20% 40%, #ff00c8 40% 60%, #00ffe7 60% 80%, #fffb00 80% 100%);
   transform: scale(1.18) rotate(2deg);
   box-shadow: 0 24px 64px #ff00c8cc, 0 0 32px #fffb00cc;
