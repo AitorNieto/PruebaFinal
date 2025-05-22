@@ -1,161 +1,41 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useFirestore, useFirebaseAuth } from 'vuefire';
-  import { collection, onSnapshot } from 'firebase/firestore';
-  import Nosotros from '../ComponentesNosotros/Nosotros.vue';
-  import Foro from '../ComponentesForo/Foro.vue';
-  import Videos from '../ComponenteVideos/Videos.vue';
-  import CookieAlert from './Extras/CookieAlert.vue';
-  import StarBackground from './Extras/StarBackground.vue';
-  import AOS from 'aos';
-  import 'aos/dist/aos.css';
-  import Juegos from '../Games/Juegos.vue';
-  import ZDrinks from '../Patrocinadores/ZDrinks.vue';
-  import Formulario from './Formulario.vue';
-  import BarraInvitados from './Extras/BarraInvitados.vue';
-  import Novedades from './Novedades.vue';
-  import Confetti from './Extras/Confetti.vue';
-  import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
-  import InicioHome from './InicioHome.vue';
-  import Footer from './Footer.vue';
-// Variables reactivas y configuración
-const Posts = ref([]);
-const db = useFirestore();
-const auth = useFirebaseAuth();
-const currentSection = ref('home');
-const showCookieAlert = ref(false);
-
-
-// Función para cambiar de sección y hacer scroll suave
-function changeSection(section) {
-  currentSection.value = section;
-  const element = document.getElementById(section);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-
-// Función para descargar posts desde Firebase
-function descargarPosts() {
-  if (!auth.currentUser) {
-    console.error('No hay usuario autenticado');
-    return;
-  }
-  const collectionRef = collection(db, `Profiles/${auth.currentUser.uid}/Posts`);
-  onSnapshot(collectionRef, (snapshot) => {
-    Posts.value = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-  });
-}
-
-onMounted(async () => {
-  // Inicializa AOS para animaciones
-  AOS.init({ duration: 1000, once: true });
-  
-  // Descarga los posts del usuario
-  descargarPosts();
-
-  // Muestra alerta de cookies después de 2 segundos
-  setTimeout(() => {
-    showCookieAlert.value = true;
-  }, 2000);
-
-  // Detecta el scroll para animar algunos elementos
-  
-  const videoSection = document.querySelector('.scroll-bg');
-  const seasons = document.querySelectorAll('.season');
-  window.addEventListener('scroll', () => {
-    if (videoSection) {
-      const rect = videoSection.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        seasons.forEach(season => {
-          season.classList.add('bounce-in');
-          season.addEventListener('animationend', () => {
-            season.classList.remove('bounce-in');
-            season.classList.add('spin');
-          }, { once: true });
-        });
-      }
-    }
-  });
-});
-
-
-function goToJuegosPage() {
-  currentSection.value = 'juegos';
-}
-
-function scrollToZDrinks() {
-  const section = document.getElementById('patrocinadores');
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
-}
+const emit = defineEmits(['navigate']);
 </script>
 
 <template>
-  <StarBackground />
-  <Confetti/>
-  <div class="home-wrapper">
-    <div v-if="currentSection === 'home'">
-      <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
-      <InicioHome />
-      <!-- Reemplazar la sección de novedades con el componente -->
-      <Novedades />
-
-      <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
-      <div id="podcast" class="scroll-bg">
-        <button class="spectacular-button" @click="changeSection('videos')">
-          Ver Videos
-        </button>
-      </div>
-
-      <div id="foro" class="large-red-background foro-background">
-        <button class="spectacular-button" @click="changeSection('foro')">
-          Nuestro Foro
-        </button>
-      </div>
-
-      <div id="random" class="large-dark-red-background random-background">
-        <button class="spectacular-button" @click="changeSection('random')">
-          Cosas Random
-        </button>
-      </div>
-
-      <!-- Componente Nosotros -->
-      <Nosotros />
-       <!-- Título Patrocinadores -->
-      <h2 id="patrocinadores" class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
- <!-- Componente ZDrinks -->
-      <ZDrinks />    
-      <!-- Componente Formulario -->
-       <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
-      <Formulario/>   
-      <Footer @go-juegos="goToJuegosPage" />
-   
+  <div class="random-flex-container">
+    <div class="materiales-section">
+      <h2>Materiales necesarios</h2>
+      <ul>
+        <li>Arcilla roja (también llamada barro rojo) – preferiblemente arcilla refractaria si vas a cocerla.</li>
+        <li>Torno de alfarero (opcional pero recomendable)</li>
+        <li>Herramientas básicas de alfarero:
+          <ul>
+            <li>Esteca o espátula</li>
+            <li>Hilo de corte</li>
+            <li>Esponja</li>
+            <li>Palillo o punzón</li>
+          </ul>
+        </li>
+        <li>Agua</li>
+        <li>Engobe o barniz natural (opcional)</li>
+        <li>Horno cerámico (cocción entre 900 y 1000 ºC)</li>
+      </ul>
     </div>
 
-    <!-- Otras secciones según la navegación -->
-    <div v-else-if="currentSection === 'videos'">
-      <Videos @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
+    <div class="pasos-section">
+      <h2>🛠️ Pasos para hacer un botijo</h2>
+      <ol>
+        <li><b>Preparar la arcilla:</b> Amasa la arcilla para eliminar burbujas de aire y lograr una textura homogénea. Mantén una parte húmeda para modelar los detalles (pitorro, asa, etc.).</li>
+        <li><b>Modelar el cuerpo:</b> Forma una bola de arcilla y colócala sobre el torno o trabaja a mano. Da forma de esfera achatada o algo ovoide. Asegúrate de dejarlo hueco por dentro. Puedes usar la técnica del vaciado si es una bola maciza (hacer un hueco dentro).</li>
+        <li><b>Hacer el cuello y la boca:</b> Aplana una zona superior para abrir un agujero donde irá el cuello (por donde se llena el agua). Modela un tubo corto para el cuello y únelo con barbotina (mezcla de barro y agua como “pegamento”).</li>
+        <li><b>Colocar el pitorro:</b> Haz un agujero lateral en la parte superior. Modela un pequeño tubo cónico (el pitorro por donde se bebe) y colócalo ahí. Asegúrate de que quede bien unido y sellado.</li>
+        <li><b>Añadir el asa:</b> Modela una tira de arcilla y dale forma curva. Une el asa desde la parte superior del cuello al cuerpo del botijo.</li>
+        <li><b>Alisar y decorar:</b> Usa una esponja húmeda para suavizar la superficie. Puedes decorar con grabados o engobes naturales si lo deseas.</li>
+        <li><b>Secado:</b> Deja secar lentamente en un lugar ventilado durante varios días. Evita corrientes de aire directas para que no se agriete.</li>
+        <li><b>Cocción:</b> Cuece el botijo en un horno cerámico a unos 950 ºC durante varias horas. Si no se cuece bien, el botijo puede filtrar o romperse.</li>
+      </ol>
     </div>
-    <div v-else-if="currentSection === 'foro'">
-      <Foro @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
-    </div>
-    <div v-else-if="currentSection === 'random'">
-      <Random @navigate="changeSection" />
-    </div>
-
-
-    <!-- Alerta de cookies -->
-    <CookieAlert v-if="showCookieAlert" />
-    <!-- Barra de invitados siempre visible abajo en Home -->
-    <BarraInvitados />
-  </div>
-  <div v-if="currentSection === 'juegos'">
-    <Juegos @navigate="changeSection" />
   </div>
 </template>
 
@@ -171,6 +51,7 @@ function scrollToZDrinks() {
   width: 100%;
   min-height: 100vh;
 }
+
 .spectacular-button::before {
   content: '';
   position: absolute;
@@ -199,6 +80,7 @@ function scrollToZDrinks() {
   transform: translateY(-2px) scale(0.98);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
 /* Navegación: Fondo desplazable para "Ver Videos" */
 .scroll-bg {
   width: 100%;
@@ -294,7 +176,29 @@ function scrollToZDrinks() {
   cursor: pointer;
 }
 
-.section-title {  /* Reemplaza la clase con la que ya tenga el botón */
+.random-background {
+  background: linear-gradient(135deg, #800080 60%, #ff69b4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.random-section-content {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.section-title {
+  /* Reemplaza la clase con la que ya tenga el botón */
   background-color: #ffffff; /* Fondo claro para mayor contraste */
   color: #800000; /* Texto en rojo oscuro */
   border: 2px solid #800000; /* Borde para resaltar */
@@ -307,10 +211,13 @@ function scrollToZDrinks() {
   border-radius: 8px;
   transition: all 0.3s ease;
 }
-.section-title:hover {  background-color: #800000;
+
+.section-title:hover {
+  background-color: #800000;
   color: #ffffff;
   border: 2px solid #ffffff;
 }
+
 .patrocinadores-title {
   font-size: 3.5rem;
   color: #ffd700;
@@ -326,10 +233,12 @@ function scrollToZDrinks() {
   margin-top: 3rem;
   margin-bottom: 1.5rem;
 }
+
 .patrocinadores-title.slide-in {
   opacity: 1;
   transform: translateX(0);
 }
+
 .form-container {
   position: relative;
   z-index: 10000 !important;
@@ -421,6 +330,7 @@ function scrollToZDrinks() {
   overflow: hidden;
   transition: all 0.3s;
 }
+
 @media (max-width: 900px) {
   .spectacular-button {
     font-size: 1rem;
@@ -428,6 +338,7 @@ function scrollToZDrinks() {
     border-radius: 10px;
   }
 }
+
 @media (max-width: 600px) {
   .spectacular-button {
     font-size: 0.95rem;
@@ -449,6 +360,59 @@ function scrollToZDrinks() {
   .foro-content {
     font-size: 0.9rem;
     padding: 0.3rem 0.5rem;
+  }
+}
+
+.random-flex-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.materiales-section,
+.pasos-section {
+  flex: 1 1 320px;
+  min-width: 280px;
+  max-width: 500px;
+  background: rgba(80,0,40,0.85);
+  border-radius: 14px;
+  padding: 1.7rem 2rem;
+  color: #fff;
+  box-shadow: 0 2px 16px rgba(128,0,64,0.10);
+}
+
+.materiales-section h2,
+.pasos-section h2 {
+  color: #ffd700;
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+}
+
+.materiales-section ul,
+.pasos-section ol {
+  color: #fff;
+}
+
+.materiales-section ul ul {
+  color: #ffe4e1;
+}
+
+.pasos-section li {
+  margin-bottom: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .random-flex-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .materiales-section,
+  .pasos-section {
+    max-width: 100%;
   }
 }
 </style>
