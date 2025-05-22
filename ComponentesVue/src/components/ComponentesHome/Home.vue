@@ -20,6 +20,7 @@
   import Footer from './Footer.vue';
   import Menu from './Menu.vue';
   import Perfil from '../ComponentesPerfil/Perfil.vue';
+  import Random from '../ComponentesRandom/Random.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
