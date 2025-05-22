@@ -18,7 +18,7 @@
           <transition-group name="fade-stagger">
             <h4 key="message" class="card-message">{{ currentMessage }}</h4>
             <div key="promo" class="mini-promo">
-              Usa código: <span class="mini-code">DELIRIOSYBARBARIES10</span>
+              Usa código: <span class="mini-code">DELIRIOSYBARBARIES</span>
             </div>
           </transition-group>
         </div>
