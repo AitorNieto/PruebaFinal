@@ -125,8 +125,9 @@ const sendEmail = () => {
   cursor: pointer;
   margin-bottom: 0.5rem;
   font-size: 2.1rem;
-  color: #343a40; /* gris fuerte y elegante */
-  font-family: 'Cinzel', serif;
+  color: #302c2c;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  font-stretch: condensed;
   font-weight: 700;
   letter-spacing: 1px;
   text-shadow: 0 0 8px #fff3, 0 2px 8px #fff8;

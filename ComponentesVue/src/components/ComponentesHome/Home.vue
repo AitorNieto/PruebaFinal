@@ -18,6 +18,8 @@
   import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
   import InicioHome from './InicioHome.vue';
   import Footer from './Footer.vue';
+  import Menu from './Menu.vue';
+  import Perfil from '../ComponentesPerfil/Perfil.vue';
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -29,10 +31,6 @@ const showCookieAlert = ref(false);
 // Función para cambiar de sección y hacer scroll suave
 function changeSection(section) {
   currentSection.value = section;
-  const element = document.getElementById(section);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
 }
 
 // Función para descargar posts desde Firebase
@@ -98,6 +96,8 @@ function scrollToZDrinks() {
 <template>
   <StarBackground />
   <Confetti/>
+  <!-- SOLO muestra el menú en la sección home -->
+  <Menu v-if="currentSection === 'home'" :currentView="currentSection" @navigate="changeSection" />
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
@@ -139,10 +139,14 @@ function scrollToZDrinks() {
 
     <!-- Otras secciones según la navegación -->
     <div v-else-if="currentSection === 'videos'">
-      <Videos @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
+      <Videos @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'foro'">
-      <Foro @navigate="changeSection" @go-zdrinks="currentSection = 'patrocinadores'" />
+      <Foro @navigate="changeSection" />
+    </div>
+    <!-- AÑADE esto para el perfil -->
+    <div v-else-if="currentSection === 'profile'">
+      <Perfil @navigate="changeSection" />
     </div>
     <div v-else-if="currentSection === 'random'">
       <Random @navigate="changeSection" />
@@ -161,15 +165,16 @@ function scrollToZDrinks() {
 
 <style scoped>
 * {
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .home-wrapper {
   width: 100%;
   min-height: 100vh;
+  background: #800000 !important;
 }
 .spectacular-button::before {
   content: '';
@@ -313,22 +318,30 @@ function scrollToZDrinks() {
 }
 .patrocinadores-title {
   font-size: 3.5rem;
-  color: #ffd700;
+  color: #cec8a4;
   text-align: center;
   font-family: 'Cinzel', serif;
-  text-shadow: 0 0 10px rgba(255,215,0,0.5),
-               0 0 20px rgba(255,215,0,0.3),
-               0 0 30px rgba(255,215,0,0.2),
-               0 0 40px rgba(255,0,0,0.1);
   opacity: 0;
   transform: translateX(-100%);
-  transition: opacity 1s, transform 1s;
+  transition: 
+    opacity 1s, 
+    transform 1s,
+    box-shadow 0.3s,
+    filter 0.3s,
+    scale 0.3s;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+  cursor: pointer;
 }
+
 .patrocinadores-title.slide-in {
   opacity: 1;
   transform: translateX(0);
+}
+
+.patrocinadores-title:hover {
+  filter: brightness(1.2);
+  transform: translateX(0) scale(1.05) rotate(-1deg);
 }
 .form-container {
   position: relative;
