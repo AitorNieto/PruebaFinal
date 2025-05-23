@@ -85,23 +85,32 @@ export default {
 <style scoped>
 /* ¡ESTILOS MEGA DIVERTIDOS! */
 .contenedor-lituano {
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   padding: 2rem;
   text-align: center;
   background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
   position: relative;
   overflow: hidden;
+  min-height: 80vh; /* Reducimos la altura */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el espacio uniformemente */
+  align-items: center;
+  gap: 2rem; /* Espaciado entre elementos */
 }
 
 .titulo-llamativo {
+  position: relative; /* Cambiamos a relative */
+  top: 0;
+  left: 0;
+  transform: none; /* Eliminamos la transformación */
+  width: 100%;
   font-size: 2rem;
   color: #ff00aa;
   text-shadow: 3px 3px 0 #fff, 5px 5px 0 #ff00aa;
-  margin-bottom: 2rem;
-  animation: titulo-bailando 2s infinite;
+  margin: 1rem 0; /* Ajustamos el margen */
 }
 
 .emoji-giratorio {
@@ -110,14 +119,17 @@ export default {
 }
 
 .tarjeta-palabra {
+  max-width: 800px;
+  width: 90%;
   background: white;
   border-radius: 15px;
   padding: 2rem;
-  margin: 1rem 0;
   cursor: pointer;
   perspective: 1000px;
   transition: transform 0.5s;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  margin: auto; /* Centramos la tarjeta */
+  position: relative;
 }
 
 .tarjeta-palabra:hover {
@@ -163,6 +175,11 @@ export default {
 }
 
 .boton-loco {
+  position: relative; /* Cambiamos a relative */
+  bottom: 0;
+  left: 0;
+  transform: none; /* Eliminamos la transformación */
+  margin: 1rem 0; /* Ajustamos el margen */
   background: linear-gradient(45deg, #ff00aa, #ff0066);
   border: none;
   color: white;
@@ -174,7 +191,6 @@ export default {
   transition: all 0.3s;
   font-weight: bold;
   text-transform: uppercase;
-  margin-top: 1rem;
 }
 
 .boton-loco:hover {
@@ -216,5 +232,49 @@ export default {
 @keyframes confetti-fall {
   0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
   100% { transform: translateY(500px) rotate(360deg); opacity: 0; }
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .contenedor-lituano {
+    min-height: 70vh; /* Altura más pequeña en móvil */
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .titulo-llamativo {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .texto-grande {
+    font-size: 1.8rem;
+  }
+
+  .tarjeta-palabra {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .boton-loco {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .emoji {
+    font-size: 2.5rem;
+  }
+}
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-height: 600px) {
+  .contenedor-lituano {
+    min-height: auto;
+    padding: 1rem 0;
+  }
+
+  .titulo-llamativo {
+    font-size: 1.3rem;
+  }
 }
 </style>

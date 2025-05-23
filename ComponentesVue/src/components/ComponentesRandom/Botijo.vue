@@ -61,10 +61,6 @@ setInterval(wobble, 100);
         <li><b>Cocción:</b> Cuece el botijo en un horno cerámico a unos 950 ºC.</li>
       </ol>
     </div>
-
-    <button class="volver-button" @click="emit('navigate', 'home')">
-      Volver al Home
-    </button>
   </div>
 </template>
 
@@ -175,25 +171,7 @@ li {
   border: none;
 }
 
-.volver-button {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  padding: 1rem 2rem;
-  font-family: 'Comic Sans MS', cursive;
-  font-size: 1.2rem;
-  color: white;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
 
-.volver-button:hover {
-  transform: scale(1.05) rotate(2deg);
-}
 
 .party-text {
   position: absolute;
@@ -234,12 +212,5 @@ li {
     font-size: 0.9rem;
   }
   
-  .volver-button {
-    position: static;
-    margin: 2rem auto;
-    display: block;
-    font-size: 1rem;
-    padding: 0.8rem 1.5rem;
-  }
 }
 </style>

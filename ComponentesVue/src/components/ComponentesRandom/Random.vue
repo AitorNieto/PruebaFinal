@@ -5,9 +5,7 @@ import GatoExplosivo from './GatoExplosivo.vue';
 import Botijo from './Botijo.vue';
 import { ref } from 'vue';
 
-const letters = '🎨🏺⚱️🎭🎪🎠';
-const isRainbowMode = ref(false);
-const danceEmoji = ref('💃');
+
 
 function toggleRainbowMode() {
   isRainbowMode.value = !isRainbowMode.value;
@@ -23,16 +21,12 @@ function startRainbowParty() {
   document.body.style.backgroundColor = `hsl(${hue}, 70%, 95%)`;
   setTimeout(startRainbowParty, 1000);
 }
-
-function danceMoves() {
-  const dances = ['💃', '🕺', '👯‍♂️', '🪩'];
-  danceEmoji.value = dances[Math.floor(Math.random() * dances.length)];
-}
-
-setInterval(danceMoves, 500);
 </script>
 
 <template>
+  <button class="volver-button" @click="emit('navigate', 'home')">
+      Volver al Home
+  </button>
   <div class="random-flex-container" :class="{ 'rainbow-mode': isRainbowMode }">
     <div class="crazy-corner" @click="toggleRainbowMode">{{ danceEmoji }}</div>
     <div class="floating-letters">
@@ -43,17 +37,13 @@ setInterval(danceMoves, 500);
     </div>
 
     <Botijo />
-    
-    
   </div>
-  <div class="floating-emoji emoji-1">🏺</div>
-  <div class="floating-emoji emoji-2">🎨</div>
-  <div class="floating-emoji emoji-3">⚱️</div>
   <Idiomas />
   <div class="confetti"></div>
   <div class="confetti confetti-2"></div>
   <div class="confetti confetti-3"></div>
   <GatoExplosivo />
+  
 </template>
 
 <style scoped>
@@ -169,6 +159,10 @@ setInterval(danceMoves, 500);
     font-size: 1rem;
     padding: 0.8rem 1.5rem;
   }
+
+  .full-width-section {
+    margin: 1rem -1rem;
+  }
 }
 
 /* Accessibility */
@@ -178,6 +172,41 @@ setInterval(danceMoves, 500);
   .crazy-corner,
   .confetti {
     animation: none;
+  }
+}
+
+.full-width-section {
+  width: 100vw;
+  margin: 2rem -2rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.volver-button {
+  position: fixed; /* Fija el botón en la ventana */
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999; /* Asegura que esté siempre por encima de otros elementos */
+  padding: 1rem 2rem;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 1.2rem;
+  color: white;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+/* Ajuste responsive para el botón */
+@media (max-width: 768px) {
+  .volver-button {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
 }
 </style>
