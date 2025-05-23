@@ -83,7 +83,6 @@ export default {
 </script>
 
 <style scoped>
-/* ¡ESTILOS MEGA DIVERTIDOS! */
 .contenedor-lituano {
   width: 100%;
   max-width: none;

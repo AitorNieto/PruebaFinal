@@ -47,7 +47,7 @@ function startRainbowParty() {
 </template>
 
 <style scoped>
-/* Mantén solo los estilos relacionados con los efectos random */
+
 .random-flex-container {
   min-height: 100vh;
   display: flex;
@@ -97,8 +97,6 @@ function startRainbowParty() {
   66% { background: hsl(240, 70%, 95%); }
   100% { background: hsl(360, 70%, 95%); }
 }
-
-/* Other fun elements */
 .crazy-corner {
   position: fixed;
   top: 20px;

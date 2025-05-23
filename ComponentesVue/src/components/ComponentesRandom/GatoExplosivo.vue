@@ -40,12 +40,14 @@ const showSecretMessage = ref(false);
 
 // Movimiento con teclas
 const moverGato = (e) => {
-  const velocidad = caosActivo.value ? 30 : 10;
+  const velocidad = caosActivo.value ? 40 : 20; // Aumentamos la velocidad base
+  const smoothing = caosActivo.value ? 1 : 0.8; // Factor de suavizado
+
   switch(e.key) {
-    case 'w': gatoY.value -= velocidad; break;
-    case 's': gatoY.value += velocidad; break;
-    case 'a': gatoX.value -= velocidad; break;
-    case 'd': gatoX.value += velocidad; break;
+    case 'w': gatoY.value -= velocidad * smoothing; break;
+    case 's': gatoY.value += velocidad * smoothing; break;
+    case 'a': gatoX.value -= velocidad * smoothing; break;
+    case 'd': gatoX.value += velocidad * smoothing; break;
   }
   checkColision();
 };
@@ -67,33 +69,50 @@ const checkColision = () => {
   }
 };
 
-// Corazones al hacer clic
+// Mejoramos el sistema de corazones con menor delay
+let isAnimating = false;
 const lanzarCorazones = () => {
+  if (isAnimating) return;
+  isAnimating = true;
+  
   miau.value.play();
   clickCount.value++;
   
-  // Mensaje secreto al click 48
   if (clickCount.value === 48) {
     showSecretMessage.value = true;
     setTimeout(() => {
       showSecretMessage.value = false;
-      clickCount.value = 0; // Reiniciar contador después de que desaparezca el mensaje
+      clickCount.value = 0;
     }, 5000);
   }
 
-  for (let i = 0; i < 5; i++) {
-    corazones.value.push({
+  const newCorazones = [];
+  const numCorazones = 8;
+  
+  for (let i = 0; i < numCorazones; i++) {
+    const angle = (i / numCorazones) * Math.PI * 2;
+    const radio = Math.random() * 20 + 30;
+    const escala = Math.random() * 0.5 + 0.8;
+    const delay = i * 25; // Reducido el delay entre corazones
+
+    newCorazones.push({
       style: {
-        left: `${Math.random() * 50}px`,
-        top: `${Math.random() * 50}px`,
+        left: `${Math.cos(angle) * radio}px`,
+        top: `${Math.sin(angle) * radio}px`,
         opacity: 1,
-        transform: `scale(${Math.random() * 2})`
+        transform: `scale(${escala})`,
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', // Transición más rápida
+        animationDelay: `${delay}ms`
       }
     });
-    setTimeout(() => {
-      corazones.value.shift();
-    }, 1000);
   }
+  
+  corazones.value = newCorazones;
+
+  setTimeout(() => {
+    corazones.value = [];
+    isAnimating = false;
+  }, 500); // Reducido el tiempo de animación total
 };
 
 // Modo CAOS
@@ -125,196 +144,153 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* ESTILOS PSICODÉLICOS */
+/* ESTILOS PSICODÉLICOS MEJORADOS */
 .mundo-gato {
   width: 100%;
   max-width: none;
   min-height: 80vh;
   background: linear-gradient(45deg, #ff00ff, #00ffff);
-  margin: 0;
   position: relative;
   overflow: hidden;
-  border-radius: 0;
-  transition: all 0.5s;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between; /* Distribuye el espacio verticalmente */
   align-items: center;
-  padding: 4rem 2rem;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modo-caos {
   background: linear-gradient(45deg, #ff0000, #ffff00);
   animation: fondo-caos 0.1s infinite;
+  box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.5);
 }
 
 .titulo-caotico {
-  position: absolute;
-  top: 2rem;
-  left: 30%;
-  transform: translateX(-50%);
+  position: relative; /* Cambiado de absolute a relative */
+  margin-top: -2rem; /* Ajuste fino de la posición */
+  width: 100%;
   color: white;
-  text-shadow: 0 0 10px #000;
-  font-size: 2.5rem;
+  text-shadow: 0 0 10px #000,
+               0 0 20px #ff00ff,
+               0 0 30px #ff00ff;
+  font-size: 3rem;
   text-align: center;
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  animation: titulo-temblor 0.3s infinite;
+  transform-origin: center;
+  animation: titulo-flotante 3s ease-in-out infinite;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
 .gato {
-  position: absolute; /* Cambiado a absolute para movimiento libre */
+  position: absolute;
   font-size: 5rem;
   cursor: pointer;
-  transition: all 0.2s;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); /* Transición más rápida */
+  transform-origin: center center;
   z-index: 10;
-  text-align: center;
   user-select: none;
+  will-change: transform; /* Optimización de rendimiento */
+  margin: auto; /* Centra el gato verticalmente cuando no se mueve */
 }
 
 .gato:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.8));
 }
 
-.corazon {
-  position: absolute;
-  animation: flotar 1s ease-out forwards;
+.gato:active {
+  transform: scale(0.95); /* Efecto de click */
 }
 
 .boton-caos {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: black;
-  color: white;
-  border: none;
+  position: relative; /* Cambiado de absolute a relative */
+  margin-bottom: 2rem;
   padding: 15px 30px;
   font-size: 1.2rem;
   border-radius: 50px;
   cursor: pointer;
-  z-index: 100;
+  background: linear-gradient(45deg, #ff0000, #ff6b6b);
+  color: white;
+  border: none;
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
   transition: all 0.3s;
-  text-align: center;
-  white-space: nowrap;
+  z-index: 100;
 }
 
-.boton-caos:hover {
-  background: #ff0000;
-  transform: translateX(-50%) scale(1.1);
+.corazon {
+  position: absolute;
+  pointer-events: none;
+  font-size: 2rem;
+  will-change: transform, opacity;
+  animation: explotar-corazon 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Animación más rápida */
+  filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
 }
 
-/* Media queries para responsividad */
-@media (max-width: 768px) {
-  .mundo-gato {
-    padding: 3rem 1rem;
-    min-height: 70vh;
+@keyframes explotar-corazon {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
   }
-
-  .titulo-caotico {
-    font-size: 1.8rem;
-    width: 95%;
-    top: 1.5rem;
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
   }
-
-  .gato {
-    font-size: 4rem;
-  }
-
-  .speech-bubble {
-    min-width: 150px;
-    padding: 12px;
-    font-size: 0.8rem;
-    top: -60px;
-  }
-
-  .boton-caos {
-    padding: 12px 24px;
-    font-size: 1rem;
-    bottom: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .mundo-gato {
-    min-height: 60vh;
-  }
-
-  .titulo-caotico {
-    font-size: 1.5rem;
-  }
-
-  .gato {
-    font-size: 3rem;
-  }
-
-  .speech-bubble {
-    min-width: 150px;
-    padding: 10px;
-    font-size: 0.7rem;
-  }
-}
-
-/* ANIMACIONES LOCAS */
-@keyframes flotar {
-  to {
-    transform: translateY(-100px) rotate(360deg);
+  100% {
+    transform: scale(0) rotate(360deg) translate(var(--random-x, 100px), var(--random-y, -100px));
     opacity: 0;
   }
+}
+
+/* Mejoramos la animación del modo caos */
+.modo-caos .gato {
+  transition: all 0.1s linear; /* Más rápido en modo caos */
+}
+
+.modo-caos .corazon {
+  animation-duration: 0.8s; /* Más rápido en modo caos */
+}
+
+@keyframes flotar-gato {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+  }
+  25% { 
+    transform: translateY(-10px) rotate(-5deg); 
+  }
+  75% { 
+    transform: translateY(10px) rotate(5deg); 
+  }
+}
+
+@keyframes titulo-flotante {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10px) rotate(2deg); }
 }
 
 @keyframes fondo-caos {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(180deg) brightness(1.2); }
+  100% { filter: hue-rotate(360deg) brightness(1); }
 }
 
-@keyframes titulo-temblor {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.speech-bubble {
-  position: absolute;
-  background: white;
-  border-radius: 20px;
-  padding: 15px;
-  min-width: 200px;
-  max-width: 90%;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.9rem;
-  font-weight: bold;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  border: 3px solid #000;
-  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  z-index: 1000;
-}
-
-.speech-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 10px solid transparent;
-  border-top-color: #000;
-}
-
-@keyframes popIn {
-  0% {
-    transform: translateX(-50%) scale(0);
-    opacity: 0;
+/* Ajustes responsive actualizados */
+@media (max-width: 768px) {
+  .mundo-gato {
+    padding: 3rem 1rem;
   }
-  80% {
-    transform: translateX(-50%) scale(1.2);
+
+  .titulo-caotico {
+    font-size: 2rem;
+    margin-top: -1rem;
   }
-  100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
+
+  .boton-caos {
+    margin-bottom: 1rem;
+    padding: 12px 24px;
+    font-size: 1rem;
   }
 }
 </style>
