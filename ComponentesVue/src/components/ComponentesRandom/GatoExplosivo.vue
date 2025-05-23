@@ -12,6 +12,9 @@
       <div v-for="(corazon, index) in corazones" :key="index" class="corazon" :style="corazon.style">
         ❤️
       </div>
+      <div v-if="showSecretMessage" class="speech-bubble">
+        "¿48? Solo un número. Pero algunos números hacen historia."
+      </div>
     </div>
 
     <button @click="activarCaos" class="boton-caos">
@@ -32,15 +35,17 @@ const corazones = ref([]);
 const caosActivo = ref(false);
 const miau = ref(null);
 const explosion = ref(null);
+const clickCount = ref(0);
+const showSecretMessage = ref(false);
 
 // Movimiento con teclas
 const moverGato = (e) => {
   const velocidad = caosActivo.value ? 30 : 10;
   switch(e.key) {
-    case 'ArrowUp': gatoY.value -= velocidad; break;
-    case 'ArrowDown': gatoY.value += velocidad; break;
-    case 'ArrowLeft': gatoX.value -= velocidad; break;
-    case 'ArrowRight': gatoX.value += velocidad; break;
+    case 'w': gatoY.value -= velocidad; break;
+    case 's': gatoY.value += velocidad; break;
+    case 'a': gatoX.value -= velocidad; break;
+    case 'd': gatoX.value += velocidad; break;
   }
   checkColision();
 };
@@ -58,6 +63,17 @@ const checkColision = () => {
 // Corazones al hacer clic
 const lanzarCorazones = () => {
   miau.value.play();
+  clickCount.value++;
+  
+  // Mensaje secreto al click 48
+  if (clickCount.value === 48) {
+    showSecretMessage.value = true;
+    setTimeout(() => {
+      showSecretMessage.value = false;
+      clickCount.value = 0; // Reiniciar contador después de que desaparezca el mensaje
+    }, 5000);
+  }
+
   for (let i = 0; i < 5; i++) {
     corazones.value.push({
       style: {
@@ -176,5 +192,46 @@ onUnmounted(() => {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
+}
+
+.speech-bubble {
+  position: absolute;
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  min-width: 200px;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border: 3px solid #000;
+  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1000;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 10px solid transparent;
+  border-top-color: #000;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  80% {
+    transform: translateX(-50%) scale(1.2);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
 }
 </style>
