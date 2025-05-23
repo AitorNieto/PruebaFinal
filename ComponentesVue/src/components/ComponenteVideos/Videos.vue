@@ -97,13 +97,13 @@ const seasons = availableSeasons;
 const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
-const clickStartTime = ref(0); // Añadida esta variable
-const clickStartX = ref(0);    // Añadida esta variable
-const clickTimeout = ref(null); // Añadida para mejor manejo del click
+const clickStartTime = ref(0); 
+const clickStartX = ref(0); 
+const clickTimeout = ref(null);
 
 // Añadir estas variables para mejor control
-const isClick = ref(true); // Nueva variable para controlar si es click
-const moveDistance = ref(0); // Nueva variable para medir el movimiento
+const isClick = ref(true); 
+const moveDistance = ref(0); 
 
 // Computed
 const currentSeasonVideos = computed(() => {
@@ -277,8 +277,8 @@ onUnmounted(() => {
 }
 
 .back-button {
-  margin: 3rem auto 2rem; /* Aumentamos el margen superior */
-  display: block; /* Centramos el botón */
+  margin: 3rem auto 2rem;
+  display: block; 
   z-index: 2;
 }
 
@@ -321,7 +321,7 @@ onUnmounted(() => {
 /* Aseguramos que los videos no se clickeen mientras se arrastra */
 .video-card {
   pointer-events: auto;
-  flex: 0 0 auto; /* Evita que las tarjetas se estiren */
+  flex: 0 0 auto; 
   user-select: none;
 }
 
@@ -337,7 +337,7 @@ onUnmounted(() => {
 /* Mejoramos el scroll suave */
 .episodes-wrapper {
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Para iOS */
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -450,11 +450,11 @@ onUnmounted(() => {
 
 .episodes-wrapper.dragging {
   cursor: grabbing;
-  scroll-behavior: auto; /* Desactivar scroll suave mientras se arrastra */
+  scroll-behavior: auto; 
 }
 
 .episodes-wrapper.dragging .video-card {
-  pointer-events: none; /* Evita clicks mientras se arrastra */
+  pointer-events: none;
 }
 
 /* Título principal */
@@ -636,11 +636,11 @@ onUnmounted(() => {
 
 .episodes-wrapper.dragging {
   cursor: grabbing;
-  scroll-behavior: auto; /* Desactivar scroll suave mientras se arrastra */
+  scroll-behavior: auto; 
 }
 
 .episodes-wrapper.dragging .video-card {
-  pointer-events: none; /* Evita clicks mientras se arrastra */
+  pointer-events: none;
 }
 
 /* Ocultar scrollbar pero mantener funcionalidad */
@@ -700,7 +700,7 @@ onUnmounted(() => {
 .short-container {
   position: relative;
   width: 100%;
-  padding-top: 177.77%; /* Ratio para shorts (9:16) */
+  padding-top: 177.77%;
 }
 
 .short-container iframe {
@@ -755,7 +755,7 @@ iframe {
 .video-container {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* Mantén el aspect ratio 16:9 */
+  padding-top: 56.25%;
   background: #000000;
   overflow: hidden;
 }

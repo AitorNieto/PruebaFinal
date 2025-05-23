@@ -39,8 +39,6 @@
             Recientes
           </button>
         </div>
-
-        <!-- Mover el nuevo comentario aquí -->
         <div v-if="isAuthenticated" class="new-comment">
           <textarea 
             v-model="newComment" 
@@ -169,7 +167,6 @@
 import { ref } from 'vue';
 import { db, auth } from "@/firebase";
 import { collection, query, getDocs, addDoc, serverTimestamp, orderBy, doc, updateDoc, arrayUnion, arrayRemove, increment, getDoc, where } from "firebase/firestore";
-// Importar la imagen por defecto
 import defaultAvatar from '@/assets/avatar-default.png';
 
 export default {

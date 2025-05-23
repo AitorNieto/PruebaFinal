@@ -33,8 +33,8 @@ onMounted(() => {
   justify-content: center;
   height: 100vh;
   background-color: rgb(232, 228, 228);
-  color: #8b0000; /* Rojo granate */
-  font-family: 'Roboto', sans-serif; /* Letra redondita */
+  color: #800000;
+  font-family: 'Roboto', sans-serif; 
   position: relative;
 }
 
@@ -42,23 +42,23 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px; /* Tamaño más grande */
+  font-size: 48px;
   animation: fadeIn 1s ease-in-out;
 }
 
 .letter, .icon {
-  margin: 0 5px; /* Espaciado más pequeño */
-  animation: spin 1.5s linear infinite; /* Ajusta la duración de la animación */
-  color: #8b0000; /* Rojo granate */
+  margin: 0 5px;
+  animation: spin 1.5s linear infinite; 
+  color: #8b0000; 
 }
 
 .letter {
-  font-size: 48px; /* Tamaño más grande */
+  font-size: 48px; 
   font-weight: bold;
 }
 
 .icon {
-  font-size: 36px; /* Tamaño más pequeño para el ícono */
+  font-size: 36px;
 }
 
 .footer {
@@ -66,7 +66,7 @@ onMounted(() => {
   bottom: 10px;
   font-size: 12px;
   text-align: center;
-  color: #8b0000; /* Rojo granate */
+  color: #8b0000;
 }
 
 @keyframes spin {
@@ -83,19 +83,18 @@ onMounted(() => {
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .spinner {
-    font-size: 24px; /* Tamaño más pequeño */
+    font-size: 24px;
   }
 
   .letter {
-    font-size: 24px; /* Tamaño más pequeño */
+    font-size: 24px; 
   }
-
   .icon {
-    font-size: 18px; /* Tamaño más pequeño para el ícono */
+    font-size: 18px;
   }
 
   .footer {
-    font-size: 10px; /* Tamaño más pequeño */
+    font-size: 10px; 
   }
 }
 </style>

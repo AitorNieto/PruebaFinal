@@ -74,10 +74,10 @@ const tiktoks = ref([
 
 .tiktok-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(250px, 320px)); /* Aumentado el ancho mínimo y máximo */
+  grid-template-columns: repeat(4, minmax(250px, 320px)); 
   gap: 2rem;
   justify-content: center;
-  max-width: 1600px; /* Aumentado el ancho máximo del contenedor */
+  max-width: 1600px; 
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -102,7 +102,7 @@ const tiktoks = ref([
   position: relative;
   padding-top: 177.77%;
   margin: 0 auto;
-  max-width: 320px; /* Aumentado el ancho máximo */
+  max-width: 320px; 
   background: #000;
 }
 

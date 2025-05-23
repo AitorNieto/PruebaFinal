@@ -86,10 +86,10 @@ const sendEmail = () => {
 
   emailjs
     .sendForm(
-      'service_4nwf7rl',   // Sustituye con tu Service ID
-      'template_dfp94b5',  // Sustituye con tu Template ID
+      'service_4nwf7rl',  
+      'template_dfp94b5',  
       form.value,
-      'e183AsU3CUzEW5Mce'  // Sustituye con tu Public Key
+      'e183AsU3CUzEW5Mce' 
     )
     .then(() => {
       sent.value = true
@@ -134,7 +134,7 @@ const sendEmail = () => {
   transition: color 0.2s;
 }
 .form-title.clickable:hover {
-  color: #8b0000; /* rojo vino al pasar el ratón */
+  color: #8b0000; 
 }
 
 .open-form-btn {
@@ -186,7 +186,7 @@ label {
   display: block;
   font-weight: 600;
   margin-bottom: 0.6rem;
-  color: #343a40; /* gris fuerte y elegante */
+  color: #343a40; 
   font-size: 1.05rem;
   letter-spacing: 0.5px;
   font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
@@ -316,7 +316,6 @@ button[type="submit"]:disabled {
   }
 }
 .site-footer {
-  /* ...tus estilos previos... */
-  padding-bottom: 2.7rem; /* Añade espacio para la barra de invitados */
+  padding-bottom: 2.7rem; 
 }
 </style>

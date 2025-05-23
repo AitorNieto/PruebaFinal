@@ -326,19 +326,19 @@ onMounted(fetchPerfil);
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease;
-  background: #2a0808; /* Fondo oscuro para cuando la imagen está cargando */
+  background: #2a0808; 
 }
 
 .perfil-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio */
-  object-position: center; /* Centra la imagen */
+  object-fit: cover; 
+  object-position: center; 
   transition: transform 0.3s ease;
 }
 
 .perfil-image-container:hover .perfil-image {
-  transform: scale(1.1); /* Efecto zoom suave al hover */
+  transform: scale(1.1); 
 }
 .image-overlay {
   position: absolute;

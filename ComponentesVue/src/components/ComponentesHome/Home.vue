@@ -433,8 +433,6 @@ function scrollToZDrinks() {
     font-size: 0.95rem;
   }
 }
-
-/* Botón espectacular más adaptable */
 .spectacular-button {
   font-size: 1.2rem;
   padding: 12px 28px;

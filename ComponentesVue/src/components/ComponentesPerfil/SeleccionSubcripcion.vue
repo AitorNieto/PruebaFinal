@@ -122,17 +122,17 @@ onMounted(() => {
 }
 
 .subscription-option.basic {
-  background-color: #0070ba; /* Azul */
+  background-color: #0070ba;
   color: #fff;
 }
 
 .subscription-option.prime {
-  background-color: #b80bb8; /* Dorado más oscuro */
+  background-color: #b80bb8; 
   color: #fff;
 }
 
 .subscription-option.vip {
-  background-color: #b8860b; /* Diamante */
+  background-color: #b8860b;
   color: #fff;
 }
 

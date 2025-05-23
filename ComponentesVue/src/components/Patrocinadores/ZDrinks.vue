@@ -60,7 +60,7 @@ export default {
   box-shadow: 0 10px 30px rgba(0, 168, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.5);
   font-family: 'Fredoka One', 'Comic Neue', cursive, sans-serif;
-  color: #800000; /* Rojo vino oscuro para texto general */
+  color: #800000; 
 }
 
 .collab-container {
@@ -142,7 +142,7 @@ export default {
 .collab-title {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #800000; /* Rojo vino oscuro */
+  color: #800000; 
   text-shadow: 1px 1px 3px #fff3;
 }
 
@@ -172,7 +172,7 @@ export default {
 .slogan {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  color: #c40000; /* Rojo vino más vivo */
+  color: #c40000; 
   font-style: italic;
 }
 
@@ -235,7 +235,7 @@ export default {
 
 .action-btn {
   display: flex;
-  justify-content: center; /* Centra el contenido horizontalmente */
+  justify-content: center; 
   align-items: center;
   gap: 1rem;
   background: linear-gradient(135deg, #c40000, #800000);
@@ -244,7 +244,7 @@ export default {
   border-radius: 50px;
   font-size: 1.3rem;
   font-weight: bold;
-  margin: 1.5rem auto 0 auto; /* Centra el botón */
+  margin: 1.5rem auto 0 auto;
   text-decoration: none;
   position: relative;
   overflow: hidden;
@@ -252,7 +252,7 @@ export default {
   cursor: pointer;
   transition: all 0.5s ease;
   box-shadow: 0 5px 15px rgba(128,0,0,0.18);
-  width: fit-content; /* Ajusta el ancho al contenido */
+  width: fit-content; 
 }
 
 .action-btn .btn-text {
@@ -266,7 +266,7 @@ export default {
   z-index: 2;
   font-size: 1.5rem;
   transition: all 0.3s ease;
-  color: #ffd700; /* dorado suave para el icono */
+  color: #ffd700; 
 }
 
 .action-btn::before {

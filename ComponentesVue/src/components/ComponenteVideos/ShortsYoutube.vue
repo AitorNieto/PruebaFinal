@@ -60,9 +60,9 @@ const shorts = ref([
 
 .shorts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Reducido de 300px a 200px */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
-  max-width: 1200px; /* Reducido de 1400px */
+  max-width: 1200px; 
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -84,7 +84,7 @@ const shorts = ref([
 .short-container {
   position: relative;
   width: 100%;
-  padding-top: 177.77%; /* Mantener ratio 9:16 para shorts */
+  padding-top: 177.77%;
   background: #000;
   overflow: hidden;
 }
@@ -130,7 +130,7 @@ h3 {
   }
 
   .shorts-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 1rem;
   }
 
@@ -150,7 +150,7 @@ h3 {
   }
 
   .shorts-grid {
-    grid-template-columns: 1fr; /* 1 columna en móviles */
+    grid-template-columns: 1fr;
     padding: 0 0.5rem;
   }
 

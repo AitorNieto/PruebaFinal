@@ -1,8 +1,5 @@
 <template>
   <div>
-   
-     
-
     <div id="nosotros" class="dark-red-background">
       <div class="title-wrapper">
         <h1 class="nosotros-title">Conoce a Nuestro Equipo</h1>
@@ -57,8 +54,6 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import fotoTitulo from '@/assets/fotoTitulo.jpeg';
-
 const content = ref(null);
 // Una vez que el componente se monte, agregamos la clase "slide-in" al título
 onMounted(() => {
@@ -103,7 +98,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Ocupar todo el ancho de la pantalla */
+  width: 100vw; 
   height: auto;
   background-color: white;
   display: flex;
@@ -114,21 +109,19 @@ onMounted(() => {
 
 /* Imagen del título centrada */
 .title-image {
-  width: 100vw; /* Expande la imagen a todo el ancho de la pantalla */
-  max-height: 20vh; /* No más alta que el 20% de la página */
-  object-fit: cover; /* Mantiene proporción */
-  object-position: center center; /* Centra la imagen completamente */
+  width: 100vw; 
+  max-height: 20vh;
+  object-fit: cover; 
+  object-position: center center;
 }
-
-/* Contenedor principal (deja espacio para la imagen fija) */
 .content {
-  padding-top: 5vh; /* Ajusta este valor para mover el contenido más arriba */
+  padding-top: 5vh;
   background-color: #7c0707;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* Centra el texto */
+  text-align: center;
   
 }
 
@@ -136,7 +129,7 @@ onMounted(() => {
 .section-title {
   font-size: 2.5rem;
   color: white;
-  margin-top: 30vh; /* Ajusta este valor para mover el h1 más abajo */
+  margin-top: 30vh;
   margin-bottom: 1rem;
   
 }
@@ -145,12 +138,12 @@ onMounted(() => {
 .welcome-text {
   font-size: 1.2rem;
   color: white;
-  margin-top: 10vh; /* Ajusta este valor para mover el texto más abajo */
+  margin-top: 10vh; 
   margin-bottom: 2rem;
-  max-width: 800px; /* Limita el ancho del texto */
-  border: 2px solid white; /* Añade un borde al texto */
-  padding: 1rem; /* Añade un relleno al texto */
-  border-radius: 10px; /* Bordes redondeados */
+  max-width: 800px;
+  border: 2px solid white; 
+  padding: 1rem; 
+  border-radius: 10px;
 }
 
 /* Imagen dentro del contenido */
@@ -160,17 +153,17 @@ onMounted(() => {
 }
 
 .dark-red-background {
-  background-color: #4b0000; /* Tono de rojo más oscuro */
+  background-color: #4b0000;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
-  margin-top:0; /* Elimina el espacio superior */
-  width: 100%; /* Ajusta el ancho para ocupar todo el ancho de la pantalla */
-  min-height: 50vh; /* Ocupa todo el largo de la pantalla */
+  margin-top:0; 
+  width: 100%;
+  min-height: 50vh; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centra el contenido verticalmente */
+  justify-content: center;
 }
 
 .image-container {
@@ -189,10 +182,10 @@ onMounted(() => {
 
 .additional-image {
   width: 100%;
-  max-width: 300px; /* Ajusta el tamaño máximo de las imágenes */
+  max-width: 300px; 
   height: auto;
   display: block;
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 10px; 
 }
 
 /* Estilos para la tarjeta de volteo */
@@ -200,7 +193,7 @@ onMounted(() => {
   background-color: transparent;
   width: 300px;
   height: 400px;
-  perspective: 1000px; /* Elimina el efecto 3D */
+  perspective: 1000px; 
 }
 
 .flip-card-inner {
@@ -221,7 +214,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 10px; 
 }
 
 .flip-card-front {
@@ -230,7 +223,7 @@ onMounted(() => {
 }
 
 .flip-card-back {
-  background-color: transparent; /* Fondo transparente */
+  background-color: transparent;
   color: black;
   transform: rotateY(180deg);
   display: flex;
@@ -252,7 +245,7 @@ onMounted(() => {
 
 .card-info {
   z-index: 2;
-  color: #800000; /* Cambia el color del texto a rojo-granate */
+  color: #800000;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -260,7 +253,7 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px; /* Bordes redondeados */
-  font-weight: bold; /* Hace el texto en negrita */
+  border-radius: 10px; 
+  font-weight: bold; 
 }
 </style>
