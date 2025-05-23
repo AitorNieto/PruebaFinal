@@ -761,40 +761,60 @@ iframe {
 }
 
 /* Ajustes responsive */
-@media (max-width: 1024px) {
-  .main-title {
-    font-size: 3.5rem;
-  }
-
+@media (max-width: 1200px) {
   .video-card {
     width: 350px;
   }
 
+  .seasons-nav {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-title {
+    font-size: 3rem;
+  }
+
+  .title-container {
+    height: 250px;
+  }
+
   .episodes-wrapper {
-    padding: 2rem 3rem;
+    padding: 1.5rem;
+  }
+
+  .season-button {
+    padding: 1.2rem 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .main-title {
     font-size: 2.5rem;
+    margin: 1.5rem 0;
   }
 
   .title-container {
     height: 200px;
   }
 
-  .video-card {
-    width: 300px;
-  }
-
   .seasons-nav {
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
+    padding: 0.8rem;
   }
 
   .season-button {
     padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 150px;
+  }
+
+  .video-card {
+    width: 300px;
   }
 
   .episodes-wrapper {
@@ -802,13 +822,17 @@ iframe {
     gap: 1rem;
   }
 
-  .fancy-button {
+  .video-info h3 {
     font-size: 0.9rem;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
+  .videos-page {
+    padding-bottom: 2rem;
+  }
+
   .main-title {
     font-size: 2rem;
   }
@@ -817,53 +841,72 @@ iframe {
     height: 150px;
   }
 
+  .fancy-button {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+    width: 90%;
+    max-width: 280px;
+    margin: 1.5rem auto;
+  }
+
+  .season-button {
+    width: 100%;
+    min-width: 0;
+    padding: 0.8rem;
+  }
+
   .video-card {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
   }
 
-  .seasons-nav {
-    padding: 0.5rem;
-  }
-
-  .season-button {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .video-info h3 {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .play-overlay i {
-    font-size: 3rem;
-  }
-
   .episodes-wrapper {
     padding: 0.5rem;
   }
 
-  .fancy-button {
-    width: 90%;
-    max-width: 280px;
+  .video-info h3 {
+    font-size: 0.85rem;
+    padding: 0.6rem;
   }
 }
 
-/* Ajustes para mejorar la navegación táctil */
+/* Optimizaciones para dispositivos táctiles */
 @media (hover: none) {
-  .video-card:hover {
+  .video-card:hover,
+  .season-button:hover,
+  .fancy-button:hover {
     transform: none;
+  }
+
+  .video-card:active,
+  .season-button:active,
+  .fancy-button:active {
+    transform: scale(0.98);
   }
 
   .play-overlay {
     opacity: 1;
     background: rgba(0, 0, 0, 0.3);
   }
+}
 
-  .season-button:hover {
-    transform: none;
+/* Optimizaciones de rendimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (pointer: coarse) {
+  .episodes-wrapper {
+    scroll-snap-type: x mandatory;
+  }
+
+  .video-card {
+    scroll-snap-align: center;
   }
 }
 </style>
