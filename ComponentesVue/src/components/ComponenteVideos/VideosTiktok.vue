@@ -137,9 +137,17 @@ const tiktoks = ref([
 
 /* Tablets */
 @media (max-width: 1024px) {
+  .tiktok-title {
+    font-size: 2.5rem;
+  }
+
   .tiktok-grid {
-    grid-template-columns: repeat(2, minmax(280px, 400px)); /* Ajustado para tablets */
-    gap: 3rem;
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tiktok-container {
+    padding: 4rem 1rem;
   }
 
   .tiktok-video-container {
@@ -150,46 +158,58 @@ const tiktoks = ref([
 /* Tablets pequeñas y móviles grandes */
 @media (max-width: 768px) {
   .tiktok-grid {
-    grid-template-columns: minmax(280px, 350px);
-    gap: 2rem;
+    grid-template-columns: repeat(1, minmax(250px, 400px));
   }
 
-  .tiktok-video-container {
-    max-width: 350px;
+  .tiktok-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
 
-  .tiktok-video-container iframe {
+  .tiktok-card {
+    margin: 0 auto;
     width: 100%;
+    max-width: 400px;
   }
 }
 
 /* Móviles */
 @media (max-width: 480px) {
-  .tiktok-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .tiktok-container {
+    padding: 3rem 0.5rem;
+  }
+
+  .tiktok-title {
+    font-size: 1.8rem;
   }
 
   .tiktok-card {
     max-width: 300px;
-    margin: 0 auto;
   }
 
-  .tiktok-video-container {
-    max-width: 300px;
-  }
-
-  .tiktok-video-container iframe {
-    width: 100%;
+  .video-info h3 {
+    font-size: 0.9rem;
   }
 }
 
-/* Efecto hover mejorado */
-.tiktok-card:hover {
-  transform: translateY(-8px);
-  border-color: #ffd700;
-  box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(255, 215, 0, 0.2);
+/* Optimizaciones de rendimiento */
+@media (prefers-reduced-motion: reduce) {
+  .tiktok-card {
+    transition: none;
+  }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) {
+  .tiktok-card:hover {
+    transform: none;
+  }
+}
+
+/* Mejoras responsive para TikTok */
+@media (max-width: 1200px) {
+  .tiktok-grid {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
 }
 </style>

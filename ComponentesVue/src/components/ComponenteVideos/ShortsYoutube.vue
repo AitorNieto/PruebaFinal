@@ -113,12 +113,18 @@ h3 {
 }
 
 /* Ajustes responsive para títulos y contenedores */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .shorts-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
   }
 
+  .shorts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
   .shorts-container {
     padding: 2rem 1rem;
   }
@@ -127,16 +133,48 @@ h3 {
     grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
     gap: 1rem;
   }
+
+  .shorts-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .short-card {
+    max-width: none;
+  }
 }
 
 @media (max-width: 480px) {
+  .shorts-container {
+    padding: 1.5rem 0.5rem;
+  }
+
   .shorts-grid {
     grid-template-columns: 1fr; /* 1 columna en móviles */
+    padding: 0 0.5rem;
+  }
+
+  .shorts-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
   }
 
   .short-card {
     max-width: 300px;
     margin: 0 auto;
+  }
+
+  h3 {
+    font-size: 0.9rem;
+    min-height: 3rem;
+  }
+}
+
+/* Optimizaciones para dispositivos táctiles */
+@media (hover: none) {
+  .short-card:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
 </style>
