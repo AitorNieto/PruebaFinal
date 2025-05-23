@@ -251,6 +251,10 @@ export default {
   font-size: 1.1rem;
   color: #0077B6;
   text-shadow: 1px 1px 3px #B3E0FF;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  font-stretch: condensed;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .mini-promo {
