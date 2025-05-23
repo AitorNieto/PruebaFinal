@@ -212,7 +212,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #000000, #14171A, #000000);
+  background: linear-gradient(45deg, #060470, #14171A, #000000);
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;

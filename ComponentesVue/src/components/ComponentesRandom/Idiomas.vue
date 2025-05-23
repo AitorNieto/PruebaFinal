@@ -48,7 +48,7 @@ export default {
       { lituano: "Šuo", español: "Perro", emoji: "🐶" },
       { lituano: "Katinas", español: "Gato", emoji: "🐱" },
       { lituano: "Linksma!", español: "¡Divertido!", emoji: "🎉" },
-      { lituano: "tscadopdrocer", español: "Misterio", emoji: "❓" },
+      { lituano: "tsacdopdrocer", español: "Misterio", emoji: "❓" },
 
     ];
 

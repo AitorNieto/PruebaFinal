@@ -5,15 +5,15 @@
     <div 
       class="gato" 
       :style="{ left: gatoX + 'px', top: gatoY + 'px' }"
-      @click="lanzarCorazones"
+      @click="lanzarHumo"
       @mouseover="gatoGrita"
     >
       🐱
-      <div v-for="(corazon, index) in corazones" :key="index" class="corazon" :style="corazon.style">
-        ❤️
+      <div v-for="(nube, index) in humo" :key="index" class="humo" :style="nube.style">
+        <span class="humo-emoji">💨</span>
       </div>
       <div v-if="showSecretMessage" class="speech-bubble">
-        "¿48? Solo un número. Pero algunos números hacen historia."
+        "<span class='secret-text'>¿48? Solo un número. Pero algunos números hacen historia.</span>"
       </div>
     </div>
 
@@ -31,7 +31,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const gatoX = ref(100);
 const gatoY = ref(100);
-const corazones = ref([]);
+const humo = ref([]);
 const caosActivo = ref(false);
 const miau = ref(null);
 const explosion = ref(null);
@@ -63,7 +63,7 @@ const checkColision = () => {
 
   if (gatoX.value < 0 || gatoX.value > maxX || gatoY.value < 0 || gatoY.value > maxY) {
     explosion.value.play();
-    corazones.value = [];
+    humo.value = [];
     gatoX.value = maxX / 2;
     gatoY.value = maxY / 2;
   }
@@ -71,13 +71,12 @@ const checkColision = () => {
 
 // Mejoramos el sistema de corazones con menor delay
 let isAnimating = false;
-const lanzarCorazones = () => {
+const lanzarHumo = () => {
   if (isAnimating) return;
   isAnimating = true;
-  
   miau.value.play();
   clickCount.value++;
-  
+
   if (clickCount.value === 48) {
     showSecretMessage.value = true;
     setTimeout(() => {
@@ -86,33 +85,30 @@ const lanzarCorazones = () => {
     }, 5000);
   }
 
-  const newCorazones = [];
-  const numCorazones = 8;
-  
-  for (let i = 0; i < numCorazones; i++) {
-    const angle = (i / numCorazones) * Math.PI * 2;
+  const newHumo = [];
+  const numHumo = 8;
+  for (let i = 0; i < numHumo; i++) {
+    const angle = (i / numHumo) * Math.PI * 2;
     const radio = Math.random() * 20 + 30;
     const escala = Math.random() * 0.5 + 0.8;
-    const delay = i * 25; // Reducido el delay entre corazones
+    const delay = i * 25;
 
-    newCorazones.push({
+    newHumo.push({
       style: {
         left: `${Math.cos(angle) * radio}px`,
         top: `${Math.sin(angle) * radio}px`,
         opacity: 1,
         transform: `scale(${escala})`,
-        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', // Transición más rápida
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         animationDelay: `${delay}ms`
       }
     });
   }
-  
-  corazones.value = newCorazones;
-
+  humo.value = newHumo;
   setTimeout(() => {
-    corazones.value = [];
+    humo.value = [];
     isAnimating = false;
-  }, 500); // Reducido el tiempo de animación total
+  }, 500);
 };
 
 // Modo CAOS
@@ -220,13 +216,62 @@ onUnmounted(() => {
   z-index: 100;
 }
 
-.corazon {
+.humo {
   position: absolute;
   pointer-events: none;
-  font-size: 2rem;
+  font-size: 2.2rem;
   will-change: transform, opacity;
-  animation: explotar-corazon 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; /* Animación más rápida */
-  filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+  animation: explotar-humo 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  filter: drop-shadow(0 0 8px #bbb);
+}
+.humo-emoji {
+  opacity: 0.8;
+  filter: blur(0.5px);
+}
+@keyframes explotar-humo {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(0) rotate(360deg) translate(var(--random-x, 100px), var(--random-y, -100px));
+    opacity: 0;
+  }
+}
+.speech-bubble {
+  position: absolute;
+  left: 50%;
+  top: -60px;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #800000;
+  border-radius: 18px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  box-shadow: 0 2px 12px #0002;
+  border: 2px solid #ff00ff44;
+  z-index: 20;
+  min-width: 180px;
+  max-width: 260px;
+  text-align: center;
+  animation: speechIn 0.4s;
+}
+.secret-text {
+  font-size: 0.95rem;
+  color: #c40000;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px #fff8, 0 0 2px #ff00ff44;
+}
+@keyframes speechIn {
+  from { opacity: 0; transform: translateX(-50%) scale(0.7); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
 @keyframes explotar-corazon {

@@ -59,7 +59,7 @@
             <select v-model="perfil.genero" id="genero" required>
               <option value="hombre">Hombre</option>
               <option value="mujer">Mujer</option>
-              <option value="prefiero no decirlo">Prefiero no decirlo</option>
+              <option value="Helicóptero Apache">Helicóptero Apache</option>
             </select>
           </div>
 
