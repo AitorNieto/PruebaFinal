@@ -1,5 +1,7 @@
 <script setup>
 const emit = defineEmits(['navigate']);
+import Idiomas from './Idiomas.vue';
+import GatoExplosivo from './GatoExplosivo.vue';
 </script>
 
 <template>
@@ -40,6 +42,12 @@ const emit = defineEmits(['navigate']);
       Volver al Home
     </button>
   </div>
+<Idiomas />
+  <div class="confetti"></div>
+  <div class="confetti confetti-2"></div>
+  <div class="confetti confetti-3"></div>
+  <audio ref="audioClick" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
+  <GatoExplosivo />
 </template>
 
 <style>

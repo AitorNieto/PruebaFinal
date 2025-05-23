@@ -121,7 +121,7 @@ function scrollToZDrinks() {
 
       <div id="random" class="large-dark-red-background random-background">
         <button class="spectacular-button" @click="changeSection('random')">
-          Cosas Random
+          No entrar
         </button>
       </div>
 
@@ -293,11 +293,25 @@ function scrollToZDrinks() {
 .large-dark-red-background {
   width: 100%;
   height: 400px;
-  background-color: rgba(80,0,0,0.8);
+  background: #800000;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.large-dark-red-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('@/assets/NoEntrar.png') center center/contain no-repeat;
+  z-index: 0;
+  opacity: 1;
+}
+.large-dark-red-background > * {
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {  /* Reemplaza la clase con la que ya tenga el botón */
