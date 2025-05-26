@@ -76,7 +76,7 @@ onUnmounted(() => {
 
 .scrolling-text {
   display: flex;
-  animation: scroll-invitados 90s linear infinite;
+  animation: scroll-invitados 175s linear infinite;
   white-space: nowrap;
 }
 
