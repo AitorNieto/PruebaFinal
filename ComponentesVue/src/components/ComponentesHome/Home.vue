@@ -293,7 +293,7 @@ function scrollToZDrinks() {
 .large-dark-red-background {
   width: 100%;
   height: 400px;
-  background: #800000;
+  background: url('@/assets/cosas-random.png') center center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -301,18 +301,16 @@ function scrollToZDrinks() {
   position: relative;
   overflow: hidden;
 }
-.large-dark-red-background::before {
+
+/* Eliminar o comentar este bloque ya que no lo necesitaremos */
+/*.large-dark-red-background::before {
   content: '';
   position: absolute;
   inset: 0;
   background: url('@/assets/NoEntrar.png') center center/contain no-repeat;
   z-index: 0;
   opacity: 1;
-}
-.large-dark-red-background > * {
-  position: relative;
-  z-index: 1;
-}
+}*/
 
 .section-title {  /* Reemplaza la clase con la que ya tenga el botón */
   background-color: #ffffff; /* Fondo claro para mayor contraste */
