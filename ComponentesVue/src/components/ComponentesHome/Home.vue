@@ -21,6 +21,8 @@
   import Menu from './Menu.vue';
   import Perfil from '../ComponentesPerfil/Perfil.vue';
   import Random from '../ComponentesRandom/Random.vue';
+  import Album from './Extras/invitados/Album.vue';
+
 // Variables reactivas y configuración
 const Posts = ref([]);
 const db = useFirestore();
@@ -103,7 +105,7 @@ function scrollToZDrinks() {
     <div v-if="currentSection === 'home'">
       <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
       <InicioHome @go-zdrinks="scrollToZDrinks" />
-      <!-- Reemplazar la sección de novedades con el componente -->
+      
       <Novedades />
 
       <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
@@ -112,7 +114,7 @@ function scrollToZDrinks() {
           Ver Videos
         </button>
       </div>
-
+      <Album/>
       <div id="foro" class="large-red-background foro-background">
         <button class="spectacular-button" @click="changeSection('foro')">
           Nuestro Foro
@@ -142,6 +144,7 @@ function scrollToZDrinks() {
     <div v-else-if="currentSection === 'videos'">
       <Videos @navigate="changeSection" />
     </div>
+  
     <div v-else-if="currentSection === 'foro'">
       <Foro @navigate="changeSection" />
     </div>
