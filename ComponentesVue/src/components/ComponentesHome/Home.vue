@@ -102,7 +102,7 @@ function scrollToZDrinks() {
   <div class="home-wrapper">
     <div v-if="currentSection === 'home'">
       <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
-      <InicioHome />
+      <InicioHome @go-zdrinks="scrollToZDrinks" />
       <!-- Reemplazar la sección de novedades con el componente -->
       <Novedades />
 

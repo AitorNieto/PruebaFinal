@@ -8,7 +8,7 @@
       <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
       
       <!-- Panel de colaboración en posición absoluta dentro del hero -->
-      <div class="collaboration-panel">
+      <div class="collaboration-panel" @click="$emit('go-zdrinks')" style="cursor:pointer;">
         <div class="collaboration-badge">
           <span class="badge-text">ZDrinks</span>
           <span class="badge-line"></span>
