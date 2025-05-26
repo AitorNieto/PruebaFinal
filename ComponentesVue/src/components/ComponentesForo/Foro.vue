@@ -169,6 +169,9 @@ import { db, auth } from "@/firebase";
 import { collection, query, getDocs, addDoc, serverTimestamp, orderBy, doc, updateDoc, arrayUnion, arrayRemove, increment, getDoc, where } from "firebase/firestore";
 import defaultAvatar from '@/assets/avatar-default.png';
 
+const FORUM_START_DATE = new Date(); // Esto tomará la fecha actual como inicio
+FORUM_START_DATE.setHours(0, 1, 0, 0); // Establecer a las 00:01 del día actual
+
 export default {
   name: 'ForumWeeklyTopic',
   emits: ['navigate'],
@@ -236,6 +239,8 @@ export default {
       user: null,
       currentFilter: 'all',
       defaultAvatar: defaultAvatar, // Añadir la imagen por defecto
+      weekStart: null,
+      weekEnd: null
     };
   },
   computed: {
@@ -296,8 +301,19 @@ export default {
   },
   async created() {
     this.calculateCurrentWeek();
+    await this.cleanOldComments();
     await this.fetchComments();
     this.checkAuth();
+
+    // Verificar cada minuto si es momento de limpiar comentarios y cambiar tema
+    this.checkInterval = setInterval(() => {
+      this.calculateCurrentWeek();
+    }, 60000); // 60000 ms = 1 minuto
+  },
+  beforeDestroy() {
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+    }
   },
   methods: {
     // Método de navegación (igual al tuyo)
@@ -307,23 +323,86 @@ export default {
 
     calculateCurrentWeek() {
   const today = new Date();
-  const forumCreationDate = new Date(); // Fecha de hoy (cuando se crea el foro)
-  forumCreationDate.setHours(0, 0, 0, 0); // Normalizamos a medianoche
+  
+  // Obtener el lunes de la semana actual
+  const currentMonday = new Date(today);
+  currentMonday.setDate(today.getDate() - today.getDay() + 1);
+  currentMonday.setHours(0, 1, 0, 0);
 
-  // Calcula la diferencia en milisegundos
-  const diffInMs = today - forumCreationDate;
+  // Obtener el domingo
+  const currentSunday = new Date(currentMonday);
+  currentSunday.setDate(currentMonday.getDate() + 6);
+  currentSunday.setHours(23, 59, 59, 999);
+
+  this.weekStart = currentMonday;
+  this.weekEnd = currentSunday;
+
+  // Calcular la fecha de reinicio (26 de mayo del próximo año)
+  const resetDate = new Date(today.getFullYear() + 1, 4, 26); // Mes 4 es mayo (0-based)
   
-  // Convierte milisegundos a semanas (1 semana = 604800000 ms)
-  const diffInWeeks = Math.floor(diffInMs / 604800000);
+  // Si la fecha actual es posterior al 26 de mayo, usar el siguiente año
+  if (today > resetDate) {
+    resetDate.setFullYear(resetDate.getFullYear() + 1);
+  }
+
+  // Calcular semanas desde el inicio o desde el último reinicio
+  let weeksSinceStart;
+  if (today >= resetDate) {
+    // Si estamos después de la fecha de reinicio, empezar desde 0
+    weeksSinceStart = 0;
+  } else {
+    // Calcular semanas desde el inicio
+    weeksSinceStart = Math.floor((today - FORUM_START_DATE) / (7 * 24 * 60 * 60 * 1000));
+  }
+
+  // Asegurarse de que weeksSinceStart nunca sea negativo
+  const adjustedWeeks = Math.max(0, weeksSinceStart);
   
-  // Asigna la semana actual (0 para la primera semana)
-  this.currentWeek = diffInWeeks;
-  this.currentTopic = this.topics[this.currentWeek % this.topics.length];
+  // El índice del tema será el número de semanas transcurridas
+  const topicIndex = adjustedWeeks % this.topics.length;
+  
+  // La semana actual será el número de semanas + 1
+  this.currentWeek = adjustedWeeks + 1;
+  this.currentTopic = this.topics[topicIndex];
+  
+  // Si es lunes y son las 00:01, limpiar los comentarios antiguos
+  const isMonday = today.getDay() === 1;
+  const isJustAfterMidnight = today.getHours() === 0 && today.getMinutes() === 1;
+  
+  // Comprobar también si es fecha de reinicio
+  const isResetDate = today.getDate() === 26 && today.getMonth() === 4;
+  
+  if ((isMonday && isJustAfterMidnight) || isResetDate) {
+    this.cleanOldComments();
+  }
 },
-    async fetchComments() {
+    async cleanOldComments() {
       try {
         const q = query(
           collection(db, "forumComments"),
+          where("date", "<", this.weekStart)
+        );
+        
+        const snapshot = await getDocs(q);
+        
+        const batch = writeBatch(db);
+        snapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+        
+        await batch.commit();
+        console.log('Comentarios antiguos eliminados');
+      } catch (error) {
+        console.error('Error al limpiar comentarios:', error);
+      }
+    },
+    async fetchComments() {
+      try {
+        // Modificar la consulta para solo traer comentarios de la semana actual
+        const q = query(
+          collection(db, "forumComments"),
+          where("date", ">=", this.weekStart),
+          where("date", "<=", this.weekEnd),
           orderBy("date", "desc")
         );
         
@@ -466,7 +545,7 @@ export default {
     const commentRef = doc(db, "forumComments", comment.id);
     const userId = this.user.uid;
 
-    // Obtener el documento actual para verificar el estado real
+    // Obtener el documento actual
     const commentDoc = await getDoc(commentRef);
     if (!commentDoc.exists()) {
       console.error('Comentario no encontrado');
@@ -476,21 +555,25 @@ export default {
     const currentData = commentDoc.data();
     const likedBy = currentData.likedBy || [];
     const hasLiked = likedBy.includes(userId);
+    const currentLikes = currentData.likes || 0;
 
-    // Actualizar en Firestore
-    await updateDoc(commentRef, {
-      likes: increment(hasLiked ? -1 : 1),
-      likedBy: hasLiked 
-        ? arrayRemove(userId)
-        : arrayUnion(userId)
-    });
+    // Verificar que los likes no sean negativos
+    if (!hasLiked || currentLikes > 0) {
+      // Actualizar en Firestore
+      await updateDoc(commentRef, {
+        likes: Math.max(0, currentLikes + (hasLiked ? -1 : 1)), // Asegura que nunca sea negativo
+        likedBy: hasLiked 
+          ? arrayRemove(userId)
+          : arrayUnion(userId)
+      });
 
-    // Actualizar el estado local
-    comment.hasLiked = !hasLiked;
-    comment.likes = (comment.likes || 0) + (hasLiked ? -1 : 1);
-    comment.likedBy = hasLiked
-      ? (comment.likedBy || []).filter(id => id !== userId)
-      : [...(comment.likedBy || []), userId];
+      // Actualizar el estado local
+      comment.hasLiked = !hasLiked;
+      comment.likes = Math.max(0, (comment.likes || 0) + (hasLiked ? -1 : 1));
+      comment.likedBy = hasLiked
+        ? (comment.likedBy || []).filter(id => id !== userId)
+        : [...(comment.likedBy || []), userId];
+    }
 
     // Actualizar las respuestas si es necesario
     if (comment.replies) {
@@ -499,7 +582,6 @@ export default {
 
   } catch (error) {
     console.error('Error al actualizar like:', error);
-    // Revertir cambios locales en caso de error
     await this.fetchComments();
   }
 },
