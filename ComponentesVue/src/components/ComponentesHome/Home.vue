@@ -282,7 +282,7 @@ function scrollToZDrinks() {
 /* Divs grandes para secciones */
 .large-red-background {
   width: 100%;
-  height: 400px;
+  height: 600px; /* Aumentado para mejor visualización */
   background-color: rgba(150,0,0,0.8);
   display: flex;
   align-items: center;
@@ -292,14 +292,84 @@ function scrollToZDrinks() {
 
 .large-dark-red-background {
   width: 100%;
-  height: 400px;
+  height: 600px; /* Aumentado para mejor visualización */
   background: url('@/assets/cosas-random.png') center center/cover no-repeat;
+  background-size: 100% 100%; /* Estira la imagen para que ocupe todo el div */
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  .home-wrapper {
+    padding: 0 1vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 350px; /* Ajuste para pantallas medianas */
+  }
+  .patrocinadores-title {
+    font-size: 2.2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-wrapper {
+    padding: 0 2vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 220px; /* Ajuste para tablets */
+  }
+  .patrocinadores-title {
+    font-size: 1.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+  .section-title {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-wrapper {
+    padding: 0 2vw;
+  }
+  .large-red-background,
+  .large-dark-red-background,
+  .scroll-bg,
+  .foro-background {
+    height: 110px;
+    min-height: 90px;
+  }
+  .patrocinadores-title {
+    font-size: 1.1rem;
+    margin-top: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+  .form-container {
+    padding: 0.5rem;
+  }
+  .foro-content {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
 }
 
 /* Eliminar o comentar este bloque ya que no lo necesitaremos */
@@ -372,7 +442,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 280px;
+    height: 350px; /* Ajuste para pantallas medianas */
   }
   .patrocinadores-title {
     font-size: 2.2rem;
@@ -389,7 +459,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 180px;
+    height: 220px; /* Ajuste para tablets */
   }
   .patrocinadores-title {
     font-size: 1.5rem;
