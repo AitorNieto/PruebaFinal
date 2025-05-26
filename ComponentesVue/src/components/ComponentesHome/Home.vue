@@ -119,16 +119,18 @@ function scrollToZDrinks() {
         <Album/>
       </div>
 
-      <div id="foro" class="large-red-background foro-background">
-        <button class="spectacular-button" @click="changeSection('foro')">
-          Nuestro Foro
-        </button>
-      </div>
-
-      <div id="random" class="large-dark-red-background random-background">
-        <button class="spectacular-button" @click="changeSection('random')">
-          No entrar
-        </button>
+      <!-- Sección combinada Foro + Random -->
+      <div class="foro-random-row">
+        <div id="foro" class="foro-background foro-random-item">
+          <button class="spectacular-button" @click="changeSection('foro')">
+            Nuestro Foro
+          </button>
+        </div>
+        <div id="random" class="large-dark-red-background foro-random-item">
+          <button class="spectacular-button" @click="changeSection('random')">
+            No entrar
+          </button>
+        </div>
       </div>
 
       <!-- Componente Nosotros -->
@@ -304,7 +306,7 @@ function scrollToZDrinks() {
 .large-dark-red-background {
   width: 100%;
   height: 600px; /* Aumentado para mejor visualización */
-  background: url('@/assets/cosas-random.png') center center/cover no-repeat;
+  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
   background-size: 100% 100%; /* Estira la imagen para que ocupe todo el div */
   background-repeat: no-repeat;
   display: flex;
@@ -554,6 +556,95 @@ function scrollToZDrinks() {
   .foro-content {
     font-size: 0.9rem;
     padding: 0.3rem 0.5rem;
+  }
+}
+
+/* Estilos para la fila Foro + Random */
+.foro-random-row {
+  display: flex;
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 100vw;
+  height: 520px; /* Más alto para que ambas imágenes se vean enteras */
+  gap: 0;
+  margin: 2rem 0 1.5rem 0;
+  overflow: hidden;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+}
+
+.foro-random-item {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 50vw;
+  max-width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-radius: 0;
+  margin: 0;
+  background: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.foro-background.foro-random-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('@/assets/Foro.webp') center center/contain no-repeat;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.large-dark-red-background.foro-random-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.foro-background.foro-random-item,
+.large-dark-red-background.foro-random-item {
+  background: none !important;
+}
+
+.foro-random-item > .spectacular-button {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .foro-random-row {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+  .foro-random-item {
+    width: 100%;
+    max-width: 100%;
+    height: 180px;
+    border-radius: 14px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .foro-random-item {
+    height: 110px;
+    border-radius: 10px !important;
   }
 }
 </style>

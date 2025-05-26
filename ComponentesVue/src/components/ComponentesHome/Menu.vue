@@ -208,26 +208,35 @@ function handleLogout() {
 .menu ul {
   list-style: none;
   display: flex;
-  gap: 50px;
-  padding: 0;
-  margin: 0;
+  flex-wrap: nowrap;
+  justify-content: center;
   align-items: center;
+  gap: 32px;
+  padding: 0 12px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: auto;
 }
 
 .menu ul li a {
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  font-size: 2rem !important;
+  letter-spacing: 1px;
   color: white;
   text-decoration: none;
-  font-size: 3rem;
-  font-weight: bold;
-  letter-spacing: 2px;
+  background: none;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.18);
+  padding: 10px 18px;
+  border-radius: 7px;
+  margin: 0 1px;
+  transition: all 0.2s;
+  min-width: 70px;
+  text-align: center;
   position: relative;
-  padding: 5px 10px;
-  transition: all 0.3s ease;
-  background: linear-gradient(to right, #ffffff, white);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
 }
 
 .menu ul li a::before {
@@ -251,65 +260,32 @@ function handleLogout() {
 }
 
 .menu.scrolled ul li a {
-  font-size: 2rem;
-  background: linear-gradient(to right, #ffffff, white);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.user-section {
-  display: flex;
-  align-items: center;
-}
-
-.user-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ffffff;
-  box-shadow: 0 0 10px rgb(0, 0, 0);
-  transition: all 0.3s ease;
-}
-
-.user-section a:hover .user-avatar {
-  transform: scale(1.1);
-  border-color: #ffffff;
-  box-shadow: 0 0 20px white;
+  font-size: 1.3rem !important;
 }
 
 .scroll-to-top {
   position: fixed;
-  bottom: 90px;
   right: 20px;
+  bottom: 80px;
   background: linear-gradient(135deg, #8b0000, #4a0d0d);
   color: #ffffff;
   border: none;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
-  font-size: 1.8rem;
+  font-size: 2.1rem;
   display: none;
-  z-index: 11001 !important;
+  z-index: 12000 !important;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
 .scroll-to-top.visible {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-.scroll-to-top:hover {
-  background: linear-gradient(135deg, #4a0d0d, #8b0000);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .menu ul {
     gap: 30px;
   }
@@ -331,21 +307,48 @@ function handleLogout() {
     width: 40px;
     height: 40px;
     font-size: 1.5rem;
-    bottom: 80px;
+    bottom: 70px;
+    right: 12px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 900px) {
   .menu ul {
-    gap: 20px;
+    gap: 12px;
+    padding: 0 2px;
+    max-width: 100vw;
   }
-
   .menu ul li a {
-    font-size: 1.8rem;
+    font-size: 1.15rem !important;
+    min-width: 48px;
+    padding: 7px 8px;
+  }
+  .menu.scrolled ul li a {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .menu ul {
+    gap: 4px;
+    padding: 0 1px;
+    max-width: 100vw;
+  }
+  .menu ul li a {
+    font-size: 0.95rem !important;
+    min-width: 32px;
+    padding: 4px 4px;
+  }
+  .menu.scrolled ul li a {
+    font-size: 0.8rem !important;
   }
 
-  .menu.scrolled ul li a {
-    font-size: 1.3rem;
+  .scroll-to-top {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    bottom: 60px;
+    right: 8px;
   }
 }
 </style>
