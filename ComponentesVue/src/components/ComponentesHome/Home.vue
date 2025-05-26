@@ -114,7 +114,11 @@ function scrollToZDrinks() {
           Ver Videos
         </button>
       </div>
-      <Album/>
+
+      <div id="Hall of Fame">
+        <Album/>
+      </div>
+
       <div id="foro" class="large-red-background foro-background">
         <button class="spectacular-button" @click="changeSection('foro')">
           Nuestro Foro
