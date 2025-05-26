@@ -117,7 +117,10 @@ const sendEmail = () => {
   box-shadow: 0 8px 32px rgba(139,0,0,0.10), 0 1.5px 8px #ffd70044;
   border: 2.5px solid #ffd700;
   text-align: center;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   transition: box-shadow 0.3s, border 0.3s;
 }
 
@@ -126,9 +129,9 @@ const sendEmail = () => {
   margin-bottom: 0.5rem;
   font-size: 2.1rem;
   color: #302c2c;
-  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
   font-stretch: condensed;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 1px;
   text-shadow: 0 0 8px #fff3, 0 2px 8px #fff8;
   transition: color 0.2s;
@@ -147,7 +150,10 @@ const sendEmail = () => {
   border-radius: 12px;
   cursor: pointer;
   font-size: 1.15rem;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   box-shadow: 0 2px 12px #8b000033;
   transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   display: block;
@@ -189,7 +195,9 @@ label {
   color: #343a40; 
   font-size: 1.05rem;
   letter-spacing: 0.5px;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
 }
 input,
 select,
@@ -199,7 +207,10 @@ textarea {
   border: 2px solid #ffd700;
   border-radius: 12px;
   font-size: 1rem;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   transition: all 0.3s ease;
   background-color: #fff8f0;
   color: #8b0000;
@@ -240,7 +251,10 @@ button[type="submit"] {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   box-shadow: 0 2px 12px #8b000033;
 }
 button[type="submit"]:hover {
@@ -284,7 +298,10 @@ button[type="submit"]:disabled {
   align-items: center;
   gap: 0.75rem;
   font-weight: 500;
-  font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   font-size: 1.05rem;
 }
 .notification svg {
