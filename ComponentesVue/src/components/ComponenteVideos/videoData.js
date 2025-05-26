@@ -1,8 +1,8 @@
 const videoList = [
-    {
+  {
     season: 1,
     episodes: [
-     {
+      {
         id: '9I0KODX5IlY',
         title: 'Delirios y Barbaries - Episodio 1 - Especial Halloween',
         thumbnail: 'https://img.youtube.com/vi/9I0KODX5IlY/maxresdefault.jpg',
@@ -755,10 +755,56 @@ const videoList = [
         title: 'Delirios y Barbaries T4 - Episodio 6',
         thumbnail: 'https://img.youtube.com/vi/g7jLY3Z17uk/hqdefault.jpg',
         playing: false
-      } // ... episodios de temporada 4
+      },
+      {
+        id: 'm271S3o7F-U',
+        title: 'Delirios y Barbaries T4 - Episodio 7',
+        thumbnail: 'https://img.youtube.com/vi/m271S3o7F-U/hqdefault.jpg',
+        playing: false
+      },
+      {
+        id: 'tZ-DZwHIiBE',
+        title: 'Delirios y Barbaries T4 - Episodio 8',
+        thumbnail: 'https://img.youtube.com/vi/tZ-DZwHIiBE/hqdefault.jpg',
+        playing: false
+      },
+      {
+        id: 'UX4ys5pSSUU',
+        title: 'Delirios y Barbaries T4 - Episodio 9',
+        thumbnail: 'https://img.youtube.com/vi/UX4ys5pSSUU/hqdefault.jpg',
+        playing: false
+      },
+      {
+        id: 'hcIm7MrseXw',
+        title: 'Delirios y Barbaries T4 - Episodio 10',
+        thumbnail: 'https://img.youtube.com/vi/hcIm7MrseXw/hqdefault.jpg',
+        playing: false
+      }
     ]
   }
-];
+].map(season => {
+  // Ordenamos los episodios de mayor a menor número con manejo de errores
+  season.episodes.sort((a, b) => {
+    try {
+      // Extraer números del título completo
+      const numA = parseInt(a.title.match(/Episodio (\d+)/i)[1]);
+      const numB = parseInt(b.title.match(/Episodio (\d+)/i)[1]);
+      
+      // Si ambos números son válidos, ordenar de mayor a menor
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return numB - numA;
+      }
+      return 0; // Mantener el orden original si hay algún problema
+    } catch (error) {
+      console.warn('Error al ordenar episodios:', error);
+      return 0; // Mantener el orden original si hay error
+    }
+  });
+  return season;
+});
+
+// Ordenamos las temporadas de mayor a menor
+videoList.sort((a, b) => b.season - a.season);
 
 const availableSeasons = [4, 3, 2, 1];
 
