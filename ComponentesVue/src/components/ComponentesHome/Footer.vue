@@ -78,7 +78,10 @@
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
   color: #ffd700;
-  font-family: 'Cinzel', serif;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
   text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
@@ -105,6 +108,10 @@
   text-align: center;
   padding-top: 0.5rem;
   font-size: 0.9rem;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 .youtube {
