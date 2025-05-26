@@ -156,8 +156,8 @@ export default {
 
 /* Pestaña principal */
 .strip-tab {
-  background: linear-gradient(135deg, #F7FFB0 0%, #D4FFB2 100%);
-  box-shadow: 0 4px 16px rgba(0, 168, 255, 0.15);
+  background: linear-gradient(135deg, #fff0f0 0%, #fbe6e6 100%);
+  box-shadow: 0 4px 16px rgba(128,0,0,0.10);
   padding: 12px;
   display: flex;
   align-items: center;
@@ -216,8 +216,8 @@ export default {
 }
 
 .strip-content {
-  background: linear-gradient(135deg, #F7FFB0 0%, #D4FFB2 100%);
-  box-shadow: 0 4px 16px rgba(0, 168, 255, 0.15);
+  background: linear-gradient(135deg, #fff0f0 0%, #fbe6e6 100%);
+  box-shadow: 0 4px 16px rgba(128,0,0,0.10);
   border-radius: 0 12px 12px 0;
   padding: 12px 18px;
   min-width: 200px;
@@ -249,28 +249,35 @@ export default {
 .card-message {
   margin: 0;
   font-size: 1.1rem;
-  color: #0077B6;
-  text-shadow: 1px 1px 3px #B3E0FF;
-  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  color: #800000;
+  text-shadow: none;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
   font-stretch: condensed;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
 .mini-promo {
   font-size: 0.9rem;
-  color: var(--zd-blue-dark);
+  color: #800000;
   margin-top: 8px;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 .mini-code {
   display: inline-block;
-  background: linear-gradient(135deg, #E6F7FF, #B3E0FF);
-  color: var(--zd-blue-dark);
+  background: linear-gradient(135deg, #fff0f0, #fbe6e6);
+  color: #800000;
+  font-weight: 400;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-stretch: condensed;
+  letter-spacing: 1px;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.9rem;
-  font-weight: bold;
   margin-left: 5px;
   box-shadow: 0 2px 5px rgba(0, 168, 255, 0.2);
   transition: transform 0.2s ease;
@@ -297,12 +304,12 @@ export default {
 
 .logo-x {
   font-size: 2rem;
-  font-weight: bold;
-  color: #C40000;
+  font-weight: 400;
+  color: #800000;
   margin: 0 4px;
   line-height: 1;
   user-select: none;
-  text-shadow: 1px 1px 4px #fff, 0 1px 8px #C4000033;
+  text-shadow: 1px 1px 4px #fff, 0 1px 8px #80000033;
   display: flex;
   align-items: center;
 }

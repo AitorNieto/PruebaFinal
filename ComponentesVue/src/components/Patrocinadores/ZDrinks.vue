@@ -57,8 +57,8 @@ export default {
   padding: 0;
   margin: 3rem auto;
   max-width: 1000px;
-  box-shadow: 0 10px 30px rgba(0, 168, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0,168,255,0.2);
+  border: 1px solid rgba(255,255,255,0.5);
   font-family: 'Fredoka One', 'Comic Neue', cursive, sans-serif;
   color: #800000; 
 }
@@ -73,7 +73,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.3);
   border-radius: 25px 0 0 25px;
 }
 
@@ -332,6 +332,86 @@ export default {
   .discount-main {
     font-size: 1.3rem;
     padding: 0.2rem 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .zdrinks-collab {
+    max-width: 98vw;
+    margin: 1rem auto;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 0.5rem 0.2rem;
+  }
+  .collab-container {
+    flex-direction: column;
+    min-height: unset;
+    padding: 0;
+  }
+  .collab-image {
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    border-radius: 15px 15px 0 0;
+    min-height: unset;
+  }
+  .featured-image {
+    max-width: 120px;
+    max-height: 90px;
+    margin: 0 auto;
+  }
+  .promo-content {
+    padding: 0.7rem 0.3rem 1rem 0.3rem;
+    align-items: center;
+  }
+  .brand-presentation {
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+  }
+  .partner-logo, .zdrinks-logo {
+    height: 28px;
+  }
+  .collab-symbol {
+    font-size: 1.2rem;
+  }
+  .collab-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  .highlight {
+    font-size: 1.1rem;
+  }
+  .slogan {
+    font-size: 0.8rem;
+    margin-bottom: 0.7rem;
+  }
+  .offer-card {
+    padding: 0.5rem 0.3rem;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+  }
+  .offer-description {
+    font-size: 0.7rem;
+    margin: 0.2rem 0;
+  }
+  .promo-code {
+    font-size: 1rem;
+    padding: 0.3rem 0.7rem;
+    margin: 0.3rem 0;
+  }
+  .discount-main {
+    font-size: 1rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 20px;
+    margin: 0 0.1rem;
+  }
+  .action-btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    margin: 0.7rem auto 0 auto;
+    gap: 0.5rem;
+  }
+  .action-btn .icon {
+    font-size: 1rem;
   }
 }
 
