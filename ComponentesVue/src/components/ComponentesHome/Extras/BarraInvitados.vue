@@ -42,9 +42,9 @@ onUnmounted(() => {
   <transition name="fade">
     <div v-if="visible" class="scrolling-bar">
       <div class="scrolling-text">
-        D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
-        D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
-        D&B • Soul • D&B • Goorgo • D&B • Darios Eme Hache • D&B • WhereIsLeto • D&B • TheMelerus • D&B • Claudia Garcia • D&B • Kappah •
+        <span v-for="n in 6" :key="n">
+          D&B • Dani • D&B • Soul • D&B • Shiro • D&B • Kappah • D&B • Goorgo • D&B • El Cejas • D&B • Darioemehache • D&B • WhereIsLeto • D&B • Juan Colás • D&B • Eskini SKL • D&B • Claudia Garcia • D&B • Melerus • D&B • Nacho Pavía • D&B • Missiego Beats • D&B • Sergio Copado • D&B • Pit • D&B • Nikin • D&B • Kappah • D&B • Terk • D&B • Chesto • D&B • Jorge Barroso • D&B • Yagouu • D&B • Mota • D&B • Dusan • D&B • Alvarito • D&B • Sanabria • D&B • Sr Miner • D&B • Rubencher • D&B • Alberto SSJ
+        </span>
       </div>
     </div>
   </transition>
@@ -61,7 +61,7 @@ onUnmounted(() => {
   color: #fff;
   font-family: 'Fredoka', 'Cinzel', cursive, sans-serif;
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 1px;
   box-shadow: 0 -2px 16px #8b000055;
   border-top: 2px solid #ffd700;
@@ -75,9 +75,8 @@ onUnmounted(() => {
 }
 
 .scrolling-text {
-  display: inline-block;
-  padding-left: 100vw;
-  animation: scroll-invitados 30s linear infinite;
+  display: flex;
+  animation: scroll-invitados 90s linear infinite;
   white-space: nowrap;
 }
 
