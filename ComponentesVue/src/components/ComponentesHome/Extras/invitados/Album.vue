@@ -8,7 +8,7 @@
       <!-- Índice/Explicación -->
       <div class="page indice">
         <div class="indice-content">
-          <h2>Índice</h2>
+          <h2>ÍNDICE</h2>
           <p class="indice-descripcion">
             Hall of Fame del selecto club de invitados que han venido<br>
             Los cromos <span style="color:#FFD700; font-weight:bold;">dorados</span> son quienes han asistido por su propio pie.<br>
@@ -165,8 +165,8 @@ onMounted(() => {
 }
 
 .page {
-  background: linear-gradient(135deg, #444 0%, #888 100%);
-  border: 2px solid #e0e0e0;
+  background: linear-gradient(135deg, #800000 0%, #4a0000 100%);
+  border: 2px solid #FFD700;
   color: #222;
   font-family: 'Arial', sans-serif;
   font-size: 22px;
@@ -179,30 +179,31 @@ onMounted(() => {
 }
 
 .portada {
-  background: #72252c; /* rojo vino */
+  background: #642524;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  min-width: 0%;
+  height: 100%;
+  width: 100%;
   position: relative;
   overflow: hidden;
+  padding: 0;
 }
 .indice,
 .fin {
-  background: linear-gradient(135deg, #444 0%, #888 100%);
+  background: linear-gradient(135deg, #800000 0%, #4a0000 100%);
   color: #fff;
 }
 
 .hall-title {
   color: #f5f5f5;
-  text-shadow: 0 2px 8px #222;
+  text-shadow: 0 2px 8px black;
 }
 
 .indice-content {
-  background: rgba(230,230,230,0.12);
-  color: #222;
-  box-shadow: 0 2px 12px #8884;
+  background: rgba(255, 0, 0, 0.12);
+  color: white;
+  box-shadow: 0 2px 12px white;
 }
 
 .cromos-page {
@@ -222,10 +223,10 @@ onMounted(() => {
 }
 
 .cromo-bolsillo {
-  background: rgba(220,220,220,0.18);
+  background: rgba(255, 255, 255, 0.18);
   border: 2px solid #e0e0e0;
   border-radius: 10px;
-  box-shadow: 0 2px 8px #bbb4, 0 0 0 2px #fff1 inset;
+  box-shadow: 0 2px 8px white, 0 0 0 2px white inset;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -243,9 +244,9 @@ onMounted(() => {
   height: 120px;
   object-fit: cover;
   border-radius: 6px;
-  border: 2px solid #888;
+  border: 2px solid white;
   background: #f5f5f5;
-  box-shadow: 0 1px 4px #8883;
+  box-shadow: 0 1px 4px black;
   transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
   will-change: transform;
   z-index: 2;
@@ -271,7 +272,7 @@ onMounted(() => {
 
 .cromo-bolsillo:hover .cromo-img {
   transform: translateY(-18px) scale(1.08);
-  box-shadow: 0 8px 24px #8888, 0 0 0 4px #fff8 inset;
+  box-shadow: 0 8px 24px white, 0 0 0 4px white inset;
 }
 
 .cromo-info {
@@ -282,7 +283,7 @@ onMounted(() => {
 .cromo-numero {
   display: block;
   font-size: 0.9rem;
-  color: #444;
+  color: black;
   font-weight: bold;
   line-height: 1;
 }
@@ -290,12 +291,12 @@ onMounted(() => {
 .cromo-nombre {
   display: block;
   font-size: 0.85rem;
-  color: #222;
+  color: black;
   line-height: 1;
 }
 
 .fin {
-  background: #72252c; /* igual que portada */
+  background: #642524; /* igual que portada */
   color: #fff;
   font-size: 2rem;
   display: flex;
@@ -362,12 +363,14 @@ onMounted(() => {
 }
 
 .img-portada {
-  max-width: 90%;
-  max-height: 90%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Cambiado de 'cover' a 'contain' */
   display: block;
-  margin: 0 auto;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px #2226;
+  margin: 0;
+  padding: 20px; /* Añadido padding para dar un poco de espacio */
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .cromo-img-blur {

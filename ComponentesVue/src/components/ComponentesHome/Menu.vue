@@ -109,6 +109,7 @@ function handleLogout() {
         <ul>
           <li><a href="#" @click.prevent="navigate('novedades')">Novedades</a></li>
           <li><a href="#" @click.prevent="navigate('podcast')">Podcast</a></li>
+          <li><a href="#" @click.prevent="navigate('Hall of Fame')">Hall of Fame</a></li>
           <li><a href="#" @click.prevent="navigate('foro')">Foro</a></li>
           <li><a href="#" @click.prevent="navigate('nosotros')">Nuestro Equipo</a></li>
           <li><a href="#" @click.prevent="navigate('patrocinadores')">Patrocinadores</a></li>

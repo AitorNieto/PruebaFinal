@@ -136,13 +136,17 @@ function scrollToZDrinks() {
       <!-- Componente Formulario -->
        <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
       <Formulario/>   
-      <Footer @go-juegos="goToJuegosPage" />
+      <Footer @go-juegos="goToJuegosPage"/>
    
     </div>
 
     <!-- Otras secciones según la navegación -->
     <div v-else-if="currentSection === 'videos'">
       <Videos @navigate="changeSection" />
+    </div>
+
+    <div v-else-if="currentSection === 'Hall of Fame'">
+      <Album @navigate="changeSection" />
     </div>
   
     <div v-else-if="currentSection === 'foro'">
