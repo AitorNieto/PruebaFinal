@@ -1,13 +1,27 @@
 <template>
   <div class="background">
     <div class="hero-container">
+      <!-- Efecto de partículas o decoración de fondo -->
+      <div class="particles"></div>
+      
       <!-- Contador en posición absoluta dentro del hero -->
       <Countdown class="countdown-container" />
       
-      <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
-      <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+      <!-- Título con efecto mejorado -->
+      <div class="title-container">
+        <h1 class="titulo">DELIRIOS Y BARBARIES</h1>
+        <div class="title-decoration"></div>
+      </div>
       
-      <!-- Panel de colaboración en posición absoluta dentro del hero -->
+      <!-- Marco decorativo para la imagen -->
+      <div class="image-frame">
+        <div class="frame-inner">
+          <img :src="imageSrc" alt="Imagen de bienvenida" class="welcome-image" />
+        </div>
+        <div class="frame-decoration"></div>
+      </div>
+      
+      <!-- Panel de colaboración EXACTAMENTE COMO ESTABA ANTES -->
       <div class="collaboration-panel" @click="$emit('go-zdrinks')" style="cursor:pointer;">
         <div class="collaboration-badge">
           <span class="badge-text">ZDrinks</span>
@@ -36,6 +50,8 @@ import imageSrc from '@/assets/FondoDyB.png';
     ),
     url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
   background-size: cover;
+  overflow: hidden;
+  position: relative;
 }
 
 .hero-container {
@@ -50,24 +66,122 @@ import imageSrc from '@/assets/FondoDyB.png';
   padding-top: 3.5rem;
 }
 
-.welcome-image {
-  width: 85vw;
-  max-width: 1150px;
+/* Efecto de partículas decorativas */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,215,0,0.05) 1px, transparent 1px);
+  background-size: 30px 30px, 40px 40px;
+  z-index: 0;
+  animation: particleMove 120s linear infinite;
+}
+
+@keyframes particleMove {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 1000px 500px, -500px 250px; }
+}
+
+/* Mejoras para el título */
+.title-container {
+  position: relative;
+  margin: 0.8% auto 1.5% auto;
+  z-index: 2;
+}
+
+.title-decoration {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
+.titulo {
+  font-size: 4.7vw;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  text-align: center;
+  position: relative;
+  text-shadow: 3px 3px 3px #800000;
+  transition: all 0.4s ease;
+  z-index: 2;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.titulo:hover {
+  color: #800000;
+  text-shadow: 2px 2px 8px #bbb6b6, 0 0 2px #a30000;
+  transform: scale(1.02);
+}
+
+/* Marco decorativo para la imagen */
+.image-frame {
+  position: relative;
+  width: 87vw;
+  max-width: 1200px;
   min-width: 320px;
-  height: auto;
-  border-radius: 15px;
-  /* Sube la imagen principal acercando el margen superior */
-  margin: -1rem auto 0 auto;
-  display: block;
-  transition: transform 0.3s;
+  margin: 0 auto;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 0 1px rgba(255, 215, 0, 0.3),
+    0 0 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
   z-index: 1;
+  transition: all 0.3s ease;
 }
 
-.welcome-image:hover {
-  transform: scale(1.03);
+.image-frame:hover {
+  transform: scale(1.01);
+  box-shadow: 
+    0 0 0 1px rgba(255, 215, 0, 0.5),
+    0 0 40px rgba(0, 0, 0, 0.7),
+    inset 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
-/* Panel de colaboración - Posición absoluta dentro del hero */
+.frame-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.image-frame:hover .welcome-image {
+  transform: scale(1.02);
+}
+
+.frame-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+/* Panel de colaboración EXACTAMENTE COMO ESTABA ANTES */
 .collaboration-panel {
   position: absolute;
   top: 300px;
@@ -89,7 +203,6 @@ import imageSrc from '@/assets/FondoDyB.png';
 
 .collaboration-panel:hover {
   background: rgba(255, 255, 255, 0.18);
-  /* Elimina el box-shadow dorado */
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
 }
 
@@ -145,25 +258,6 @@ import imageSrc from '@/assets/FondoDyB.png';
   filter: brightness(1.15) drop-shadow(0 2px 8px #ffd70088);
 }
 
-.titulo {
-  font-size: 4.7vw;
-  font-weight: 700;
-  color: #ffffff;
-  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
-  text-align: center;
-  margin: 0.8% auto 0 auto;
-  position: relative;
-  text-shadow: 3px 3px 3px #800000;
-  transition: color 0.4s, text-shadow 0.4s;
-  z-index: 2;
-  letter-spacing: 1px;
-}
-
-.titulo:hover {
-  color: #800000; /* Rojo vino en el texto */
-  text-shadow: 2px 2px 8px #bbb6b6, 0 0 2px #a30000;
-}
-
 /* Contador en posición absoluta dentro del hero */
 .countdown-container {
   position: absolute;
@@ -176,7 +270,6 @@ import imageSrc from '@/assets/FondoDyB.png';
 @media (max-width: 768px) {
   .hero-container {
     padding-top: 2rem;
-    position: relative;
   }
 
   .titulo {
@@ -184,8 +277,9 @@ import imageSrc from '@/assets/FondoDyB.png';
     margin-top: 1rem;
   }
 
-  .welcome-image {
-    width: 90vw;
+  .image-frame {
+    width: 92vw;
+    padding: 10px;
     margin-top: 1rem;
   }
 
@@ -221,6 +315,10 @@ import imageSrc from '@/assets/FondoDyB.png';
 
   .partner-logo {
     max-width: 120px;
+  }
+  
+  .title-decoration {
+    width: 80%;
   }
 }
 </style>
