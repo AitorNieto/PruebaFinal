@@ -256,4 +256,44 @@ onMounted(() => {
   border-radius: 10px; 
   font-weight: bold; 
 }
+
+/* RESPONSIVE: Cartas en columna y más pequeñas en pantallas pequeñas */
+@media (max-width: 900px) {
+  .image-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+  .image-box {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .flip-card {
+    width: 220px;
+    height: 290px;
+  }
+  .additional-image {
+    max-width: 220px;
+  }
+}
+@media (max-width: 600px) {
+  .flip-card {
+    width: 150px;
+    height: 200px;
+  }
+  .additional-image {
+    max-width: 150px;
+  }
+  .image-box {
+    max-width: 170px;
+  }
+  .nosotros-title {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
 </style>

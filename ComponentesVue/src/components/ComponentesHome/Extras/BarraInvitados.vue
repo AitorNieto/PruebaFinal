@@ -43,7 +43,7 @@ onUnmounted(() => {
     <div v-if="visible" class="scrolling-bar">
       <div class="scrolling-text">
         <span v-for="n in 6" :key="n">
-          D&B • Dani • D&B • Soul • D&B • Shiro • D&B • Kappah • D&B • Goorgo • D&B • El Cejas • D&B • Darioemehache • D&B • WhereIsLeto • D&B • Juan Colás • D&B • Eskini SKL • D&B • Claudia Garcia • D&B • Melerus • D&B • Nacho Pavía • D&B • Missiego Beats • D&B • Sergio Copado • D&B • Pit • D&B • Nikin • D&B • Kappah • D&B • Terk • D&B • Chesto • D&B • Jorge Barroso • D&B • Yagouu • D&B • Mota • D&B • Dusan • D&B • Alvarito • D&B • Sanabria • D&B • Sr Miner • D&B • Rubencher • D&B • Alberto SSJ
+         • Becarios • D&B •  Dani • D&B • Soul • D&B • Shiro • D&B • Kappah • D&B • Goorgo • D&B • El Cejas • D&B • Darioemehache • D&B • WhereIsLeto • D&B • Juan Colás • D&B • Eskini SKL • D&B • Claudia Garcia • D&B • Melerus • D&B • Nacho Pavía • D&B • Missiego Beats • D&B • Sergio Copado • D&B • Pit • D&B • Nikin • D&B • Kappah • D&B • Terk • D&B • Chesto • D&B • Jorge Barroso • D&B • Yagouu • D&B • Mota • D&B • Dusan • D&B • Alvarito • D&B • Sanabria • D&B • Sr Miner • D&B • Rubencher • D&B • Alberto SSJ • D&B
         </span>
       </div>
     </div>
