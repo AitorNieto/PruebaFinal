@@ -21,7 +21,7 @@
   import Menu from './Menu.vue';
   import Perfil from '../ComponentesPerfil/Perfil.vue';
   import Random from '../ComponentesRandom/Random.vue';
-  import Album from './Extras/invitados/Album.vue';
+  import Album from './invitados/Album.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);
