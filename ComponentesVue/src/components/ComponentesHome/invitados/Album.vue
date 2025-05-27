@@ -150,7 +150,7 @@ onMounted(() => {
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), #a97c50;
+  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), black;
   background-size: cover;
   background-repeat: repeat;
   /* Para que la mesa de madera se vea más realista, puedes ajustar el color base (#a97c50) */
@@ -166,7 +166,7 @@ onMounted(() => {
 
 .page {
   background: linear-gradient(135deg, #800000 0%, #4a0000 100%);
-  border: 2px solid #FFD700;
+  border: 2px solid black;
   color: #222;
   font-family: 'Arial', sans-serif;
   font-size: 22px;
