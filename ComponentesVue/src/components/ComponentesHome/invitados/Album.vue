@@ -150,7 +150,7 @@ onMounted(() => {
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), black;
+  background: url('@/assets/FondoAlbum.webp'), black;
   background-size: cover;
   background-repeat: repeat;
   /* Para que la mesa de madera se vea más realista, puedes ajustar el color base (#a97c50) */
