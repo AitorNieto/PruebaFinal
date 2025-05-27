@@ -1,5 +1,9 @@
 <template>
   <div class="background">
+    <!-- Botón flecha para volver al home, arriba a la izquierda, fuera de la tarjeta -->
+    <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Volver al inicio">
+      <span class="flecha">←</span>
+    </button>
     <div class="login">
       <!-- Tabs simulados: Login (activo) / Registrarse -->
       <div class="tabs">
@@ -62,7 +66,7 @@
  // Emite los mismos eventos que tu padre espera:
  // - logeado -> para indicar que el usuario inició sesión correctamente
  // - solicitaRegistro -> para cambiar a la vista de registro
- const emit = defineEmits(['logeado', 'solicitaRegistro']);
+ const emit = defineEmits(['logeado', 'solicitaRegistro', 'solicitaHome']);
  
  
  const Usuario = ref('');
@@ -143,6 +147,7 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   text-align: center;
+  position: relative;
  }
  
  
@@ -322,6 +327,48 @@
  }
  .register-text a:hover {
   text-decoration: underline;
+ }
+ 
+ 
+ /* ======= Botón flecha volver arriba a la izquierda en el background ======= */
+ .volver-flecha-btn {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.2s, color 0.2s;
+  z-index: 1002;
+}
+.volver-flecha-btn .flecha {
+  font-size: 22px;
+  margin: 0;
+}
+.volver-flecha-btn:hover {
+  background: rgba(255,255,255,0.28);
+  color: #ffd900;
+}
+@media (max-width: 600px) {
+  .volver-flecha-btn {
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+  .volver-flecha-btn .flecha {
+    font-size: 18px;
+  }
  }
  
  

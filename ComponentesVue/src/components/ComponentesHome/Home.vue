@@ -154,7 +154,8 @@ function scrollToZDrinks() {
     <!-- Nueva sección para Login -->
     <Login v-else-if="currentSection === 'login'" 
            @logeado="changeSection('profile')" 
-           @solicitaRegistro="changeSection('register')" />
+           @solicitaRegistro="changeSection('register')"
+           @solicitaHome="changeSection('home')" />
 
     <Register v-else-if="currentSection === 'register'" 
               @cambiarALogin="changeSection('login')" 
