@@ -1,7 +1,16 @@
 <template>
   <div class="sopa-letras-container" @mousedown.prevent>
-    <h2>Sopa de Letras</h2>
-    <p>Encuentra las palabras ocultas en la sopa de letras.</p>
+    <div class="sopa-header">
+      <h2>Sopa de Letras</h2>
+      <div class="sopa-explicacion">
+        <span class="explicacion-titulo">¿Cómo jugar?</span>
+        <span class="explicacion-texto">
+          Selecciona con el ratón las letras de las palabras ocultas.<br />
+          Puedes marcar palabras en horizontal o vertical, en ambos sentidos.<br />
+          ¡Encuentra todas las palabras para completar el reto!
+        </span>
+      </div>
+    </div>
     <div class="sopa-layout">
       <div class="sopa-palabras">
         <h3>Palabras a buscar:</h3>
@@ -175,35 +184,96 @@ const goBack = () => {
 .sopa-letras-container {
   text-align: center;
   color: white;
-  padding: 20px;
+  padding: 18px 8px 18px 8px;
   position: relative;
-  top: 0; /* <-- Cambia esto a 0 */
+  top: 0;
   left: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: unset;
+  height: auto;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #701515 0%, #a83232 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 40px #0007, 0 1.5px 0 #fff2 inset;
+  max-width: 700px;
+  margin: 72px auto 32px auto; /* Aumenta el margen superior para bajarlo */
+}
+
+.sopa-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.sopa-letras-container h2 {
+  font-size: 2rem;
+  color: #ffd700;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #800000, 0 0 8px #fff8;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+}
+
+.sopa-explicacion {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.7rem 1.2rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 2px 12px #80000022;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 420px;
+}
+
+.explicacion-titulo {
+  font-size: 1.1rem;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+}
+
+.explicacion-texto {
+  color: #fffbe6;
+  font-size: 1rem;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 0.1rem;
 }
 
 .sopa-layout {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  gap: 40px;
-  margin-left: 0; /* <-- Cambia esto a 0 */
+  gap: 24px;
+  margin-left: 0;
 }
 
 .sopa-palabras {
   background: #333;
-  padding: 20px;
-  border-radius: 10px;
-  min-width: 150px;
+  padding: 14px;
+  border-radius: 12px;
+  min-width: 120px;
   text-align: left;
+  box-shadow: 0 2px 12px #0005;
 }
 
 .sopa-palabras h3 {
   margin-top: 0;
+  font-size: 1rem;
+  color: #ffd700;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 .sopa-palabras ul {
@@ -213,10 +283,12 @@ const goBack = () => {
 }
 
 .sopa-palabras li {
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 7px;
+  font-weight: 400;
   color: #ffe066;
   transition: color 0.2s, text-decoration 0.2s;
+  font-family: 'Poppins', Arial, sans-serif;
+  letter-spacing: 1px;
 }
 
 .sopa-palabras li.tachada {
@@ -227,49 +299,133 @@ const goBack = () => {
 .sopa-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  gap: 5px;
+  gap: 4px;
   justify-content: center;
-  margin: 20px auto;
+  margin: 10px auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #0003;
+  padding: 6px;
 }
 
 .sopa-cell {
-  width: 60px;
-  height: 60px;
+  width: 32px;
+  height: 32px;
   background-color: #A83232;
   color: white;
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Poppins', Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-  transition: background 0.2s, color 0.2s;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.13);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
 }
 
 .sopa-cell.selected {
-  background-color: yellow;
-  color: black;
+  background-color: #ffe066;
+  color: #800000;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 8px #ffd70088;
 }
 
 .sopa-cell.found {
   background-color: #2ecc40;
   color: white;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px #2ecc40bb;
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: white;
+  margin-top: 18px;
+  padding: 10px 24px;
+  background: linear-gradient(90deg, #ffd700 0%, #a83232 100%);
   border: none;
-  color: black;
+  color: #800000;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px #0003;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-  background-color: lightgray;
+  background: linear-gradient(90deg, #a83232 0%, #ffd700 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px #ffd70055;
+}
+
+@media (max-width: 1100px) {
+  .sopa-letras-container {
+    max-width: 99vw;
+    padding: 8px;
+  }
+  .sopa-layout {
+    gap: 10px;
+  }
+  .sopa-grid {
+    padding: 2px;
+  }
+  .sopa-cell {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+  .sopa-explicacion {
+    max-width: 99vw;
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .sopa-letras-container {
+    min-height: 0;
+    margin: 10px auto;
+    border-radius: 10px;
+    padding: 4px;
+    max-width: 99vw;
+  }
+  .sopa-header {
+    margin-bottom: 0.7rem;
+  }
+  .sopa-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .sopa-palabras {
+    min-width: 0;
+    width: 100%;
+    padding: 7px;
+    border-radius: 8px;
+  }
+  .sopa-grid {
+    grid-template-columns: repeat(10, 1fr);
+    padding: 1px;
+    border-radius: 8px;
+  }
+  .sopa-cell {
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+    border-radius: 2px;
+  }
+  .sopa-explicacion {
+    font-size: 0.95rem;
+    padding: 0.3rem 0.3rem;
+    max-width: 99vw;
+  }
+  button {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
 }
 </style>
