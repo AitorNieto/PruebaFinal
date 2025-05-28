@@ -4,9 +4,14 @@
    
     <!-- Vista principal de Juegos -->
     <div v-if="currentView === 'juegos'" class="puzzles-container">
-      <h1>Bienvenido a la página de Puzzles 🧩</h1>
-      <p>Aquí podrás encontrar información sobre los puzzles.</p>
-            <button class="fancy-button back-button" @click="goBack">
+      <h1 class="secret-title">🕵️‍♂️ Zona Secreta de Juegos 🧩</h1>
+      <p class="secret-desc">
+        Has encontrado el <span class="highlight">rincón oculto</span> de DyB.<br>
+        Aquí solo llegan los más curiosos.<br>
+        ¿Te atreves a resolver los enigmas y convertirte en leyenda?<br>
+        <span class="secret-hint">Elige un juego y demuestra tu ingenio...</span>
+      </p>
+      <button class="fancy-button back-button" @click="goBack">
         <i class="fas fa-arrow-left"></i>
         <span>Volver al Inicio</span>
         <div class="button-glow"></div>
@@ -68,11 +73,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 import TresEnRaya from './TresEnRaya.vue';
 import Wordle from "./Wordle.vue";
 import SopaLetras from "./SopaLetras.vue";
-
 
 // Controlar la vista actual
 const currentView = ref('juegos');
@@ -127,6 +131,7 @@ const goToCrucigrama = () => {
 };
 const emit = defineEmits(['navigate']);
 const goBack = () => emit('navigate', 'home');
+
 </script>
 
 <style scoped>
@@ -138,7 +143,8 @@ const goBack = () => emit('navigate', 'home');
 
 .puzzles-container {
   position: relative;
-  top: -500px;
+  /* Elimina el top negativo para que no quede fuera de pantalla */
+  top: 0;
   text-align: center;
   color: white;
   padding: 20px;
@@ -368,5 +374,42 @@ const goBack = () => emit('navigate', 'home');
 }
 .fancy-button:hover::after {
   opacity: 1;
+}
+
+.secret-title {
+  font-size: 2.3rem;
+  color: #ffd700;
+  text-shadow: 0 2px 12px #800000, 0 0 8px #fff8;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+}
+
+.secret-desc {
+  color: #fffbe6;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  background: rgba(128,0,0,0.18);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 12px #80000044;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.secret-desc .highlight {
+  color: #ffd700;
+  font-weight: bold;
+  text-shadow: 0 1px 8px #fff8;
+}
+
+.secret-hint {
+  display: block;
+  margin-top: 1rem;
+  color: #ffb300;
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 1px;
 }
 </style>
