@@ -22,26 +22,18 @@
           <div
             class="cromo-bolsillo"
             :class="{
-              'cromo-dorado': invitado.nombre === 'DarioMH' ||
-                             invitado.nombre === 'Goorgo' ||
-                             invitado.nombre === 'Melerus' ||
-                             invitado.nombre === 'Soul'
+              'cromo-dorado': isDorado(invitado.nombre)
             }"
             v-for="(invitado, n) in invitadosPrimeraPagina"
             :key="'primera-cromo-' + n"
           >
             <img
-              :src="invitado.img ? invitado.img : funda"
-              :alt="invitado.nombre ? invitado.nombre : 'Cromo'"
+              :src="invitado.img || funda"
+              :alt="invitado.nombre || 'Cromo'"
               class="cromo-img"
+              @error="handleImageError"
               :class="{
-                'cromo-img-dario': invitado.nombre === 'DarioMH' ||
-                                  invitado.nombre === 'Melerus' ||
-                                  invitado.nombre === 'Soul' ||
-                                  invitado.nombre === 'Kappah' ||
-                                  invitado.nombre === 'WhereIsLeto' ||
-                                  invitado.cifrado // <-- añade esto para nil
-                ,
+                'cromo-img-dario': isDarioImg(invitado.nombre),
                 'cromo-img-blur': invitado.cifrado
               }"
             />
@@ -49,7 +41,7 @@
               <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
               <span
                 class="cromo-nombre"
-                :class="{ 'nombre-dorado': invitado.nombre === 'DarioMH' || invitado.nombre === 'Goorgo' || invitado.nombre === 'Melerus' || invitado.nombre === 'Soul' }"
+                :class="{ 'nombre-dorado': isDorado(invitado.nombre) }"
               >{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
             </div>
           </div>
@@ -61,15 +53,19 @@
         <div class="cromos-grid">
           <div
             class="cromo-bolsillo"
+            :class="{
+              'cromo-dorado': isDorado(invitado.nombre)
+            }"
             v-for="(invitado, n) in invitadosSegundaPagina"
             :key="'segunda-cromo-' + n"
           >
             <img
-              :src="invitado.img"
-              :alt="invitado.nombre"
+              :src="invitado.img || funda"
+              :alt="invitado.nombre || 'Cromo'"
               class="cromo-img"
+              @error="handleImageError"
               :class="{
-                'cromo-img-especial': invitado.especial,
+                'cromo-img-dario': isDarioImg(invitado.nombre),
                 'cromo-img-blur': invitado.cifrado
               }"
             />
@@ -86,21 +82,28 @@
         <div class="cromos-grid">
           <div
             class="cromo-bolsillo"
+            :class="{
+              'cromo-dorado': isDorado(invitado.nombre)
+            }"
             v-for="(invitado, n) in invitadosTerceraPagina"
             :key="'tercera-cromo-' + n"
           >
             <img
-              :src="invitado.img"
-              :alt="invitado.nombre"
+              :src="invitado.img || funda"
+              :alt="invitado.nombre || 'Cromo'"
               class="cromo-img"
+              @error="handleImageError"
               :class="{
-                'cromo-img-especial': invitado.especial,
+                'cromo-img-dario': isDarioImg(invitado.nombre),
                 'cromo-img-blur': invitado.cifrado
               }"
             />
             <div class="cromo-info">
               <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
-              <span class="cromo-nombre">{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
+              <span
+                class="cromo-nombre"
+                :class="{ 'nombre-dorado': isDorado(invitado.nombre) }"
+              >{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
             </div>
           </div>
         </div>
@@ -140,7 +143,7 @@ import melerus from '@/assets/Melerus.jpg'
 import goorgo from '@/assets/Goorgo.jpg'
 import soul from '@/assets/Soul.png'
 import kappah from '@/assets/Kappah.jpg'
-import leto from '@/assets/WhereIsLeto.jpg'
+import WhereIsLeto from '@/assets/WhereIsLeto.jpg'
 import funda from '@/assets/Funda.png'
 import nil from '@/assets/nil.jpg'
 import AlbertoSSJ from '@/assets/Alberto SSJ.webp'
@@ -171,7 +174,7 @@ const invitadosPrimeraPagina = [
   { nombre: 'Goorgo', numero: 5, img: goorgo },
   { nombre: 'Soul', numero: 6, img: soul },
   { nombre: 'Kappah', numero: 7, img: kappah },
-  { nombre: 'WhereIsLeto', numero: 8, img: leto },
+  { nombre: 'Leto', numero: 8, img: WhereIsLeto },
   { nombre: '??? ', numero: 9, img: nil, cifrado: true }
 ]
 const invitadosSegundaPagina = [
@@ -196,6 +199,21 @@ const invitadosTerceraPagina = [
   { nombre: 'Nacho Pavia', numero: 26, img: NachoPavia },
   { nombre: 'Becarios', numero: 27, img: Becarios }
 ]
+
+// Añadir una función para manejar errores de carga de imágenes
+const handleImageError = (event) => {
+  event.target.src = funda;
+}
+
+// Añadir una computed property para las clases comunes
+const commonClasses = {
+  doradoNames: ['DarioMH', 'Goorgo', 'Melerus', 'Soul', 'Becarios'],
+  darioImgNames: ['DarioMH', 'Melerus', 'Soul', 'Kappah', 'Leto']
+}
+
+// Función helper para verificar nombres
+const isDorado = (nombre) => commonClasses.doradoNames.includes(nombre)
+const isDarioImg = (nombre) => commonClasses.darioImgNames.includes(nombre)
 
 onMounted(() => {
   flipInstance = new PageFlip(album.value, {
