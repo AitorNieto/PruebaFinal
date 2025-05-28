@@ -120,6 +120,7 @@ function redirectToTwitch() {
   position: relative;
   z-index: 1;
   transition: transform 0.2s ease-in-out;
+  font-weight: 400; /* Quitar negrita */
 }
 
 .countdown-container:hover .countdown-box {
@@ -128,12 +129,13 @@ function redirectToTwitch() {
 
 .countdown-box h2 {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 400; /* Quitar negrita */
   margin-bottom: 10px;
 }
 
 .time {
   font-size: 1.5rem;
+  font-weight: 400; /* Quitar negrita */
 }
 
 @media (max-width: 768px) {
