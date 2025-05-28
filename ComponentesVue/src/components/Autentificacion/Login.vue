@@ -2,7 +2,7 @@
   <div class="background">
     <!-- Botón flecha para volver al home, arriba a la izquierda, fuera de la tarjeta -->
     <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Volver al inicio">
-      <span class="flecha">←</span>
+      <i class="fas fa-arrow-left"></i>
     </button>
     <div class="login">
       <!-- Tabs simulados: Login (activo) / Registrarse -->
@@ -120,7 +120,9 @@
  <style scoped>
  /* ======= Estilos de fondo y card principal ======= */
  * {
-  font-family: "Poppins", sans-serif;
+  font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-stretch: condensed;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -167,26 +169,26 @@
   margin: 0 8px;
   padding: 8px 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 400;
   border-bottom: 2px solid transparent;
   transition: color 0.3s ease;
  }
  
  
  .tab:hover {
-  color: #ffd900;
+  color: #fff;
  }
  
  
  .active-tab {
-  border-bottom: 2px solid #ffd900;
+  border-bottom: 2px solid #800000;
  }
  
  
  /* ======= Título ======= */
  .title {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 400;
   color: white;
   margin-bottom: 16px;
  }
@@ -321,12 +323,12 @@
   color: white;
  }
  .register-text a {
-  color: #ffd900;
-  text-decoration: none;
-  font-weight: bold;
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 400;
  }
  .register-text a:hover {
-  text-decoration: underline;
+  color: #a32b2b;
  }
  
  
@@ -335,9 +337,9 @@
   position: fixed;
   top: 32px;
   left: 32px;
-  background: rgba(255,255,255,0.13);
+  background: #800000;
   color: #fff;
-  border: none;
+  border: 2px solid #800000;
   border-radius: 50%;
   width: 38px;
   height: 38px;
@@ -347,16 +349,17 @@
   font-size: 22px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border 0.2s;
   z-index: 1002;
 }
-.volver-flecha-btn .flecha {
+.volver-flecha-btn i {
   font-size: 22px;
   margin: 0;
 }
 .volver-flecha-btn:hover {
-  background: rgba(255,255,255,0.28);
-  color: #ffd900;
+  background: #a32b2b;
+  color: #fff;
+  border: 2px solid #a32b2b;
 }
 @media (max-width: 600px) {
   .volver-flecha-btn {
@@ -366,7 +369,7 @@
     height: 32px;
     font-size: 18px;
   }
-  .volver-flecha-btn .flecha {
+  .volver-flecha-btn i {
     font-size: 18px;
   }
  }
