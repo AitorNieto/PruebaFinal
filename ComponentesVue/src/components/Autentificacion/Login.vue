@@ -32,7 +32,7 @@
         <label>
           <input type="checkbox" /> Recordarme
         </label>
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="forgot-password" @click.prevent="forgotPassword">¿Olvidaste tu contraseña?</a>
       </div>
  
  
@@ -59,7 +59,7 @@
  
  <script setup>
  import { ref, defineEmits } from 'vue';
- import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from 'firebase/auth';
  import { useFirebaseAuth } from 'vuefire';
  
  
@@ -114,6 +114,22 @@
  function togglePasswordVisibility() {
   passwordFieldType.value = passwordFieldType.value === 'password' ? 'text' : 'password';
  }
+ 
+ function forgotPassword() {
+  if (!Usuario.value) {
+    errorMensaje.value = 'Introduce tu correo electrónico para restablecer la contraseña.';
+    return;
+  }
+  sendPasswordResetEmail(auth, Usuario.value)
+    .then(() => {
+      buenMensaje.value = 'Se ha enviado un correo para restablecer la contraseña.';
+      errorMensaje.value = '';
+    })
+    .catch((error) => {
+      errorMensaje.value = 'Error al enviar el correo de recuperación: ' + error.message;
+      buenMensaje.value = '';
+    });
+}
  </script>
  
  
