@@ -115,7 +115,7 @@ function toggleRepeatPasswordVisibility() {
       <button @click="presioneAceptar" class="login-btn">Registrar</button>
 
       <!-- Botón Google -->
-      <button @click="registrarConGoogle" class="google-btn">Registrar con Google</button>
+      <button @click="registrarConGoogle" class="google-btn">Registrarse con Google</button>
 
       <!-- Mensajes de error / éxito -->
       <p class="error" v-if="errorMensaje">{{ errorMensaje }}</p>
@@ -236,11 +236,13 @@ function toggleRepeatPasswordVisibility() {
 }
 
 .tab:hover {
-  color: #ffd900;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
 }
 
 .active-tab {
-  border-bottom: 2px solid #ffd900;
+  border-bottom: 2px solid #ffd90099;
 }
 
 /* ======= Título ======= */
@@ -323,13 +325,28 @@ function toggleRepeatPasswordVisibility() {
   border: none;
   outline: none;
   font-size: 14px;
-  color: white;
-  background: #818e8f;
+  color: #fff;
+  background: #4285f4;
   cursor: pointer;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.google-btn::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg') no-repeat center/contain;
+  vertical-align: middle;
 }
 .google-btn:hover {
-  background: #93aaac;
+  background: #357ae8;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
 }
 
 /* ======= Mensajes de error / éxito ======= */

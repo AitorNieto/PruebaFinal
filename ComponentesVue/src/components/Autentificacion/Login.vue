@@ -193,11 +193,13 @@
  
  .tab:hover {
   color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
  }
  
  
  .active-tab {
-  border-bottom: 2px solid #800000;
+  border-bottom: 2px solid #ffd90099;
  }
  
  
@@ -309,12 +311,28 @@
   outline: none;
   font-size: 14px;
   color: white;
-  background: #818e8f;
+  background: #4285f4;
   cursor: pointer;
   margin-bottom: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+ }
+ .google-btn::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg') no-repeat center/contain;
+  vertical-align: middle;
  }
  .google-btn:hover {
-  background: #93aaac;
+  background: #357ae8;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
  }
  
  
