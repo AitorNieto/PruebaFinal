@@ -53,7 +53,7 @@
         <div v-else class="auth-warning">
           🔒 Debes 
           <a 
-            @click="$emit('navigate', 'auth')" 
+            @click="$emit('navigate', 'login')" 
             class="auth-link"
           >iniciar sesión</a> 
           o 
