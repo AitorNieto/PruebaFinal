@@ -43,14 +43,43 @@
   
   <script setup>
   import { ref } from "vue";
-  
-  const emit = defineEmits(["go-back"]);
-  
-  const wordToGuess = ref("AUDIO"); // Cambia esto por una palabra aleatoria si quieres
-  const attempts = ref(Array(6).fill("").map(() => Array(5).fill("")));
-  const currentRow = ref(0);
-  const currentWord = ref("");
-  const gameStatus = ref(null);
+
+const emit = defineEmits(["go-back"]);
+
+// Array de palabras de 5 letras relacionadas con el podcast
+const palabrasPodcast = [
+  "RISAS",
+  "LOCOS",
+  "VOCES",
+  "RADIO",
+  "RISAS",
+  "FANSY",
+  "TOPOS",
+  "GRITO",
+  "JUEGO",
+  "BROMA",
+  "DEBAT",
+  "TOMAS",
+  "FINAL",
+  "RISAS",
+  "DELIR",
+  "BARBA",
+  "AMIGO",
+  "MICRO",
+  "LETRA",
+  "SONAR"
+];
+
+// Selecciona la palabra del día según la fecha (cambia cada 24h)
+const hoy = new Date();
+const diasDesdeEpoch = Math.floor(hoy.getTime() / (1000 * 60 * 60 * 24));
+const palabraDelDia = palabrasPodcast[diasDesdeEpoch % palabrasPodcast.length];
+
+const wordToGuess = ref(palabraDelDia);
+const attempts = ref(Array(6).fill("").map(() => Array(5).fill("")));
+const currentRow = ref(0);
+const currentWord = ref("");
+const gameStatus = ref(null);
   
   // Verifica la palabra ingresada
   const checkWord = () => {
@@ -73,11 +102,44 @@
   
   // Define los colores de las celdas según la comparación
   const getCellColor = (rowIndex, colIndex) => {
+    // Si la fila es la acertada y el juego está ganado, todo verde
+    if (
+      gameStatus.value &&
+      attempts.value[rowIndex].join("") === wordToGuess.value &&
+      gameStatus.value.includes("¡Ganaste!")
+    ) {
+      return "correct";
+    }
+
     if (rowIndex >= currentRow.value) return "";
-    const letter = attempts.value[rowIndex][colIndex];
-    if (letter === wordToGuess.value[colIndex]) return "correct";
-    if (wordToGuess.value.includes(letter)) return "present";
-    return "absent";
+    const guess = attempts.value[rowIndex];
+    const target = wordToGuess.value.split("");
+
+    // Paso 1: Marca las letras correctas (verde)
+    const colorArray = Array(5).fill("");
+    const targetUsed = Array(5).fill(false);
+
+    for (let i = 0; i < 5; i++) {
+      if (guess[i] === target[i]) {
+        colorArray[i] = "correct";
+        targetUsed[i] = true;
+      }
+    }
+
+    // Paso 2: Marca las letras presentes (amarillo) solo si quedan disponibles
+    for (let i = 0; i < 5; i++) {
+      if (colorArray[i]) continue;
+      for (let j = 0; j < 5; j++) {
+        if (!targetUsed[j] && guess[i] === target[j]) {
+          colorArray[i] = "present";
+          targetUsed[j] = true;
+          break;
+        }
+      }
+      if (!colorArray[i]) colorArray[i] = "absent";
+    }
+
+    return colorArray[colIndex];
   };
   
   // Reiniciar el juego
@@ -181,4 +243,3 @@
     margin-top: 20px;
   }
   </style>
-  
