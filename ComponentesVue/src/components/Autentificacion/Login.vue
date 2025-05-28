@@ -1,8 +1,8 @@
 <template>
   <div class="background">
-    <!-- Botón flecha para volver al home, arriba a la izquierda, fuera de la tarjeta -->
-    <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Volver al inicio">
-      <i class="fas fa-arrow-left"></i>
+    <!-- Botón X para cerrar, arriba a la izquierda, fuera de la tarjeta -->
+    <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Cerrar">
+      <span class="flecha">&times;</span>
     </button>
     <div class="login">
       <!-- Tabs simulados: Login (activo) / Registrarse -->
@@ -339,27 +339,37 @@
   left: 32px;
   background: #800000;
   color: #fff;
-  border: 2px solid #800000;
+  border: none;
   border-radius: 50%;
   width: 38px;
-  height: 38px;
+  height:38px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   z-index: 1002;
 }
-.volver-flecha-btn i {
-  font-size: 22px;
+.volver-flecha-btn .flecha {
+  font-size: 1.4em;
+  font-weight: bold;
   margin: 0;
+  font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 1px 4px #0005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .volver-flecha-btn:hover {
   background: #a32b2b;
   color: #fff;
-  border: 2px solid #a32b2b;
+  box-shadow: 0 4px 16px #0004;
 }
 @media (max-width: 600px) {
   .volver-flecha-btn {
@@ -369,8 +379,8 @@
     height: 32px;
     font-size: 18px;
   }
-  .volver-flecha-btn i {
-    font-size: 18px;
+  .volver-flecha-btn .flecha {
+    font-size: 1.1em;
   }
  }
  
