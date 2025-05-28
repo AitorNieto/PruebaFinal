@@ -177,8 +177,7 @@ const goBack = () => {
   color: white;
   padding: 20px;
   position: relative;
-  /* Elimina el left negativo y usa margin para centrar */
-  top: -400px;
+  top: 0; /* <-- Cambia esto a 0 */
   left: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -189,10 +188,10 @@ const goBack = () => {
 
 .sopa-layout {
   display: flex;
-  justify-content: flex-start; /* Cambia a flex-start */
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 40px;
-  margin-left: 1200px; /* Mueve todo el layout a la derecha */
+  margin-left: 0; /* <-- Cambia esto a 0 */
 }
 
 .sopa-palabras {

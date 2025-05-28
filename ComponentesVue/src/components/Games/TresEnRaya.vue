@@ -101,7 +101,7 @@ const goBack = () => {
   color: white;
   padding: 20px;
   position: relative;
-  top: -800px;
+  top: 0; /* <-- Cambia esto a 0 */
 }
 
 .board {

@@ -162,7 +162,7 @@ const gameStatus = ref(null);
     color: white;
     padding: 20px;
     position: relative;
-    top: -800px;  /* Mueve el contenido más arriba */
+    top: 0;  /* Cambia esto a 0 */
   }
   
   .grid {
