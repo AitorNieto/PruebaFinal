@@ -247,8 +247,8 @@ onMounted(fetchPerfil);
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Impact&display=swap');
+
 
 /* Fondo y contenedor principal */
 .perfil-container {
@@ -258,7 +258,9 @@ onMounted(fetchPerfil);
   min-height: 100vh;
   padding: 20px;
   background: linear-gradient(135deg, #2a0808 0%, #4a0d0d 100%);
-  font-family: 'Poppins', sans-serif;
+  font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-stretch: condensed;
   position: relative;
   transition: filter 0.3s ease;
 }
