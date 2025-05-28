@@ -1,8 +1,8 @@
 <template>
   <div class="background">
-    <!-- Botón flecha para volver al home, arriba a la izquierda, fuera de la tarjeta -->
-    <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Volver al inicio">
-      <span class="flecha">←</span>
+    <!-- Botón X para cerrar, arriba a la izquierda, fuera de la tarjeta -->
+    <button class="volver-flecha-btn" @click="emit('solicitaHome')" aria-label="Cerrar">
+      <span class="flecha">&times;</span>
     </button>
     <div class="login">
       <!-- Tabs simulados: Login (activo) / Registrarse -->
@@ -32,7 +32,7 @@
         <label>
           <input type="checkbox" /> Recordarme
         </label>
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="forgot-password" @click.prevent="forgotPassword">¿Olvidaste tu contraseña?</a>
       </div>
  
  
@@ -59,7 +59,7 @@
  
  <script setup>
  import { ref, defineEmits } from 'vue';
- import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from 'firebase/auth';
  import { useFirebaseAuth } from 'vuefire';
  
  
@@ -114,13 +114,31 @@
  function togglePasswordVisibility() {
   passwordFieldType.value = passwordFieldType.value === 'password' ? 'text' : 'password';
  }
+ 
+ function forgotPassword() {
+  if (!Usuario.value) {
+    errorMensaje.value = 'Introduce tu correo electrónico para restablecer la contraseña.';
+    return;
+  }
+  sendPasswordResetEmail(auth, Usuario.value)
+    .then(() => {
+      buenMensaje.value = 'Se ha enviado un correo para restablecer la contraseña.';
+      errorMensaje.value = '';
+    })
+    .catch((error) => {
+      errorMensaje.value = 'Error al enviar el correo de recuperación: ' + error.message;
+      buenMensaje.value = '';
+    });
+}
  </script>
  
  
  <style scoped>
  /* ======= Estilos de fondo y card principal ======= */
  * {
-  font-family: "Poppins", sans-serif;
+  font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-stretch: condensed;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -167,26 +185,28 @@
   margin: 0 8px;
   padding: 8px 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 400;
   border-bottom: 2px solid transparent;
   transition: color 0.3s ease;
  }
  
  
  .tab:hover {
-  color: #ffd900;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
  }
  
  
  .active-tab {
-  border-bottom: 2px solid #ffd900;
+  border-bottom: 2px solid #ffd90099;
  }
  
  
  /* ======= Título ======= */
  .title {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 400;
   color: white;
   margin-bottom: 16px;
  }
@@ -291,12 +311,28 @@
   outline: none;
   font-size: 14px;
   color: white;
-  background: #818e8f;
+  background: #4285f4;
   cursor: pointer;
   margin-bottom: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+ }
+ .google-btn::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg') no-repeat center/contain;
+  vertical-align: middle;
  }
  .google-btn:hover {
-  background: #93aaac;
+  background: #357ae8;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
  }
  
  
@@ -321,12 +357,12 @@
   color: white;
  }
  .register-text a {
-  color: #ffd900;
-  text-decoration: none;
-  font-weight: bold;
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 400;
  }
  .register-text a:hover {
-  text-decoration: underline;
+  color: #a32b2b;
  }
  
  
@@ -335,28 +371,39 @@
   position: fixed;
   top: 32px;
   left: 32px;
-  background: rgba(255,255,255,0.13);
+  background: #800000;
   color: #fff;
   border: none;
   border-radius: 50%;
   width: 38px;
-  height: 38px;
+  height:38px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   z-index: 1002;
 }
 .volver-flecha-btn .flecha {
-  font-size: 22px;
+  font-size: 1.4em;
+  font-weight: bold;
   margin: 0;
+  font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 1px 4px #0005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 .volver-flecha-btn:hover {
-  background: rgba(255,255,255,0.28);
-  color: #ffd900;
+  background: #a32b2b;
+  color: #fff;
+  box-shadow: 0 4px 16px #0004;
 }
 @media (max-width: 600px) {
   .volver-flecha-btn {
@@ -367,7 +414,7 @@
     font-size: 18px;
   }
   .volver-flecha-btn .flecha {
-    font-size: 18px;
+    font-size: 1.1em;
   }
  }
  

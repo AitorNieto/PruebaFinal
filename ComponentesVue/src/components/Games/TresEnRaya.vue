@@ -31,7 +31,6 @@
 <script setup>
 import { ref } from 'vue';
 
-const emit = defineEmits(['go-back']);
 
 // Tablero inicial vacío
 const board = ref(Array(9).fill(''));
@@ -87,6 +86,7 @@ const resetGame = () => {
 };
 
 // Volver a la vista anterior
+const emit = defineEmits(["go-back"]);
 const goBack = () => {
   emit('go-back');
 };

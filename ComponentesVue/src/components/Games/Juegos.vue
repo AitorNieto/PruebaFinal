@@ -1,9 +1,16 @@
 <template>
   <div>
+    <!-- Botón para volver al home -->
+   
     <!-- Vista principal de Juegos -->
     <div v-if="currentView === 'juegos'" class="puzzles-container">
       <h1>Bienvenido a la página de Puzzles 🧩</h1>
       <p>Aquí podrás encontrar información sobre los puzzles.</p>
+            <button class="fancy-button back-button" @click="goBack">
+        <i class="fas fa-arrow-left"></i>
+        <span>Volver al Inicio</span>
+        <div class="button-glow"></div>
+      </button>
 
       <!-- Contenedor principal para alinear los juegos -->
       <div class="games-container">
@@ -53,14 +60,12 @@
     </div>
 
     <!-- Vista de los juegos individuales -->
-    <TresEnRaya v-if="currentView === 'tresenraya'" @go-back="goBack" />
-    <Wordle v-if="currentView === 'wordle'" @go-back="goBack" />
-    <SopaLetras v-if="currentView === 'sopaletras'" @go-back="goBack" />
+    <TresEnRaya v-if="currentView === 'tresenraya'" @go-back="currentView = 'juegos'" />
+    <Wordle v-if="currentView === 'wordle'" @go-back="currentView = 'juegos'" />
+    <SopaLetras v-if="currentView === 'sopaletras'" @go-back="currentView = 'juegos'" />
 
   </div>
 </template>
-
-
 
 <script setup>
 import { ref } from "vue";
@@ -104,10 +109,6 @@ const goToSopaLetras = () => {
   currentView.value = "sopaletras";
 };
 
-// Volver a la vista principal de Juegos
-const goBack = () => {
-  currentView.value = 'juegos';
-};
 
 const wordlePreview = ref(["W", "O", "R", "D", "L", "E"]);
 
@@ -124,7 +125,8 @@ const crucigramaPreview = ref([
 const goToCrucigrama = () => {
   console.log("Ir a la vista del crucigrama");
 };
-
+const emit = defineEmits(['navigate']);
+const goBack = () => emit('navigate', 'home');
 </script>
 
 <style scoped>
@@ -331,5 +333,40 @@ const goToCrucigrama = () => {
 .filled {
   background-color: #ffffff !important;
   color: black;
+}
+
+.fancy-button {
+  background: linear-gradient(45deg, #600000, #800000); 
+  color: #fff;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 215, 0, 0.2); 
+  border-radius: 8px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+              inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+.fancy-button::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #ffd700, #800000); 
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.fancy-button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(45deg, #800000, #a00000);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4),
+              inset 0 0 30px rgba(255, 215, 0, 0.1); 
+}
+.fancy-button:hover::after {
+  opacity: 1;
 }
 </style>
