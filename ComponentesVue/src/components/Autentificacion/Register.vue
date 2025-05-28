@@ -28,11 +28,16 @@ function presioneAceptar() {
   errorMensaje.value = '';
   buenMensaje.value = '';
 
+  // Validación básica de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!UsuarioRe.value || !PasswordRe.value || !RepetirPasswordRe.value) {
     errorMensaje.value = 'Por favor, completa todos los campos.';
     return;
   }
-
+  if (!emailRegex.test(UsuarioRe.value)) {
+    errorMensaje.value = 'Introduce un correo electrónico válido.';
+    return;
+  }
   if (PasswordRe.value !== RepetirPasswordRe.value) {
     errorMensaje.value = 'Las contraseñas no coinciden.';
     return;
@@ -40,9 +45,9 @@ function presioneAceptar() {
 
   createUserWithEmailAndPassword(auth, UsuarioRe.value, PasswordRe.value)
     .then(() => {
-      buenMensaje.value = 'Registro completado. Verifica tu correo electrónico.';
       sendEmailVerification(auth.currentUser);
-      emit('cambiarAHome');
+      buenMensaje.value = 'Registro completado.\nHemos enviado un correo de verificación a tu email.\nPor favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta antes de iniciar sesión.';
+      // No cambiar a home automáticamente, dejar que el usuario lea el mensaje
     })
     .catch((error) => {
       errorMensaje.value = 'Error: ' + error.message;
@@ -77,6 +82,10 @@ function toggleRepeatPasswordVisibility() {
 
 <template>
   <div class="background">
+    <!-- Botón X para cerrar, arriba a la izquierda, fuera de la tarjeta -->
+    <button class="volver-flecha-btn" @click="$emit('cambiarAHome')" aria-label="Cerrar">
+      <span class="flecha">&times;</span>
+    </button>
     <div class="login">
       <!-- Tabs simulados: Iniciar Sesión / Registrarse (activo) -->
       <div class="tabs">
@@ -106,7 +115,7 @@ function toggleRepeatPasswordVisibility() {
       <button @click="presioneAceptar" class="login-btn">Registrar</button>
 
       <!-- Botón Google -->
-      <button @click="registrarConGoogle" class="google-btn">Registrar con Google</button>
+      <button @click="registrarConGoogle" class="google-btn">Registrarse con Google</button>
 
       <!-- Mensajes de error / éxito -->
       <p class="error" v-if="errorMensaje">{{ errorMensaje }}</p>
@@ -124,7 +133,9 @@ function toggleRepeatPasswordVisibility() {
 <style scoped>
 /* ======= Estilos de fondo y card principal ======= */
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  font-stretch: condensed;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -149,6 +160,59 @@ function toggleRepeatPasswordVisibility() {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   text-align: center;
+  position: relative;
+}
+
+/* ======= Botón flecha volver arriba a la izquierda en el background ======= */
+.volver-flecha-btn {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  background: #800000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  z-index: 1002;
+}
+.volver-flecha-btn .flecha {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 0;
+  font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 1px 4px #0005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.volver-flecha-btn:hover {
+  background: #a32b2b;
+  color: #fff;
+  box-shadow: 0 4px 16px #0004;
+}
+@media (max-width: 600px) {
+  .volver-flecha-btn {
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+  .volver-flecha-btn .flecha {
+    font-size: 1.1em;
+  }
 }
 
 /* ======= Tabs (pestañas) ======= */
@@ -172,11 +236,13 @@ function toggleRepeatPasswordVisibility() {
 }
 
 .tab:hover {
-  color: #ffd900;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
 }
 
 .active-tab {
-  border-bottom: 2px solid #ffd900;
+  border-bottom: 2px solid #ffd90099;
 }
 
 /* ======= Título ======= */
@@ -259,13 +325,28 @@ function toggleRepeatPasswordVisibility() {
   border: none;
   outline: none;
   font-size: 14px;
-  color: white;
-  background: #818e8f;
+  color: #fff;
+  background: #4285f4;
   cursor: pointer;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.google-btn::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg') no-repeat center/contain;
+  vertical-align: middle;
 }
 .google-btn:hover {
-  background: #93aaac;
+  background: #357ae8;
+  color: #fff;
+  /* Quitar cualquier sombra o efecto dorado */
+  text-shadow: none;
 }
 
 /* ======= Mensajes de error / éxito ======= */

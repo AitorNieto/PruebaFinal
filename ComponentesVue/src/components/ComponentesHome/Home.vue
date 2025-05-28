@@ -1,27 +1,29 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useFirestore, useFirebaseAuth } from 'vuefire';
-  import { collection, onSnapshot } from 'firebase/firestore';
-  import Nosotros from '../ComponentesNosotros/Nosotros.vue';
-  import Foro from '../ComponentesForo/Foro.vue';
-  import Videos from '../ComponenteVideos/Videos.vue';
-  import CookieAlert from './Extras/CookieAlert.vue';
-  import StarBackground from './Extras/StarBackground.vue';
-  import AOS from 'aos';
-  import 'aos/dist/aos.css';
-  import Juegos from '../Games/Juegos.vue';
-  import ZDrinks from '../Patrocinadores/ZDrinks.vue';
-  import Formulario from './Formulario.vue';
-  import BarraInvitados from './Extras/BarraInvitados.vue';
-  import Novedades from './Novedades.vue';
-  import Confetti from './Extras/Confetti.vue';
-  import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
-  import InicioHome from './InicioHome.vue';
-  import Footer from './Footer.vue';
-  import Menu from './Menu.vue';
-  import Perfil from '../ComponentesPerfil/Perfil.vue';
-  import Random from '../ComponentesRandom/Random.vue';
-  import Album from './invitados/Album.vue';
+import { ref, onMounted } from 'vue';
+import { useFirestore, useFirebaseAuth } from 'vuefire';
+import { collection, onSnapshot } from 'firebase/firestore';
+import Nosotros from '../ComponentesNosotros/Nosotros.vue';
+import Foro from '../ComponentesForo/Foro.vue';
+import Videos from '../ComponenteVideos/Videos.vue';
+import CookieAlert from './Extras/CookieAlert.vue';
+import StarBackground from './Extras/StarBackground.vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import Juegos from '../Games/Juegos.vue';
+import ZDrinks from '../Patrocinadores/ZDrinks.vue';
+import Formulario from './Formulario.vue';
+import BarraInvitados from './Extras/BarraInvitados.vue';
+import Novedades from './Novedades.vue';
+import Confetti from './Extras/Confetti.vue';
+import TarjetaZdrinks from './Extras/TarjetaZdrinks.vue';
+import InicioHome from './InicioHome.vue';
+import Footer from './Footer.vue';
+import Menu from './Menu.vue';
+import Perfil from '../ComponentesPerfil/Perfil.vue';
+import Random from '../ComponentesRandom/Random.vue';
+import Album from './invitados/Album.vue';
+import Login from '../Autentificacion/Login.vue';
+import Register from '../Autentificacion/Register.vue';
 
 // Variables reactivas y configuración
 const Posts = ref([]);
@@ -30,10 +32,14 @@ const auth = useFirebaseAuth();
 const currentSection = ref('home');
 const showCookieAlert = ref(false);
 
-
-// Función para cambiar de sección y hacer scroll suave
+// Función para cambiar de sección
 function changeSection(section) {
   currentSection.value = section;
+  
+  // Si volvemos al home, hacer scroll al inicio
+  if (section === 'home') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 // Función para descargar posts desde Firebase
@@ -52,19 +58,13 @@ function descargarPosts() {
 }
 
 onMounted(async () => {
-  // Inicializa AOS para animaciones
   AOS.init({ duration: 1000, once: true });
-  
-  // Descarga los posts del usuario
   descargarPosts();
 
-  // Muestra alerta de cookies después de 2 segundos
   setTimeout(() => {
     showCookieAlert.value = true;
   }, 2000);
 
-  // Detecta el scroll para animar algunos elementos
-  
   const videoSection = document.querySelector('.scroll-bg');
   const seasons = document.querySelectorAll('.season');
   window.addEventListener('scroll', () => {
@@ -83,7 +83,6 @@ onMounted(async () => {
   });
 });
 
-
 function goToJuegosPage() {
   currentSection.value = 'juegos';
 }
@@ -99,16 +98,20 @@ function scrollToZDrinks() {
 <template>
   <StarBackground />
   <Confetti/>
-  <!-- SOLO muestra el menú en la sección home -->
-  <Menu v-if="currentSection === 'home'" :currentView="currentSection" @navigate="changeSection" />
+  
+  <!-- Menú solo visible en home -->
+  <Menu v-if="currentSection === 'home'" 
+        :currentView="currentSection" 
+        @navigate="changeSection" />
+  
   <div class="home-wrapper">
+    <!-- Sección Home -->
     <div v-if="currentSection === 'home'">
       <TarjetaZdrinks @go-zdrinks="scrollToZDrinks" />
       <InicioHome @go-zdrinks="scrollToZDrinks" />
       
       <Novedades />
 
-      <!-- Navegación: sección "Ver Videos" con fondo desplazable -->
       <div id="podcast" class="scroll-bg">
         <button class="spectacular-button" @click="changeSection('videos')">
           Ver Videos
@@ -119,7 +122,6 @@ function scrollToZDrinks() {
         <Album/>
       </div>
 
-      <!-- Sección combinada Foro + Random -->
       <div class="foro-random-row">
         <div id="foro" class="foro-background foro-random-item">
           <button class="spectacular-button" @click="changeSection('foro')">
@@ -133,47 +135,37 @@ function scrollToZDrinks() {
         </div>
       </div>
 
-      <!-- Componente Nosotros -->
       <Nosotros />
-       <!-- Título Patrocinadores -->
       <h2 id="patrocinadores" class="patrocinadores-title" :class="{ 'slide-in': true }">PATROCINADORES</h2>
- <!-- Componente ZDrinks -->
       <ZDrinks />    
-      <!-- Componente Formulario -->
-       <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
+      <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
       <Formulario/>   
       <Footer @go-juegos="goToJuegosPage"/>
-   
     </div>
 
-    <!-- Otras secciones según la navegación -->
-    <div v-else-if="currentSection === 'videos'">
-      <Videos @navigate="changeSection" />
-    </div>
+    <!-- Otras secciones -->
+    <Videos v-else-if="currentSection === 'videos'" @navigate="changeSection" />
+    <Album v-else-if="currentSection === 'Hall of Fame'" @navigate="changeSection" />
+    <Foro v-else-if="currentSection === 'foro'" @navigate="changeSection" />
+    <Perfil v-else-if="currentSection === 'profile'" @navigate="changeSection" />
+    <Random v-else-if="currentSection === 'random'" @navigate="changeSection" />
+    <Juegos v-else-if="currentSection === 'juegos'" @navigate="changeSection" />
+    
+    <!-- Nueva sección para Login -->
+    <Login v-else-if="currentSection === 'login'" 
+           @logeado="changeSection('profile')" 
+           @solicitaRegistro="changeSection('register')"
+           @solicitaHome="changeSection('home')" />
 
-    <div v-else-if="currentSection === 'Hall of Fame'">
-      <Album @navigate="changeSection" />
-    </div>
-  
-    <div v-else-if="currentSection === 'foro'">
-      <Foro @navigate="changeSection" />
-    </div>
-    <!-- AÑADE esto para el perfil -->
-    <div v-else-if="currentSection === 'profile'">
-      <Perfil @navigate="changeSection" />
-    </div>
-    <div v-else-if="currentSection === 'random'">
-      <Random @navigate="changeSection" />
-    </div>
-
+    <Register v-else-if="currentSection === 'register'" 
+              @cambiarALogin="changeSection('login')" 
+              @cambiarAHome="changeSection('home')" />
 
     <!-- Alerta de cookies -->
-    <CookieAlert v-if="showCookieAlert" />
-    <!-- Barra de invitados siempre visible abajo en Home -->
-    <BarraInvitados />
-  </div>
-  <div v-if="currentSection === 'juegos'">
-    <Juegos @navigate="changeSection" />
+    <CookieAlert v-if="showCookieAlert && currentSection === 'home'" />
+    
+    <!-- Barra de invitados -->
+    <BarraInvitados v-if="currentSection === 'home'" />
   </div>
 </template>
 

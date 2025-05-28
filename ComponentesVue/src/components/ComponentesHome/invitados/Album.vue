@@ -150,25 +150,30 @@ onMounted(() => {
   align-items: center;
   min-height: 100vh;
   width: 100vw;
-  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), #a97c50;
+  background: url('@/assets/FondoAlbum.webp'), black;
   background-size: cover;
   background-repeat: repeat;
   /* Para que la mesa de madera se vea más realista, puedes ajustar el color base (#a97c50) */
   padding-top: 30px;
   padding-bottom: 30px; /* Más espacio abajo para que no se corte el álbum */
+  font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif;
+  font-weight: 400;
 }
 
 .flipbook {
   width: 800px;
   height: 600px;
   position: relative;
+  font-family: inherit;
+  font-weight: 400;
 }
 
 .page {
   background: linear-gradient(135deg, #800000 0%, #4a0000 100%);
-  border: 2px solid #FFD700;
+  border: 2px solid black;
   color: #222;
-  font-family: 'Arial', sans-serif;
+  font-family: inherit;
+  font-weight: 400;
   font-size: 22px;
   display: flex;
   align-items: center;
@@ -237,6 +242,8 @@ onMounted(() => {
   width: 110px;
   height: 140px;
   overflow: visible;
+  font-family: inherit;
+  font-weight: 400;
 }
 
 .cromo-img {
@@ -259,14 +266,14 @@ onMounted(() => {
 }
 
 .cromo-dorado {
-  border: 2.5px solid #FFD700 !important; /* dorado */
-  box-shadow: 0 0 12px #FFD70088, 0 0 0 4px #fff8 inset;
+  border: 2.5px solid #800000 !important; /* rojo oscuro en vez de dorado */
+  box-shadow: 0 0 12px #80000044, 0 0 0 4px #fff8 inset;
 }
 
 .nombre-dorado {
-  color: #FFD700 !important; /* dorado */
-  text-shadow: 0 0 6px #fff, 0 0 8px #FFD70088;
-  font-weight: bold;
+  color: #800000 !important; /* rojo oscuro en vez de dorado */
+  text-shadow: 0 0 6px #fff, 0 0 8px #80000044;
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
@@ -332,10 +339,9 @@ onMounted(() => {
     0 4px 24px #000a,
     0 1px 0 #FFD700,
     0 0 40px #FFD70088;
-  background: linear-gradient(90deg, #FFD700 10%, #fff 40%, #FFD700 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px #FFD70088);
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: initial !important;
   margin: 0;
   line-height: 1.05;
   text-align: center;
@@ -345,21 +351,22 @@ onMounted(() => {
   font-size: 2.6rem;
   letter-spacing: 0.25em;
   margin: 0.2em 0 0.2em 0;
-  background: linear-gradient(90deg, #fff 10%, #FFD700 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 2px 12px #FFD70088,
-    0 1px 0 #fff;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: initial !important;
+  color: #fff !important;
+  text-shadow: none !important;
 }
 
 .hall-icon {
   font-size: 3.2rem;
   margin-bottom: 0.2em;
-  color: #FFD700;
-  text-shadow: 0 2px 12px #FFD70088, 0 1px 0 #fff;
-  filter: drop-shadow(0 0 8px #FFD70088);
+  color: #800000;
+  text-shadow: none;
+  filter: none;
   display: block;
+  font-family: inherit;
+  font-weight: 400;
 }
 
 .img-portada {
@@ -399,8 +406,8 @@ onMounted(() => {
   font-size: 2.8rem;
   letter-spacing: 0.12em;
   margin-bottom: 18px;
-  color: #FFD700;
-  text-shadow: 0 2px 12px #fff8, 0 1px 0 #FFD700;
+  color: #800000;
+  text-shadow: none !important;
 }
 
 .contraportada-content p {
@@ -412,7 +419,7 @@ onMounted(() => {
 
 .contraportada-disenio {
   font-size: 1.1rem;
-  color: #FFD700;
+  color: #800000;
   letter-spacing: 0.15em;
   display: flex;
   justify-content: center;

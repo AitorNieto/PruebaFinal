@@ -53,7 +53,7 @@
         <div v-else class="auth-warning">
           🔒 Debes 
           <a 
-            @click="$emit('navigate', 'auth')" 
+            @click="$emit('navigate', 'login')" 
             class="auth-link"
           >iniciar sesión</a> 
           o 
@@ -614,6 +614,7 @@ setFilter(filter) {
   padding: 3rem 1rem;
   color: #ffffff;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
   position: relative;
   overflow: hidden;
 }
@@ -718,7 +719,7 @@ setFilter(filter) {
   flex: 1;
   padding: 1rem 2rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   color: #ffffff;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -783,7 +784,7 @@ setFilter(filter) {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .submit-reply:hover {
@@ -856,6 +857,7 @@ setFilter(filter) {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  font-weight: 400;
 }
 
 .like-button:hover {
@@ -899,7 +901,7 @@ setFilter(filter) {
   color: #ff4444;
   text-decoration: underline;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 400;
   transition: all 0.3s ease;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
@@ -915,6 +917,11 @@ setFilter(filter) {
 
 .auth-link:active {
   transform: translateY(1px);
+}
+
+/* Solo el tema de la semana en negrita */
+.weekly-topic h2 {
+  font-weight: 700;
 }
 
 /* Animaciones */
@@ -983,11 +990,12 @@ textarea {
 
 .reply .comment-text {
   color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
 }
 
 .user-name {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   color: #ff9999;
   letter-spacing: 0.2px;
   text-shadow: none;

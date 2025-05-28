@@ -11,6 +11,7 @@ const props = defineProps({
     default: 'home'
   }
 });
+
 const emit = defineEmits(['navigate']);
 const auth = useFirebaseAuth();
 const db = getFirestore(firebaseApp);
@@ -27,6 +28,8 @@ const watchUserProfile = (userId) => {
       userPhoto.value = data.profileImageUrl || defaultAvatar;
       userName.value = data.username || "Usuario";
     }
+  }, (error) => {
+    console.error("Error al obtener el perfil del usuario:", error);
   });
 };
 
@@ -40,11 +43,11 @@ const handleScroll = () => {
   const mainSectionBottom = mainSection.getBoundingClientRect().bottom;
 
   if (mainSectionBottom <= 0) {
-    menu.classList.add('scrolled');
-    scrollToTopButton.classList.add('visible');
+    menu?.classList?.add('scrolled');
+    scrollToTopButton?.classList?.add('visible');
   } else {
-    menu.classList.remove('scrolled');
-    scrollToTopButton.classList.remove('visible');
+    menu?.classList?.remove('scrolled');
+    scrollToTopButton?.classList?.remove('visible');
   }
 };
 
@@ -56,7 +59,6 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   if (auth.currentUser) {
     profileUnsubscribe = watchUserProfile(auth.currentUser.uid);
-    // También asignamos una imagen por defecto si no hay otra disponible
     userPhoto.value = auth.currentUser.photoURL || defaultAvatar;
   }
 });
@@ -68,22 +70,32 @@ onUnmounted(() => {
   }
 });
 
+// Función de navegación mejorada
 function navigate(section) {
-  if (section === 'profile' && !auth.currentUser) {
-    alert('Debes estar autenticado para acceder al perfil. Redirigiendo al registro.');
-    emit('navigate', 'register');
-  } else if (section === 'profile') {
-    emit('navigate', section);
-  } else {
-    const element = document.getElementById(section);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  if (section === 'profile') {
+    if (!auth.currentUser) {
+      // Redirigir a login si no está autenticado
+      emit('navigate', 'login');
+      return;
     }
+    // Usuario autenticado, ir a perfil
+    emit('navigate', 'profile');
+  } else {
+    // Para secciones del home (novedades, podcast, etc.)
+    if (props.currentView === 'home') {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    // Si no encuentra el elemento o no estamos en home
+    emit('navigate', section);
   }
 }
 
 function handleLogout() {
-  if (!auth || !auth.currentUser) {
+  if (!auth?.currentUser) {
     console.error("No estás conectado para cerrar sesión.");
     alert("No estás conectado para cerrar sesión.");
     return;
@@ -92,7 +104,7 @@ function handleLogout() {
   auth.signOut()
     .then(() => {
       alert("Sesión cerrada correctamente.");
-      emit('navigate', 'login');
+      emit('navigate', 'home'); // Redirigir al home después de logout
     })
     .catch((error) => {
       console.error("Error al cerrar sesión:", error.message);
@@ -100,7 +112,6 @@ function handleLogout() {
     });
 }
 </script>
-
 <template>
   <!-- El menú solo se muestra si currentView NO es 'profile' -->
   <div v-if="currentView !== 'profile'">

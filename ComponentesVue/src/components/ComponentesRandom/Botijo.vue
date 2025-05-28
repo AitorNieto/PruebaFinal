@@ -91,6 +91,7 @@ setInterval(wobble, 100);
     linear-gradient(to bottom, #e8e8e8 1px, transparent 1px) 0 0;
   background-size: 100% 100%, 100% 100%, 15px 15px;
   background-repeat: no-repeat, no-repeat, repeat;
+  margin-top: 5%;
 }
 
 .materiales-section {
@@ -203,6 +204,14 @@ li {
 }
 
 @media (max-width: 600px) {
+  .party-text {
+    top: 1.2rem;
+    font-size: 1.5rem;
+  }
+  .materiales-section, .pasos-section {
+    /* ...existing code... */
+    margin-top: 3.5rem;
+  }
   h2 {
     font-size: 1.5rem;
   }
