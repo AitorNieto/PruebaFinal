@@ -172,11 +172,7 @@ const updateProfileImage = async () => {
     }
     
     // Validar la URL (acepta png, jpg, jpeg, gif, webp)
-    const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-    if (!urlPattern.test(tempImageUrl.value)) {
-      alert('Introduce una URL de imagen válida (png, jpg, jpeg, gif, webp)');
-      return;
-    }
+
     
     // Actualizamos el objeto reactivo
     perfil.value.profileImageUrl = tempImageUrl.value;
