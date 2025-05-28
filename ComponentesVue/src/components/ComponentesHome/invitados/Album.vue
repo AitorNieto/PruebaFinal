@@ -56,22 +56,55 @@
         </div>
         <div class="numero-pagina-cromos">Página 1</div>
       </div>
-      <!-- Más páginas de cromos (todas fundas) -->
-      <div
-        class="page cromos-page"
-        v-for="idx in 2"
-        :key="'pagina-' + idx"
-      >
+      <!-- Segunda página de cromos -->
+      <div class="page cromos-page">
         <div class="cromos-grid">
           <div
             class="cromo-bolsillo"
-            v-for="n in 9"
-            :key="'pagina-' + idx + '-cromo-' + n"
+            v-for="(invitado, n) in invitadosSegundaPagina"
+            :key="'segunda-cromo-' + n"
           >
-            <img :src="funda" alt="Cromo" class="cromo-img" />
+            <img
+              :src="invitado.img"
+              :alt="invitado.nombre"
+              class="cromo-img"
+              :class="{
+                'cromo-img-especial': invitado.especial,
+                'cromo-img-blur': invitado.cifrado
+              }"
+            />
+            <div class="cromo-info">
+              <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
+              <span class="cromo-nombre">{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
+            </div>
           </div>
         </div>
-        <div class="numero-pagina-cromos">Página {{ idx + 1 }}</div>
+        <div class="numero-pagina-cromos">Página 2</div>
+      </div>
+      <!-- Tercera página de cromos -->
+      <div class="page cromos-page">
+        <div class="cromos-grid">
+          <div
+            class="cromo-bolsillo"
+            v-for="(invitado, n) in invitadosTerceraPagina"
+            :key="'tercera-cromo-' + n"
+          >
+            <img
+              :src="invitado.img"
+              :alt="invitado.nombre"
+              class="cromo-img"
+              :class="{
+                'cromo-img-especial': invitado.especial,
+                'cromo-img-blur': invitado.cifrado
+              }"
+            />
+            <div class="cromo-info">
+              <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
+              <span class="cromo-nombre">{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="numero-pagina-cromos">Página 3</div>
       </div>
       <!-- Fin del álbum -->
       <div class="page fin">
@@ -110,10 +143,28 @@ import kappah from '@/assets/Kappah.jpg'
 import leto from '@/assets/WhereIsLeto.jpg'
 import funda from '@/assets/Funda.png'
 import nil from '@/assets/nil.jpg'
+import AlbertoSSJ from '@/assets/Alberto SSJ.webp'
+import ChestoyTerk from '@/assets/Chesto-y-Terk.webp'
+import Dusan from '@/assets/Dusan.webp'
+import Eskini from '@/assets/Eskini.webp'
+import JorgeBarroso from '@/assets/Jorge-Barroso.webp'
+import JuanColás from '@/assets/Juan-Colás.webp'
+import MissiegoBeats from '@/assets/Missiego Beats.webp'
+import Mota from '@/assets/Mota.webp'
+import Nikin from '@/assets/Nikin.webp'
+import Pit from '@/assets/Pit.webp'
+import Sanabria from '@/assets/Sanabria.webp'
+import SergioCopado from '@/assets/Sergio Copado.webp'
+import SrMiner from '@/assets/Sr Miner.webp'
+import Alvarito from '@/assets/Alvarito.webp'
+import Yagouu from '@/assets/Yagouu.webp'
+import Rubencher from '@/assets/Rubencher.webp'
+import NachoPavia from '@/assets/Nacho Pavía.webp'
+import Becarios from '@/assets/Becarios.webp'
 
 // Array de invitados SOLO para la primera página de cromos (ahora segunda hoja)
 const invitadosPrimeraPagina = [
-  { nombre: 'ElCejas', numero: 1, img: elCejas },
+  { nombre: 'elCejas', numero: 1, img: elCejas },
   { nombre: 'Claudia Garcia', numero: 2, img: claudia },
   { nombre: 'DarioMH', numero: 3, img: dario },
   { nombre: 'Melerus', numero: 4, img: melerus },
@@ -122,6 +173,28 @@ const invitadosPrimeraPagina = [
   { nombre: 'Kappah', numero: 7, img: kappah },
   { nombre: 'WhereIsLeto', numero: 8, img: leto },
   { nombre: '??? ', numero: 9, img: nil, cifrado: true }
+]
+const invitadosSegundaPagina = [
+  { nombre: 'Alberto SSJ', numero: 10, img: AlbertoSSJ },
+  { nombre: 'Chesto y Terk', numero: 11, img: ChestoyTerk },
+  { nombre: 'Dusan', numero: 12, img: Dusan },
+  { nombre: 'Eskini', numero: 13, img: Eskini },
+  { nombre: 'Jorge Barroso', numero: 14, img: JorgeBarroso },
+  { nombre: 'Juan Colás', numero: 15, img: JuanColás },
+  { nombre: 'Missiego Beats', numero: 16, img: MissiegoBeats },
+  { nombre: 'Mota', numero: 17, img: Mota },
+  { nombre: 'Nikin ', numero: 18, img: Nikin }
+]
+const invitadosTerceraPagina = [
+  { nombre: 'Pit', numero: 19, img: Pit },
+  { nombre: 'Sanabria', numero: 20, img: Sanabria },
+  { nombre: 'Sergio Copado', numero: 21, img: SergioCopado },
+  { nombre: 'Sr Miner', numero: 22, img: SrMiner },
+  { nombre: 'Alvarito', numero: 23, img: Alvarito },
+  { nombre: 'Yagouu', numero: 24, img: Yagouu },
+  { nombre: 'Rubencher', numero: 25, img: Rubencher },
+  { nombre: 'Nacho Pavia', numero: 26, img: NachoPavia },
+  { nombre: 'Becarios', numero: 27, img: Becarios }
 ]
 
 onMounted(() => {
@@ -266,13 +339,13 @@ onMounted(() => {
 }
 
 .cromo-dorado {
-  border: 2.5px solid #800000 !important; /* rojo oscuro en vez de dorado */
-  box-shadow: 0 0 12px #80000044, 0 0 0 4px #fff8 inset;
+  border: 2.5px solid gold !important; /* rojo oscuro en vez de dorado */
+  box-shadow: 0 0 12px gold, 0 0 0 4px gold inset;
 }
 
 .nombre-dorado {
-  color: #800000 !important; /* rojo oscuro en vez de dorado */
-  text-shadow: 0 0 6px #fff, 0 0 8px #80000044;
+  color: rgb(0, 0, 0) !important; /* rojo oscuro en vez de dorado */
+  text-shadow: 0 0 6px gold, 0 0 8px black;
   font-weight: 400;
   letter-spacing: 1px;
 }
