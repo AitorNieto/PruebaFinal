@@ -140,7 +140,7 @@ function scrollToZDrinks() {
       <ZDrinks />    
       <h2 id="contacto" class="patrocinadores-title" :class="{ 'slide-in': true }">FORMULARIO</h2>
       <Formulario/>   
-      <Footer @go-juegos="goToJuegosPage"/>
+      <Footer @go-juegos="goToJuegosPage" />
     </div>
 
     <!-- Otras secciones -->
@@ -149,7 +149,7 @@ function scrollToZDrinks() {
     <Foro v-else-if="currentSection === 'foro'" @navigate="changeSection" />
     <Perfil v-else-if="currentSection === 'profile'" @navigate="changeSection" />
     <Random v-else-if="currentSection === 'random'" @navigate="changeSection" />
-    <Juegos v-else-if="currentSection === 'juegos'" @navigate="changeSection" />
+    <Juegos v-if="currentSection === 'juegos'" @navigate="changeSection" />
     
     <!-- Nueva sección para Login -->
     <Login v-else-if="currentSection === 'login'" 
