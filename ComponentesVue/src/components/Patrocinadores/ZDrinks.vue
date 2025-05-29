@@ -39,7 +39,8 @@ export default {
 </script>
 
 <style scoped>
-/* PALETA AZUL ALEGRE */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@700&display=swap');
+
 :root {
   --zd-blue: #00A8FF;
   --zd-blue-light: #6ECBF5;
@@ -48,9 +49,6 @@ export default {
   --zd-text: #2D9CDB;
   --zd-bg: #ffe6fc;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@700&display=swap');
-
 .zdrinks-collab {
   background: linear-gradient(135deg, #fff8f0 0%, #ffe6e6 100%);
   border-radius: 25px;

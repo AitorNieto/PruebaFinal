@@ -60,9 +60,9 @@ const shorts = ref([
 
 .shorts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  max-width: 1200px; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -73,6 +73,9 @@ const shorts = ref([
   overflow: hidden;
   border: 1px solid rgba(255, 215, 0, 0.2);
   transition: transform 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .short-card:hover {
@@ -84,18 +87,20 @@ const shorts = ref([
 .short-container {
   position: relative;
   width: 100%;
-  padding-top: 177.77%;
+  aspect-ratio: 9/16;
   background: #000;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .short-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   border: none;
+  aspect-ratio: 9/16;
+  display: block;
 }
 
 /* Mejorar la visualización del título */
@@ -117,9 +122,8 @@ h3 {
   .shorts-title {
     font-size: 2.5rem;
   }
-
   .shorts-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
   }
 }
@@ -128,19 +132,22 @@ h3 {
   .shorts-container {
     padding: 2rem 1rem;
   }
-
   .shorts-grid {
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0 0.5rem;
   }
-
   .shorts-title {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-
   .short-card {
-    max-width: none;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .short-container {
+    aspect-ratio: 9/16;
+    min-height: 320px;
   }
 }
 
@@ -148,25 +155,21 @@ h3 {
   .shorts-container {
     padding: 1.5rem 0.5rem;
   }
-
-  .shorts-grid {
-    grid-template-columns: 1fr;
-    padding: 0 0.5rem;
-  }
-
   .shorts-title {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
   }
-
   .short-card {
-    max-width: 300px;
+    max-width: 98vw;
     margin: 0 auto;
   }
-
+  .short-container {
+    aspect-ratio: 9/16;
+    min-height: 220px;
+  }
   h3 {
-    font-size: 0.9rem;
-    min-height: 3rem;
+    font-size: 1rem;
+    min-height: 2.5rem;
   }
 }
 

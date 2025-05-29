@@ -431,7 +431,6 @@ onMounted(() => {
     0 1px 0 #FFD700,
     0 0 40px #FFD70088;
   background: none !important;
-  -webkit-background-clip: initial !important;
   -webkit-text-fill-color: initial !important;
   margin: 0;
   line-height: 1.05;
@@ -443,7 +442,6 @@ onMounted(() => {
   letter-spacing: 0.25em;
   margin: 0.2em 0 0.2em 0;
   background: none !important;
-  -webkit-background-clip: initial !important;
   -webkit-text-fill-color: initial !important;
   color: #fff !important;
   text-shadow: none !important;
