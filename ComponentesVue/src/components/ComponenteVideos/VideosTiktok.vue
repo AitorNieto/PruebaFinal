@@ -73,13 +73,14 @@ const tiktoks = ref([
 }
 
 .tiktok-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(250px, 320px)); 
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   justify-content: center;
-  max-width: 1600px; 
+  align-items: center;
+  max-width: 420px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .tiktok-card {
@@ -89,6 +90,9 @@ const tiktoks = ref([
   border: 2px solid rgba(255, 215, 0, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tiktok-video-wrapper {
@@ -96,25 +100,29 @@ const tiktoks = ref([
   width: 100%;
   background: #000;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tiktok-video-container {
   position: relative;
-  padding-top: 177.77%;
-  margin: 0 auto;
-  max-width: 320px; 
+  width: 100%;
+  aspect-ratio: 9/16;
+  max-width: 320px;
+  min-width: 0;
   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tiktok-video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
   height: 100%;
   border: none;
   border-radius: 12px 12px 0 0;
+  display: block;
 }
 
 .video-info {
@@ -124,6 +132,8 @@ const tiktoks = ref([
     rgba(80, 0, 0, 0.8)
   );
   border-top: 1px solid rgba(255, 215, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .video-info h3 {
@@ -142,8 +152,9 @@ const tiktoks = ref([
   }
 
   .tiktok-grid {
-    grid-template-columns: repeat(2, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 1.2rem;
+    padding: 0 0.5rem;
   }
 
   .tiktok-container {
@@ -151,40 +162,62 @@ const tiktoks = ref([
   }
 
   .tiktok-video-container {
-    max-width: 400px;
+    max-width: 220px;
   }
 }
 
 /* Tablets pequeñas y móviles grandes */
 @media (max-width: 768px) {
   .tiktok-grid {
-    grid-template-columns: repeat(1, minmax(250px, 400px));
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0 0.5rem;
   }
 
   .tiktok-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .tiktok-card {
     margin: 0 auto;
     width: 100%;
-    max-width: 400px;
+    max-width: 320px;
+  }
+  .tiktok-video-container {
+    max-width: 180px;
+    min-width: 0;
+    aspect-ratio: 9/16;
+    min-height: 220px;
   }
 }
 
 /* Móviles */
 @media (max-width: 480px) {
   .tiktok-container {
-    padding: 3rem 0.5rem;
+    padding: 2rem 0.2rem;
   }
 
   .tiktok-title {
-    font-size: 1.8rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
   }
 
   .tiktok-card {
-    max-width: 300px;
+    max-width: 98vw;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  .tiktok-video-container {
+    max-width: 98vw;
+    min-width: 0;
+    aspect-ratio: 9/16;
+    min-height: 140px;
+  }
+
+  .video-info {
+    padding: 0.7rem;
   }
 
   .video-info h3 {
@@ -209,7 +242,7 @@ const tiktoks = ref([
 /* Mejoras responsive para TikTok */
 @media (max-width: 1200px) {
   .tiktok-grid {
-    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
   }
 }
 </style>
