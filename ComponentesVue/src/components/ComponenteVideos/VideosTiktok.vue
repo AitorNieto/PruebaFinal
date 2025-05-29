@@ -73,14 +73,26 @@ const tiktoks = ref([
 }
 
 .tiktok-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
   gap: 2rem;
   justify-content: center;
   align-items: center;
-  max-width: 420px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Para móviles: un tiktok debajo de otro */
+@media (max-width: 768px) {
+  .tiktok-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 420px;
+    padding: 0 0.5rem;
+  }
 }
 
 .tiktok-card {
