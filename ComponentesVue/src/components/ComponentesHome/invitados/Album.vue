@@ -164,40 +164,47 @@ import Yagouu from '@/assets/Yagouu.webp'
 import Rubencher from '@/assets/Rubencher.webp'
 import NachoPavia from '@/assets/Nacho Pavía.webp'
 import Becarios from '@/assets/Becarios.webp'
+import Dani from '@/assets/Dani.webp'
+import Shiro from '@/assets/Shiro.webp'
 
 // Array de invitados SOLO para la primera página de cromos (ahora segunda hoja)
 const invitadosPrimeraPagina = [
-  { nombre: 'elCejas', numero: 1, img: elCejas },
-  { nombre: 'Claudia Garcia', numero: 2, img: claudia },
-  { nombre: 'DarioMH', numero: 3, img: dario },
-  { nombre: 'Melerus', numero: 4, img: melerus },
+  
+  { nombre: 'Becarios', numero: 1, img: Becarios },
+  { nombre: 'Dani', numero: 2, img: Dani },
+  { nombre: 'Soul', numero: 3, img: soul },
+  { nombre: 'Shiro', numero: 4, img: Shiro },
   { nombre: 'Goorgo', numero: 5, img: goorgo },
-  { nombre: 'Soul', numero: 6, img: soul },
-  { nombre: 'Kappah', numero: 7, img: kappah },
+  { nombre: 'elCejas', numero: 6, img: elCejas },
+  { nombre: 'DarioMH', numero: 7, img: dario },
   { nombre: 'Leto', numero: 8, img: WhereIsLeto },
-  { nombre: '??? ', numero: 9, img: nil, cifrado: true }
+  { nombre: 'Juan Colás', numero: 9, img: JuanColás },
 ]
 const invitadosSegundaPagina = [
-  { nombre: 'Alberto SSJ', numero: 10, img: AlbertoSSJ },
-  { nombre: 'Chesto y Terk', numero: 11, img: ChestoyTerk },
-  { nombre: 'Dusan', numero: 12, img: Dusan },
-  { nombre: 'Eskini', numero: 13, img: Eskini },
-  { nombre: 'Jorge Barroso', numero: 14, img: JorgeBarroso },
-  { nombre: 'Juan Colás', numero: 15, img: JuanColás },
-  { nombre: 'Missiego Beats', numero: 16, img: MissiegoBeats },
-  { nombre: 'Mota', numero: 17, img: Mota },
-  { nombre: 'Nikin ', numero: 18, img: Nikin }
+  { nombre: 'Eskini', numero: 10, img: Eskini },
+  { nombre: 'Claudia Garcia', numero: 11, img: claudia },
+  { nombre: 'Melerus', numero: 12, img: melerus },
+  { nombre: 'Nacho Pavia', numero: 13, img: NachoPavia },
+  { nombre: 'Missiego Beats', numero: 14, img: MissiegoBeats },
+  { nombre: 'Sergio Copado', numero: 15, img: SergioCopado },
+  { nombre: 'Pit', numero: 16, img: Pit },
+  { nombre: 'Nikin ', numero: 17, img: Nikin },
+  { nombre: 'Kappah', numero: 18, img: kappah },
+  
 ]
 const invitadosTerceraPagina = [
-  { nombre: 'Pit', numero: 19, img: Pit },
-  { nombre: 'Sanabria', numero: 20, img: Sanabria },
-  { nombre: 'Sergio Copado', numero: 21, img: SergioCopado },
-  { nombre: 'Sr Miner', numero: 22, img: SrMiner },
-  { nombre: 'Alvarito', numero: 23, img: Alvarito },
-  { nombre: 'Yagouu', numero: 24, img: Yagouu },
-  { nombre: 'Rubencher', numero: 25, img: Rubencher },
-  { nombre: 'Nacho Pavia', numero: 26, img: NachoPavia },
-  { nombre: 'Becarios', numero: 27, img: Becarios }
+  { nombre: 'Chesto y Terk', numero: 19, img: ChestoyTerk },
+  { nombre: 'Jorge Barroso', numero: 20, img: JorgeBarroso },
+  { nombre: 'Yagouu', numero: 21, img: Yagouu },
+  { nombre: 'Mota', numero: 22, img: Mota },
+  { nombre: 'Dusan', numero: 23, img: Dusan },
+  { nombre: 'Alvarito', numero: 24, img: Alvarito },
+  { nombre: 'Sanabria', numero: 25, img: Sanabria },
+  { nombre: 'Sr Miner', numero: 26, img: SrMiner },
+  { nombre: 'Rubencher', numero: 27, img: Rubencher },
+]
+const invitadosCuartaPagina = [
+  { nombre: 'Alberto SSJ', numero: 28, img: AlbertoSSJ }
 ]
 
 // Añadir una función para manejar errores de carga de imágenes
