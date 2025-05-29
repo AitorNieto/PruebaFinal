@@ -68,15 +68,16 @@
     <TresEnRaya v-if="currentView === 'tresenraya'" @go-back="currentView = 'juegos'" />
     <Wordle v-if="currentView === 'wordle'" @go-back="currentView = 'juegos'" />
     <SopaLetras v-if="currentView === 'sopaletras'" @go-back="currentView = 'juegos'" />
-
+    <Crucigrama v-if="currentView === 'crucigrama'" @go-back="currentView = 'juegos'" />
   </div>
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import TresEnRaya from './TresEnRaya.vue';
 import Wordle from "./Wordle.vue";
 import SopaLetras from "./SopaLetras.vue";
+import Crucigrama from "./Crucigrama.vue"; // IMPORTA EL NUEVO COMPONENTE
 
 // Controlar la vista actual
 const currentView = ref('juegos');
@@ -114,6 +115,11 @@ const goToSopaLetras = () => {
 };
 
 
+// Cambiar a la vista del Crucigrama
+const goToCrucigrama = () => {
+  currentView.value = "crucigrama";
+};
+
 const wordlePreview = ref(["W", "O", "R", "D", "L", "E"]);
 
 const crucigramaPreview = ref([
@@ -125,10 +131,6 @@ const crucigramaPreview = ref([
   "", "", "S", "", "", ""
 ]);
 
-// Cambiar a la vista del Crucigrama
-const goToCrucigrama = () => {
-  console.log("Ir a la vista del crucigrama");
-};
 const emit = defineEmits(['navigate']);
 const goBack = () => emit('navigate', 'home');
 
