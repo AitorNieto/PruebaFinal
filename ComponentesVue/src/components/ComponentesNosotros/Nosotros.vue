@@ -18,6 +18,7 @@
               </div>
             </div>
           </div>
+          <div class="nombre-integrante">Jimmy</div>
         </div>
         <div class="image-box">
           <div class="flip-card">
@@ -32,6 +33,7 @@
               </div>
             </div>
           </div>
+          <div class="nombre-integrante">Dani</div>
         </div>
         <div class="image-box">
           <div class="flip-card">
@@ -46,6 +48,7 @@
               </div>
             </div>
           </div>
+          <div class="nombre-integrante">Monzon</div>
         </div>
       </div>
     </div>
@@ -178,6 +181,8 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .additional-image {
@@ -255,6 +260,26 @@ onMounted(() => {
   align-items: center;
   border-radius: 10px; 
   font-weight: bold; 
+}
+
+.nombre-integrante {
+  margin-top: 14px;
+  font-size: 1.25rem;
+  color: #d8f5f9;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  text-shadow: 0 2px 8px #800000, 0 0 8px #fff8;
+  background: rgba(128,0,0,0.08);
+  border-radius: 8px;
+  padding: 4px 0 2px 0;
+  font-weight: 400;
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 8px #80000022;
 }
 
 /* RESPONSIVE: Cartas en columna y más pequeñas en pantallas pequeñas */
