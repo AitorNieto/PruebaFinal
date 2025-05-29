@@ -109,6 +109,70 @@
         </div>
         <div class="numero-pagina-cromos">Página 3</div>
       </div>
+      <!-- Cuarta página de cromos  -->
+      <div class="page cromos-page">
+        <div class="cromos-grid">
+          <div
+            class="cromo-bolsillo"
+            :class="{
+              'cromo-dorado': isDorado(invitado.nombre)
+            }"
+            v-for="(invitado, n) in invitadosCuartaPagina"
+            :key="'cuarta-cromo-' + n"
+          >
+            <img
+              :src="invitado.img || funda"
+              :alt="invitado.nombre || 'Cromo'"
+              class="cromo-img"
+              @error="handleImageError"
+              :class="{
+                'cromo-img-dario': isDarioImg(invitado.nombre),
+                'cromo-img-blur': invitado.cifrado
+              }"
+            />
+            <div v-if="invitado.nombre" class="cromo-info">
+              <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
+              <span
+                class="cromo-nombre"
+                :class="{ 'nombre-dorado': isDorado(invitado.nombre) }"
+              >{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="numero-pagina-cromos">Página 4</div>
+      </div>
+      <!-- Quinta página de cromos  -->
+      <div class="page cromos-page">
+        <div class="cromos-grid">
+          <div
+            class="cromo-bolsillo"
+            :class="{
+              'cromo-dorado': isDorado(invitado.nombre)
+            }"
+            v-for="(invitado, n) in invitadosQuintaPagina"
+            :key="'quinta-cromo-' + n"
+          >
+            <img
+              :src="invitado.img || funda"
+              :alt="invitado.nombre || 'Cromo'"
+              class="cromo-img"
+              @error="handleImageError"
+              :class="{
+                'cromo-img-dario': isDarioImg(invitado.nombre),
+                'cromo-img-blur': invitado.cifrado
+              }"
+            />
+            <div v-if="invitado.nombre" class="cromo-info">
+              <span class="cromo-numero">#{{ invitado.numero.toString().padStart(2, '0') }}</span>
+              <span
+                class="cromo-nombre"
+                :class="{ 'nombre-dorado': isDorado(invitado.nombre) }"
+              >{{ invitado.cifrado ? '???' : invitado.nombre }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="numero-pagina-cromos">Página 5</div>
+      </div>
       <!-- Fin del álbum -->
       <div class="page fin">
         <div class="contraportada-content">
@@ -204,7 +268,27 @@ const invitadosTerceraPagina = [
   { nombre: 'Rubencher', numero: 27, img: Rubencher },
 ]
 const invitadosCuartaPagina = [
-  { nombre: 'Alberto SSJ', numero: 28, img: AlbertoSSJ }
+  { nombre: 'Alberto SSJ', numero: 28, img: AlbertoSSJ },
+  { nombre: '???', numero: 29, img: funda, cifrado: true },
+  { nombre: '???', numero: 30, img: funda, cifrado: true },
+  { nombre: '???', numero: 31, img: funda, cifrado: true },
+  { nombre: '???', numero: 32, img: funda, cifrado: true },
+  { nombre: '???', numero: 33, img: funda, cifrado: true },
+  { nombre: '???', numero: 34, img: funda, cifrado: true },
+  { nombre: '???', numero: 35, img: funda, cifrado: true },
+  { nombre: '???', numero: 36, img: funda, cifrado: true }
+]
+
+const invitadosQuintaPagina = [
+  { nombre: '???', numero: 37, img: funda, cifrado: true },
+  { nombre: '???', numero: 38, img: funda, cifrado: true },
+  { nombre: '???', numero: 39, img: funda, cifrado: true },
+  { nombre: '???', numero: 40, img: funda, cifrado: true },
+  { nombre: '???', numero: 41, img: funda, cifrado: true },
+  { nombre: '???', numero: 42, img: funda, cifrado: true },
+  { nombre: '???', numero: 43, img: funda, cifrado: true },
+  { nombre: '???', numero: 44, img: funda, cifrado: true },
+  { nombre: '???', numero: 45, img: funda, cifrado: true }
 ]
 
 // Añadir una función para manejar errores de carga de imágenes
@@ -350,7 +434,7 @@ onMounted(() => {
   object-fit: cover;
   border-radius: 6px;
   border: 2px solid white;
-  background: #f5f5f5;
+  background: #1a1a1a; /* Cambiado de #f5f5f5 a un gris muy oscuro */
   box-shadow: 0 1px 4px black;
   transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
   will-change: transform;
@@ -477,7 +561,8 @@ onMounted(() => {
 }
 
 .cromo-img-blur {
-  filter: blur(10px) brightness(1.1) grayscale(0.2);
+  filter: blur(10px) brightness(0.7) grayscale(1); /* Ajustado para que sea más oscuro */
+  background: #000; /* Fondo negro para los cromos cifrados */
 }
 
 .indice-descripcion {
