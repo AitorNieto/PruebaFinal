@@ -4,6 +4,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'StarBackground'
+}
+</script>
+
 <style scoped lang="scss">
 @use 'sass:math';
 
@@ -13,17 +19,8 @@
   }
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
-  overflow: hidden;
-}
-
 @function random_range($min, $max) {
-  $rand: random();
+  $rand: math.random();
   $random_range: $min + math.floor($rand * (($max - $min) + 1));
   @return $random_range;
 }
@@ -32,9 +29,12 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 120%;
-  transform: rotate(-45deg);
+  width: 100vw; /* Asegura que ocupe todo el viewport */
+  height: 100vh; /* Asegura que ocupe todo el viewport */
+  pointer-events: none; /* Permite hacer clic a través de las estrellas */
+  z-index: 0; /* Debe ser menor que el contenido principal pero mayor que el fondo */
+  overflow: hidden;
+  /* Elimina el transform: rotate(-45deg); para que las estrellas no se salgan de pantalla */
 }
 
 .star {
