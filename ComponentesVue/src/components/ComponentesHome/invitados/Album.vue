@@ -3,7 +3,7 @@
     <div ref="album" class="flipbook">
       <!-- Portada -->
       <div class="page portada">
-        <img src="@/assets/portada.png" alt="Portada álbum" class="img-portada" />
+        <img src="@/assets/portada.avif" alt="Portada álbum" class="img-portada" />
       </div>
       <!-- Índice/Explicación -->
       <div class="page indice">
