@@ -36,7 +36,7 @@
 
 <script setup>
 import Countdown from './Extras/Countdown.vue';
-import imageSrc from '@/assets/FondoDyB.png';
+import imageSrc from '@/assets/FondoDyB.avif';
 </script>
 
 <style scoped>

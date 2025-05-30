@@ -224,7 +224,7 @@ function scrollToZDrinks() {
 .large-dark-red-background {
   width: 100%;
   height: 750px; /* Más grande */
-  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
+  background: url('@/assets/cosas-random.avif') center center/contain no-repeat;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -585,7 +585,7 @@ function scrollToZDrinks() {
 }
 
 .large-dark-red-background.foro-random-item::before {
-  background-image: url('@/assets/cosas-random.png');
+  background-image: url('@/assets/cosas-random.avif');
 }
 
 .foro-background.foro-random-item,

@@ -85,7 +85,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { videoList, availableSeasons } from './videoData';
-import fotoTitulo from '@/assets/fotoTitulo.jpeg';
+import fotoTitulo from '@/assets/fotoTitulo.avif';
 import ShortsYoutube from './ShortsYoutube.vue';
 import VideosTiktok from './VideosTiktok.vue';
 
