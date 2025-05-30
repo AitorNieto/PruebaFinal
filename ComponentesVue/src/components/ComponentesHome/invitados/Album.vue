@@ -199,7 +199,6 @@ import { PageFlip } from 'page-flip'
 const album = ref(null)
 let flipInstance = null
 
-import portada from '@/assets/portada.png'
 import elCejas from '@/assets/ElCejas.jpg'
 import claudia from '@/assets/ClaudiaGarcia.webp'
 import dario from '@/assets/DarioMH.jpg'
@@ -209,7 +208,6 @@ import soul from '@/assets/Soul.png'
 import kappah from '@/assets/Kappah.jpg'
 import WhereIsLeto from '@/assets/WhereIsLeto.jpg'
 import funda from '@/assets/Funda.png'
-import nil from '@/assets/nil.jpg'
 import AlbertoSSJ from '@/assets/Alberto SSJ.webp'
 import ChestoyTerk from '@/assets/Chesto-y-Terk.webp'
 import Dusan from '@/assets/Dusan.webp'
