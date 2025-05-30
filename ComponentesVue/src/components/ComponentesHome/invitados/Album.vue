@@ -298,7 +298,7 @@ const handleImageError = (event) => {
 
 // Añadir una computed property para las clases comunes
 const commonClasses = {
-  doradoNames: ['DarioMH', 'Goorgo', 'Melerus', 'Soul', 'Becarios'],
+  doradoNames: ['DarioMH', 'Goorgo', 'Melerus', 'Soul', 'Becarios', 'Leto', 'Claudia Garcia'],
   darioImgNames: ['DarioMH', 'Melerus', 'Soul', 'Kappah', 'Leto']
 }
 
