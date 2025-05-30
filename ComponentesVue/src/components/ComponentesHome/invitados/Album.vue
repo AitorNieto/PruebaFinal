@@ -199,53 +199,53 @@ import { PageFlip } from 'page-flip'
 const album = ref(null)
 let flipInstance = null
 
-import elCejas from '@/assets/ElCejas.jpg'
-import claudia from '@/assets/ClaudiaGarcia.webp'
-import dario from '@/assets/DarioMH.jpg'
-import melerus from '@/assets/Melerus.jpg'
-import goorgo from '@/assets/Goorgo.jpg'
-import soul from '@/assets/Soul.png'
-import kappah from '@/assets/Kappah.jpg'
-import WhereIsLeto from '@/assets/WhereIsLeto.jpg'
-import funda from '@/assets/Funda.png'
-import AlbertoSSJ from '@/assets/Alberto SSJ.webp'
-import ChestoyTerk from '@/assets/Chesto-y-Terk.webp'
-import Dusan from '@/assets/Dusan.webp'
-import Eskini from '@/assets/Eskini.webp'
-import JorgeBarroso from '@/assets/Jorge-Barroso.webp'
-import JuanColás from '@/assets/Juan-Colás.webp'
-import MissiegoBeats from '@/assets/Missiego Beats.webp'
-import Mota from '@/assets/Mota.webp'
-import Nikin from '@/assets/Nikin.webp'
-import Pit from '@/assets/Pit.webp'
-import Sanabria from '@/assets/Sanabria.webp'
-import SergioCopado from '@/assets/Sergio Copado.webp'
-import SrMiner from '@/assets/Sr Miner.webp'
-import Alvarito from '@/assets/Alvarito.webp'
-import Yagouu from '@/assets/Yagouu.webp'
-import Rubencher from '@/assets/Rubencher.webp'
-import NachoPavia from '@/assets/Nacho Pavía.webp'
-import Becarios from '@/assets/Becarios.webp'
-import Dani from '@/assets/Dani.webp'
-import Shiro from '@/assets/Shiro.webp'
+import ElCejas from '@/assets/elCejas.avif'
+import ClaudiaGarcia from '@/assets/Claudia Garcia.avif'
+import Dario from '@/assets/DarioMH.avif'
+import Melerus from '@/assets/melerus.avif'
+import Goorgo from '@/assets/Goorgo.avif'
+import Soul from '@/assets/Soul.avif'
+import kappah from '@/assets/Kappah.avif'
+import WhereIsLeto from '@/assets/WhereIsLeto.avif'
+import funda from '@/assets/Funda.avif'
+import AlbertoSSJ from '@/assets/Alberto SSJ.avif'
+import ChestoyTerk from '@/assets/Chesto y Terk.avif'
+import Dusan from '@/assets/Dusan.avif'
+import Eskini from '@/assets/Eskini.avif'
+import JorgeBarroso from '@/assets/Jorge Barroso.avif'
+import JuanColás from '@/assets/Juan Colás.avif'
+import MissiegoBeats from '@/assets/Missiego Beats.avif'
+import Mota from '@/assets/Mota.avif'
+import Nikin from '@/assets/Nikin.avif'
+import Pit from '@/assets/Pit.avif'
+import Sanabria from '@/assets/Sanabria.avif'
+import SergioCopado from '@/assets/Sergio Copado.avif'
+import SrMiner from '@/assets/Sr Miner.avif'
+import Alvarito from '@/assets/Alvarito.avif'
+import Yagouu from '@/assets/Yagouu.avif'
+import Rubencher from '@/assets/Rubencher.avif'
+import NachoPavia from '@/assets/Nacho Pavía.avif'
+import Becarios from '@/assets/Becarios.avif'
+import Dani from '@/assets/Dani.avif'
+import Shiro from '@/assets/Shiro.avif'
 
 // Array de invitados SOLO para la primera página de cromos (ahora segunda hoja)
 const invitadosPrimeraPagina = [
   
   { nombre: 'Becarios', numero: 1, img: Becarios },
   { nombre: 'Dani', numero: 2, img: Dani },
-  { nombre: 'Soul', numero: 3, img: soul },
+  { nombre: 'Soul', numero: 3, img: Soul },
   { nombre: 'Shiro', numero: 4, img: Shiro },
-  { nombre: 'Goorgo', numero: 5, img: goorgo },
-  { nombre: 'elCejas', numero: 6, img: elCejas },
-  { nombre: 'DarioMH', numero: 7, img: dario },
+  { nombre: 'Goorgo', numero: 5, img: Goorgo },
+  { nombre: 'elCejas', numero: 6, img: ElCejas },
+  { nombre: 'DarioMH', numero: 7, img: Dario },
   { nombre: 'Leto', numero: 8, img: WhereIsLeto },
   { nombre: 'Juan Colás', numero: 9, img: JuanColás },
 ]
 const invitadosSegundaPagina = [
   { nombre: 'Eskini', numero: 10, img: Eskini },
-  { nombre: 'Claudia Garcia', numero: 11, img: claudia },
-  { nombre: 'Melerus', numero: 12, img: melerus },
+  { nombre: 'Claudia Garcia', numero: 11, img: ClaudiaGarcia },
+  { nombre: 'Melerus', numero: 12, img: Melerus },
   { nombre: 'Nacho Pavia', numero: 13, img: NachoPavia },
   { nombre: 'Missiego Beats', numero: 14, img: MissiegoBeats },
   { nombre: 'Sergio Copado', numero: 15, img: SergioCopado },
