@@ -17,37 +17,40 @@
         <div class="button-glow"></div>
       </button>
 
-      <!-- Contenedor principal para alinear los juegos -->
-      <div class="games-container">
-        <!-- Contenedor de la Sopa de Letras -->
-        <div class="sopa-letras-container" @click="goToSopaLetras">
+      <!-- Cada juego en columna, uno debajo de otro -->
+      <div class="games-list-vertical">
+        <!-- Sopa de Letras -->
+        <div class="game-preview sopa-letras-container" @click="goToSopaLetras">
           <div class="sopa-grid">
             <div v-for="(cell, index) in sopaLetrasPreview" :key="index" class="sopa-cell">
               {{ cell }}
             </div>
           </div>
+          <div class="game-title">Sopa de Letras</div>
         </div>
 
-        <!-- Contenedor del Tres en Raya -->
-        <div class="tres-en-raya-container" @click="goToTresEnRaya">
+        <!-- Tres en Raya -->
+        <div class="game-preview tres-en-raya-container" @click="goToTresEnRaya">
           <div class="grid">
             <div v-for="(cell, index) in board" :key="index" class="cell">
               <span v-if="cell" class="piece">{{ cell }}</span>
             </div>
           </div>
+          <div class="game-title">Tres en Raya</div>
         </div>
 
-        <!-- Contenedor del Wordle -->
-        <div class="wordle-container" @click="goToWordle">
+        <!-- Wordle -->
+        <div class="game-preview wordle-container" @click="goToWordle">
           <div class="wordle-row">
             <div v-for="(letter, index) in wordlePreview" :key="index" class="wordle-cell">
               {{ letter }}
             </div>
           </div>
+          <div class="game-title">Wordle</div>
         </div>
 
-        <!-- Contenedor del Crucigrama -->
-        <div class="crucigrama-container" @click="goToCrucigrama">
+        <!-- Crucigrama -->
+        <div class="game-preview crucigrama-container" @click="goToCrucigrama">
           <div class="crucigrama-grid">
             <div v-for="(row, rowIndex) in crucigramaPreview" :key="rowIndex" class="crucigrama-row">
               <div
@@ -60,6 +63,7 @@
               </div>
             </div>
           </div>
+          <div class="game-title">Crucigrama</div>
         </div>
       </div>
     </div>
@@ -145,7 +149,6 @@ const goBack = () => emit('navigate', 'home');
 
 .puzzles-container {
   position: relative;
-  /* Elimina el top negativo para que no quede fuera de pantalla */
   top: 0;
   text-align: center;
   color: white;
@@ -153,12 +156,49 @@ const goBack = () => emit('navigate', 'home');
 }
 
 /* Contenedor principal para alinear los juegos */
-.games-container {
+/* Por defecto: horizontal (PC/tablet) */
+.games-list-vertical {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  gap: 28px;
   align-items: flex-start;
-  gap: 20px; /* Espaciado entre los divs */
-  margin-top: 20px;
+  justify-content: center;
+  margin: 36px auto 0 auto;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Cada preview ocupa el mismo espacio en horizontal */
+.game-preview {
+  flex: 1 1 0;
+  max-width: 220px;
+  min-width: 140px;
+  margin: 0 8px;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px #0003;
+  transition: transform 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  background: #8B1E1E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0 10px 0;
+  position: relative;
+}
+.game-preview:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 24px #ffd70033;
+  background: #a83232;
+}
+.game-title {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  color: #800000;
+  font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
+  letter-spacing: 1px;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 0 1px 8px #fff8;
 }
 
 /* Contenedor de la Sopa de Letras */
@@ -381,7 +421,7 @@ const goBack = () => emit('navigate', 'home');
 .secret-title {
   font-size: 2.3rem;
   color: #ffd700;
-  text-shadow: 0 2px 12px #800000, 0 0 8px #fff8;
+  text-shadow: 0 2px 12px #b18f8f, 0 0 8px #fff8;
   margin-bottom: 0.5rem;
   letter-spacing: 2px;
   font-family: 'Impact', 'Arial Narrow Bold', Arial, sans-serif;
@@ -413,5 +453,50 @@ const goBack = () => emit('navigate', 'home');
   font-size: 1.1rem;
   font-style: italic;
   letter-spacing: 1px;
+}
+
+/* Responsive para móviles: vertical */
+@media (max-width: 900px) {
+  .games-list-vertical {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    max-width: 99vw;
+    margin-top: 16px;
+  }
+  .game-preview {
+    max-width: 99vw;
+    min-width: 0;
+    padding: 8px 0 6px 0;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+  .game-title {
+    font-size: 1rem;
+    margin-top: 6px;
+  }
+  .sopa-letras-container,
+  .tres-en-raya-container,
+  .wordle-container,
+  .crucigrama-container {
+    min-width: 0;
+    max-width: 99vw;
+    border-radius: 6px;
+    padding: 0;
+  }
+  .sopa-grid,
+  .crucigrama-grid {
+    gap: 2px;
+  }
+  .wordle-cell {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+  .piece {
+    width: 18px;
+    height: 18px;
+    font-size: 13px;
+  }
 }
 </style>
