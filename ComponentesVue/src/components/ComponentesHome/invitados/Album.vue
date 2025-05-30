@@ -308,8 +308,8 @@ const isDarioImg = (nombre) => commonClasses.darioImgNames.includes(nombre)
 
 onMounted(() => {
   flipInstance = new PageFlip(album.value, {
-    width: 400,
-    height: 600,
+    width: 450,
+    height: 700,
     size: 'fixed',
     minWidth: 315,
     maxWidth: 1000,
@@ -324,30 +324,39 @@ onMounted(() => {
   flipInstance.loadFromHTML(document.querySelectorAll('.page'))
 })
 </script>
-
 <style scoped>
 .album-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   width: 100vw;
   background: url('@/assets/FondoAlbum.webp'), black;
   background-size: cover;
   background-repeat: repeat;
-  /* Para que la mesa de madera se vea más realista, puedes ajustar el color base (#a97c50) */
-  padding-top: 30px;
-  padding-bottom: 30px; /* Más espacio abajo para que no se corte el álbum */
+  padding-top: 0;
+  padding-bottom: 30px;
   font-family: Impact, 'Arial Narrow Bold', Arial, sans-serif;
   font-weight: 400;
+
 }
 
+/* Tamaño para PC (más grande) */
 .flipbook {
-  width: 800px;
-  height: 600px;
+  width: 450px;
+  height: 700px;
   position: relative;
   font-family: inherit;
   font-weight: 400;
+}
+
+/* Tamaño para móviles (más pequeño) */
+@media (max-width: 768px) {
+  .flipbook {
+    width: 95vw;
+    height: 55vh;
+    min-height: 350px;
+  }
 }
 
 .page {
@@ -363,6 +372,7 @@ onMounted(() => {
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
+  margin-top: 15%;
 }
 
 .portada {
@@ -375,7 +385,9 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
   padding: 0;
+  margin-top: 15%;
 }
+
 .indice,
 .fin {
   background: linear-gradient(135deg, #800000 0%, #4a0000 100%);
@@ -434,7 +446,7 @@ onMounted(() => {
   object-fit: cover;
   border-radius: 6px;
   border: 2px solid white;
-  background: #1a1a1a; /* Cambiado de #f5f5f5 a un gris muy oscuro */
+  background: #1a1a1a;
   box-shadow: 0 1px 4px black;
   transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
   will-change: transform;
@@ -448,12 +460,12 @@ onMounted(() => {
 }
 
 .cromo-dorado {
-  border: 2.5px solid gold !important; /* rojo oscuro en vez de dorado */
+  border: 2.5px solid gold !important;
   box-shadow: 0 0 12px gold, 0 0 0 4px gold inset;
 }
 
 .nombre-dorado {
-  color: rgb(0, 0, 0) !important; /* rojo oscuro en vez de dorado */
+  color: rgb(0, 0, 0) !important;
   text-shadow: 0 0 6px gold, 0 0 8px black;
   font-weight: 400;
   letter-spacing: 1px;
@@ -485,7 +497,7 @@ onMounted(() => {
 }
 
 .fin {
-  background: #642524; /* igual que portada */
+  background: #642524;
   color: #fff;
   font-size: 2rem;
   display: flex;
@@ -501,7 +513,7 @@ onMounted(() => {
 .hall-title-multiline {
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* Mueve el contenido a la derecha */
+  align-items: flex-end;
   justify-content: center;
   max-width: 90%;
   max-height: 90%;
@@ -509,7 +521,7 @@ onMounted(() => {
   height: 100%;
   user-select: none;
   text-align: right;
-  padding-right: 2.5rem; /* Ajusta el margen derecho si quieres más separación */
+  padding-right: 2.5rem;
 }
 
 .hall-line {
@@ -552,17 +564,17 @@ onMounted(() => {
 .img-portada {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Cambiado de 'cover' a 'contain' */
+  object-fit: contain;
   display: block;
   margin: 0;
-  padding: 20px; /* Añadido padding para dar un poco de espacio */
+  padding: 20px;
   border-radius: 0;
   box-shadow: none;
 }
 
 .cromo-img-blur {
-  filter: blur(10px) brightness(0.7) grayscale(1); /* Ajustado para que sea más oscuro */
-  background: #000; /* Fondo negro para los cromos cifrados */
+  filter: blur(10px) brightness(0.7) grayscale(1);
+  background: #000;
 }
 
 .indice-descripcion {
@@ -606,5 +618,13 @@ onMounted(() => {
   justify-content: center;
   gap: 12px;
   align-items: center;
+}
+
+/* Ajuste específico para móviles muy pequeños */
+@media (max-width: 480px) {
+  .flipbook {
+    height: 50vh;
+    min-height: 320px;
+  }
 }
 </style>

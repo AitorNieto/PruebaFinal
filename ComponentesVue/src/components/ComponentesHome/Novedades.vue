@@ -272,13 +272,24 @@
 
 @media (max-width: 480px) {
   .ultimo-video {
-    padding: 1.5rem;
-    border-radius: 25px;
+    padding: 0.7rem;
+    border-radius: 18px;
   }
-  
+
+  .episode-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+
   .video-wrapper {
-    padding: 6px;
-    border-width: 3px;
+    padding: 2px;
+    border-width: 2px;
+    max-width: 100vw;
+  }
+
+  .video-container {
+    padding-bottom: 70%;
+    border-radius: 12px;
   }
 }
 </style>

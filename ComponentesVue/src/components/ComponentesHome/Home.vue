@@ -210,10 +210,35 @@ function scrollToZDrinks() {
   transform: translateY(-2px) scale(0.98);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+/* Divs grandes para secciones */
+.large-red-background {
+  width: 100%;
+  height: 750px; /* Más grande */
+  background-color: #800000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.large-dark-red-background {
+  width: 100%;
+  height: 750px; /* Más grande */
+  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
 /* Navegación: Fondo desplazable para "Ver Videos" */
 .scroll-bg {
   width: 100%;
-  height: 400px;
+  height: 500px; 
   background: url('@/assets/Videos.png') repeat-x,
               url('@/assets/Videos.png') repeat-x;
   background-size: contain;
@@ -238,15 +263,7 @@ function scrollToZDrinks() {
   align-items: flex-end;
   justify-content: center;
   position: relative;
-}
-
-.foro-content {
-  background-color: white;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  text-align: center;
-  position: absolute;
-  bottom: 10px;
+  height: 750px; /* Más grande */
 }
 
 /* Temporadas */
@@ -284,31 +301,7 @@ function scrollToZDrinks() {
   100% { transform: rotate(-10deg); }
 }
 
-/* Divs grandes para secciones */
-.large-red-background {
-  width: 100%;
-  height: 600px; /* Aumentado para mejor visualización */
-  background-color: rgba(150,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.large-dark-red-background {
-  width: 100%;
-  height: 600px; /* Aumentado para mejor visualización */
-  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
-  background-size: 100% 100%; /* Estira la imagen para que ocupe todo el div */
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
+/* Responsive para Home */
 @media (max-width: 1200px) {
   .home-wrapper {
     padding: 0 1vw;
@@ -317,7 +310,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 350px; /* Ajuste para pantallas medianas */
+    height: 480px; /* Más grande en pantallas medianas */
   }
   .patrocinadores-title {
     font-size: 2.2rem;
@@ -334,7 +327,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 220px; /* Ajuste para tablets */
+    height: 320px; /* Más grande en tablets */
   }
   .patrocinadores-title {
     font-size: 1.5rem;
@@ -355,8 +348,8 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 110px;
-    min-height: 90px;
+    height: 160px;
+    min-height: 120px;
   }
   .patrocinadores-title {
     font-size: 1.1rem;
@@ -437,7 +430,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 350px; /* Ajuste para pantallas medianas */
+    height: 480px; /* Más grande en pantallas medianas */
   }
   .patrocinadores-title {
     font-size: 2.2rem;
@@ -454,7 +447,7 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 220px; /* Ajuste para tablets */
+    height: 320px; /* Más grande en tablets */
   }
   .patrocinadores-title {
     font-size: 1.5rem;
@@ -475,8 +468,8 @@ function scrollToZDrinks() {
   .large-dark-red-background,
   .scroll-bg,
   .foro-background {
-    height: 110px;
-    min-height: 90px;
+    height: 160px;
+    min-height: 120px;
   }
   .patrocinadores-title {
     font-size: 1.1rem;
@@ -546,10 +539,10 @@ function scrollToZDrinks() {
   display: flex;
   width: 100vw;
   max-width: 100vw;
-  min-width: 100vw;
-  height: 520px; /* Más alto para que ambas imágenes se vean enteras */
+  min-width: 75vw;
+  height: 75vh; /* Ahora ocupa toda la altura de la ventana */
   gap: 0;
-  margin: 2rem 0 1.5rem 0;
+  margin: 0;
   overflow: hidden;
   position: relative;
   left: 50%;
@@ -565,32 +558,34 @@ function scrollToZDrinks() {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 75vh; /* Ocupa toda la altura */
   border-radius: 0;
   margin: 0;
   background: none !important;
   position: relative;
   overflow: hidden;
+  background-color: transparent !important;
 }
 
-.foro-background.foro-random-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('@/assets/Foro.webp') center center/contain no-repeat;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-}
-
+.foro-background.foro-random-item::before,
 .large-dark-red-background.foro-random-item::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('@/assets/cosas-random.png') center center/contain no-repeat;
-  z-index: 0;
   width: 100%;
   height: 100%;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  z-index: 0;
+}
+
+.foro-background.foro-random-item::before {
+  background-image: url('@/assets/Foro.webp');
+}
+
+.large-dark-red-background.foro-random-item::before {
+  background-image: url('@/assets/cosas-random.png');
 }
 
 .foro-background.foro-random-item,
@@ -620,6 +615,11 @@ function scrollToZDrinks() {
     max-width: 100%;
     height: 180px;
     border-radius: 14px !important;
+  }
+  .foro-background.foro-random-item::before,
+  .large-dark-red-background.foro-random-item::before {
+    background-size: cover !important;
+    background-position: center center !important;
   }
 }
 

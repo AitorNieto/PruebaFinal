@@ -81,7 +81,7 @@ onMounted(() => {
 }
 
 .auth-buttons button:hover {
-  background-color: #660000; /* Granate oscuro */
+  background-color: #800000; /* Granate oscuro */
 }
 
 .main-title {

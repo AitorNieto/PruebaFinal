@@ -156,20 +156,21 @@ h3 {
     padding: 1.5rem 0.5rem;
   }
   .shorts-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
   }
   .short-card {
-    max-width: 98vw;
+    max-width: 99vw;
     margin: 0 auto;
   }
   .short-container {
     aspect-ratio: 9/16;
-    min-height: 220px;
+    min-height: 260px; /* Más alto para que el vídeo sea más grande */
   }
   h3 {
-    font-size: 1rem;
-    min-height: 2.5rem;
+    font-size: 0.8rem;
+    min-height: 1.2rem;
+    padding: 0.3rem;
   }
 }
 
