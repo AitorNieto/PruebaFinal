@@ -12,7 +12,7 @@
                 <img src="@/assets/Jimmy.png" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
                 <div class="card-info">
                 </div>
               </div>
@@ -27,7 +27,7 @@
                 <img src="@/assets/Lomas.png" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
                 <div class="card-info">
                 </div>
               </div>
@@ -42,7 +42,7 @@
                 <img src="@/assets/Monzon.png" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
-                <img src="@/assets/TraseraCarta.jpg" alt="Carta" class="card-image" />
+                <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
                 <div class="card-info">
                 </div>
               </div>

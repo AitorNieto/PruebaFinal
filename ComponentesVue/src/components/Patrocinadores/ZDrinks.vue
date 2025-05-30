@@ -3,7 +3,7 @@
     <div class="collab-container">
       <!-- Imagen grande a la izquierda -->
       <div class="collab-image">
-        <img src="@/assets/ZDrink&Dani.png" alt="ZDrink & Dani colaboración" class="featured-image">
+        <img src="@/assets/ZDrink&Dani.avif" alt="ZDrink & Dani colaboración" class="featured-image">
       </div>
 
       <!-- Contenido a la derecha -->

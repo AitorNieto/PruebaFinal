@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useFirestore } from 'vuefire';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import twitchLogo from '@/assets/Twitch.png';
+import twitchLogo from '@/assets/Twitch.avif';
 
 const db = useFirestore();
 const targetDate = ref(new Date());

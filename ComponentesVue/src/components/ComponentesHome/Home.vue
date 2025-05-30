@@ -239,8 +239,8 @@ function scrollToZDrinks() {
 .scroll-bg {
   width: 100%;
   height: 500px; 
-  background: url('@/assets/Videos.png') repeat-x,
-              url('@/assets/Videos.png') repeat-x;
+  background: url('@/assets/Videos.avif') repeat-x,
+              url('@/assets/Videos.avif') repeat-x;
   background-size: contain;
   background-position: 0 0, 0 100%;
   display: flex;

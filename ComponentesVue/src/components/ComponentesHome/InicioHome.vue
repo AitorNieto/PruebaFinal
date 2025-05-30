@@ -27,7 +27,7 @@
           <span class="badge-text">ZDrinks</span>
           <span class="badge-line"></span>
         </div>
-        <img src="@/assets/ZDrinks.png" alt="Zdrinks" class="partner-logo" />
+        <img src="@/assets/ZDrinks.avif" alt="Zdrinks" class="partner-logo" />
         <p class="partner-text">Patrocinador Oficial</p>
       </div>
     </div>
@@ -48,7 +48,7 @@ import imageSrc from '@/assets/FondoDyB.png';
       #800000,
       rgba(90, 2, 2, 0.89)
     ),
-    url('@/assets/FondoPrincipal.png') no-repeat center center fixed;
+    url('@/assets/FondoPrincipal.avif') no-repeat center center fixed;
   background-size: cover;
   overflow: hidden;
   position: relative;
