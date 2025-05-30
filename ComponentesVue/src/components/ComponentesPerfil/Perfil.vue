@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!showSubscription" class="perfil-container" :class="{ 'blurred': editingImage }">
+  <div class="perfil-container" :class="{ 'blurred': editingImage }">
     <button @click="navigateHome" class="back-button">
       <i class="fas fa-arrow-left"></i>
     </button>
@@ -63,10 +63,6 @@
             </select>
           </div>
 
-          <button @click="navigateToSubscription" class="upgrade-button">
-            Mejorar
-          </button>
-
           <button type="submit" class="save-button">
             <i class="fas fa-save"></i>
             Guardar Perfil
@@ -79,10 +75,6 @@
         </form>
       </div>
     </div>
-  </div>
-
-  <div v-else>
-    <SeleccionSubcripcion />
   </div>
 
   <!-- Modal para actualizar la URL de la imagen -->
@@ -122,17 +114,15 @@ import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
 import { firebaseApp } from '../../firebase';
 import '@fortawesome/fontawesome-free/css/all.css';
-import SeleccionSubcripcion from './SeleccionSubcripcion.vue';
 
 const emit = defineEmits(['navigate', 'profileSaved']);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const defaultImage = new URL('@/assets/avatar-default.png', import.meta.url).href;
 
-const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '', subscription: 'basic' });
+const perfil = ref({ username: '', edad: '', genero: '', profileImageUrl: '' });
 const editingImage = ref(false);
 const tempImageUrl = ref('');
-const showSubscription = ref(false);
 
 // Computed para el src del avatar, reactivo a los cambios
 const avatarSrc = computed(() => {
@@ -237,10 +227,6 @@ const openImageEditor = () => {
 
 const closeImageEditor = () => {
   editingImage.value = false;
-};
-
-const navigateToSubscription = () => {
-  showSubscription.value = true;
 };
 
 onMounted(fetchPerfil);
@@ -560,20 +546,7 @@ select:hover {
 }
 
 .upgrade-button {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  background-color:rgb(207, 196, 33);
-  color: white;
+  display: none !important;
 }
 
 .premium-button {
