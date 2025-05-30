@@ -167,7 +167,7 @@
 import { ref } from 'vue';
 import { db, auth } from "@/firebase";
 import { collection, query, getDocs, addDoc, serverTimestamp, orderBy, doc, updateDoc, arrayUnion, arrayRemove, increment, getDoc, where } from "firebase/firestore";
-import defaultAvatar from '@/assets/avatar-default.png';
+import defaultAvatar from '@/assets/avatar-default.avif';
 
 const FORUM_START_DATE = new Date(); // Esto tomará la fecha actual como inicio
 FORUM_START_DATE.setHours(0, 1, 0, 0); // Establecer a las 00:01 del día actual

@@ -9,7 +9,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/Jimmy.png" alt="Imagen 1" class="additional-image" />
+                <img src="@/assets/Jimmy.avif" alt="Imagen 1" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
@@ -24,7 +24,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/Lomas.png" alt="Imagen 2" class="additional-image" />
+                <img src="@/assets/Lomas.avif" alt="Imagen 2" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
@@ -39,7 +39,7 @@
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="@/assets/Monzon.png" alt="Imagen 3" class="additional-image" />
+                <img src="@/assets/Monzon.avif" alt="Imagen 3" class="additional-image" />
               </div>
               <div class="flip-card-back">
                 <img src="@/assets/TraseraCarta.avif" alt="Carta" class="card-image" />
